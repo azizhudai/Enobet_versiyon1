@@ -1,0 +1,55 @@
+﻿declare @id int;set @id=0;
+INSERT INTO NobetDegisimTalep
+           (TalepEdenPersonelId
+           ,TalepEttigiPersonelId
+           ,YeniTalepEdenKisininTarihi
+           ,YeniTalepEttigiKisininTarihi
+           ,DegisimTipi
+           ,NobetListeJsonId
+           ,EskiTalepEdenKisininTarihi
+           ,EskiTalepEttigiKisininTarihi
+           ,MahalId
+           ,IslemYapanPersonelId
+           --,AmirId
+           ,Link
+           ,Durum
+           ,Mazeret
+
+		   ,NobetKidemliId
+		   ,KendiAmirId
+		   ,TalepEttigiAmirId
+		   ,OnayMakamiId
+		   ,IslemTarihi
+		   ,NobetKidemliOnayladiMi
+		   ,KendiAmirOnayladiMi
+		   ,TalepEttigiAmirOnayladiMi
+		   ,OnayMakamiOnayladiMi
+		   ,TalepEttigiPersonelOnayladiMi
+		   )
+     VALUES
+           (@TalepEdenPersonelId
+           ,@TalepEttigiPersonelId
+           ,@YeniTalepEdenKisininTarihi
+           ,@YeniTalepEttigiKisininTarihi
+           ,@DegisimTipi
+           ,@NobetListeJsonId
+           ,@EskiTalepEdenKisininTarihi
+           ,@EskiTalepEttigiKisininTarihi
+           ,@MahalId
+           ,@IslemYapanPersonelId
+           --,@AmirId
+           ,@Link
+           ,@Durum
+           ,@Mazeret
+		   ,@NobetKidemliId
+		   ,@KendiAmirId
+		   ,@TalepEttigiAmirId
+		   ,@OnayMakamiId
+		   ,Getdate()
+		   ,0
+		   ,0
+		   ,0
+		   ,0
+		   ,0
+		   )
+           SELECT @id=SCOPE_IDENTITY(); select @id;

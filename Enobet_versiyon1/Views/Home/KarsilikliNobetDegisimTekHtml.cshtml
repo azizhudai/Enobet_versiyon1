@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="/app-assets/css/bootstrap.css" rel="stylesheet">
+    <style>
+        table {
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        #t01 tr:nth-child(even) {
+            background-color: #eee;
+        }
+
+        #t01 tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        #t01 th {
+            background-color: dodgerblue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <table id="t01">
+        <tr>
+            <th>Talep Eden Personel Adı</th>
+            <th>Talep Edenin Yeni Tarihi</th>
+            <th>Talep Ettiği Personel Adı</th>
+
+        </tr>
+        <tr>
+            <td>TEPA</td>
+            <td>TEYT</td>
+            <td>TEPPA</td>
+        </tr>
+        <tr><th>Mazeret Açıklama</th></tr>
+        <tr>
+            <td>
+                <label style="color:red;">Mzrt</label>
+            </td>
+        </tr>
+        <tr>
+            <th>Nöbet Kıdemlisi</th>
+            <th>Talep Eden Personelin Amiri</th>
+            <th>Talep Ettiği Personelin Amiri</th>
+            <th>Onay Makamı</th>
+        </tr>
+        <tr>
+            <td>NK</td>
+            <td>TalepAmir</td>
+            <td>EttiA</td>
+            <td>OnayMak</td>
+        </tr>
+
+    </table>
+
+    <center>
+
+        <a href="https://localhost:44370/Home/TekTalepSonucIslemiSayfa?eposta=AmirE&onay=criptNo&durum=EncodeDurum" target="_blank" style="color:blue">ONAYLA</a><br />
+        <br />
+        <br />
+        <a href="https://localhost:44370/Home/TalepSonucIslemiSayfa?eposta=AmirE&onay=criptNo&durum=SonucEncode" target="_blank" style="color:red">REDDET</a>
+
+    </center>
+    <br />
+
+</body>
+</html>

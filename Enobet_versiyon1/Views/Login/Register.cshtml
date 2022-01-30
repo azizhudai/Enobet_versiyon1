@@ -1,0 +1,386 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html class="loading" lang="tr" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="Frest admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Frest admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>E-Nöbet Kayıt Ol</title>
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/b.jpg">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    @Styles.Render("~/app-assets/vendors/css/vendors.min.css")
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    @Styles.Render("~/app-assets/css/bootstrap.css")
+    @Styles.Render("~/app-assets/css/bootstrap-extended.css")
+    @Styles.Render("~/app-assets/css/colors.css")
+    @Styles.Render("~/app-assets/css/components.css")
+    @Styles.Render("~/app-assets/css/themes/dark-layout.css")
+    @Styles.Render("~/app-assets/css/themes/semi-dark-layout.css")
+    <!-- END: Theme CSS-->
+    <!-- BEGIN: Page CSS-->
+    @Styles.Render("~/app-assets/css/core/menu/menu-types/vertical-menu.css")
+    @Styles.Render("~/app-assets/css/pages/authentication.css")
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    @Styles.Render("~/assets/css/style.css")
+    <!-- END: Custom CSS-->
+    <style>
+
+        .uppercase {
+            text-transform: uppercase !important;
+        }
+        .lower{
+            text-transform:lowercase !important;
+        }
+    </style>
+</head>
+<!-- END: Head-->
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern boxicon-layout no-card-shadow 1-column  navbar-sticky footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <!-- register section starts -->
+                <section class="row flexbox-container">
+                    <div class="col-xl-8 col-10">
+                        <div class="card bg-authentication mb-0">
+                            <div class="row m-0">
+                                <!-- register section left -->
+                                <div class="col-md-6 col-12 px-0">
+                                    <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
+                                        <div class="card-header pb-1">
+                                            <div class="card-title">
+                                                <h4 class="text-center mb-2">Kayıt Ol</h4>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <p>
+                                                <small> Tüm Alanlar Zorunludur!</small>
+                                            </p>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                @*@using (Html.BeginForm("KullaniciEkle", "Login", FormMethod.Post))
+        {*@
+                                                <form>
+                                                    <div class="form-body">
+                                                        <div class="row">
+                                                            @*<div class="col-md-4 col-12">
+                    <div class="form-label-group">
+                        <input type="text" id="userRank" required class="form-control" placeholder="* Sınıfı ve Rütbesi" name="userRank">
+                        <label for="userRank"><span style="color:red">* </span>Sınıfı ve Rütbesi</label>
+                    </div>
+                </div>*@
+                                                            <div class="form-group col-md-6 col-12">
+                                                                <div class="form-group validate">
+                                                                    <label><span style="color:red">* </span>Sınıf</label>
+                                                                    @*<select id="SinifId">
+
+                            @{
+                                var i = 0;
+                                var count = ViewBag.ddlSinifId.len
+                                                                                                                                                                                while ()
+                            }
+
+
+
+                        </select>*@
+                                                                    @Html.DropDownList("SinifId", (IEnumerable<SelectListItem>)ViewBag.ddlSinifId, null, new { @class = "form-control" })
+                                                                    @*@Html.DropDownListFor(n => n.SinifId, new SelectList(ViewBag.ddlSinifId, "Value", "Text", Model.SinifId), new { @class = "form-control" })*@
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-md-6 col-12">
+                                                                <div class="form-group validate">
+                                                                    <label><span style="color:red">* </span>Rütbe</label>
+                                                                    @Html.DropDownList("RutbeId", (IEnumerable<SelectListItem>)ViewBag.ddlRutbeId, null, new { @class = "form-control" })
+
+                                                                    @*@Html.DropDownListFor(n => n.RutbeId, new SelectList(ViewBag.ddlRutbeId, "Value", "Text", Model.RutbeId), new { @class = "form-control" })*@
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12" style="padding-top:24px">
+                                                                <div class="form-label-group">
+                                                                    <input type="text" id="userName" required class="form-control uppercase" placeholder="* Adı" name="userName">
+                                                                    <label for="userName"><span style="color:red">* </span>Adı</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12" style="padding-top:24px">
+                                                                <div class="form-label-group">
+                                                                    <input type="text" id="userSurname" required class="form-control uppercase" placeholder="* Soyadı" name="userSurname">
+                                                                    <label for="userSurname"><span style="color:red">* </span>Soyadı</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-label-group">
+                                                                    <input type="email" id="Email" required class="form-control lower" placeholder="* E-posta" name="Email">
+                                                                    <label for="Email"><span style="color:red">* </span>E-posta</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-label-group">
+                                                                    <input type="text" id="Tcno" class="form-control" name="* Tcno" placeholder="T.C. No" data-mask="00000000000">
+                                                                    <label for="Tcno"><span style="color:red">* </span>T.C. No</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-label-group">
+                                                                    <input type="password" id="password" class="form-control" name="password" placeholder="* Parola">
+                                                                    <label for="company-column"><span style="color:red">* </span>Parola</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-label-group">
+                                                                    <input type="password" id="passwordAgain" class="form-control" name="passwordAgain" placeholder="* Parola Tekrar">
+                                                                    <label for="passwordAgain"><span style="color:red">* </span>Parola Tekrar</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-md-12 col-12">
+                                                                <div class="form-group validate">
+                                                                    <label><span style="color:red">* </span>Mahal</label>
+                                                                    @Html.DropDownList("MahalId", (IEnumerable<SelectListItem>)ViewBag.ddlMahalId, null, new { @class = "form-control" })
+
+                                                                    @*@Html.DropDownListFor(n => n.RutbeId, new SelectList(ViewBag.ddlRutbeId, "Value", "Text", Model.RutbeId), new { @class = "form-control" })*@
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12 d-flex justify-content-end">
+                                                                <button type="reset" id="userBtnClear" onclick="this.form.reset();" class="btn btn-light-secondary mr-1 mb-1">Temizle</button>
+                                                                <button type="button" id="userBtnSave" onclick="btnUserAddClkk();" class="btn btn-primary mr-1 mb-1">Kaydet</button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                               
+
+                                                @*  }*@
+                                                <hr>
+                                                <div class="text-center"><small class="mr-25">Hesabınız Varsa</small><a href="~/Login/Login"><small>Giriş Sayfası</small> </a></div>
+                                                <div class="text-center"><small class="mr-25"></small><a href="~/Home/index"><small>Anasayfa</small> </a></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- image section right -->
+                                <div class="col-md-6 d-md-block d-none text-center align-self-center p-3">
+                                    <img class="img-fluid" src="~/app-assets/images/logo/tsk_dzkk.png" alt="branding logo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- register section endss -->
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+    <!-- BEGIN: Vendor JS-->
+    @Scripts.Render("~/app-assets/vendors/js/vendors.min.js")
+    @Scripts.Render("~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js")
+    @Scripts.Render("~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js")
+    @Scripts.Render("~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js")
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    @Scripts.Render("~/app-assets/js/core/app-menu.js")
+    @Scripts.Render("~/app-assets/js/core/app.js")
+    @Scripts.Render("~/app-assets/js/scripts/components.js")
+    @Scripts.Render("~/app-assets/js/scripts/footer.js")
+    <!-- END: Theme JS-->
+    <!-- BEGIN: Page JS-->
+    <!-- END: Page JS-->
+
+    @Scripts.Render("~/app-assets/js/scripts/jquery.mask.js")
+</body>
+<!-- END: Body-->
+
+</html>
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    //$(document).ready(function () {
+
+    //    String.prototype.turkishToUpper = function () {
+    //        var string = this;
+    //        var letters = { "i": "İ", "ş": "Ş", "ğ": "Ğ", "ü": "Ü", "ö": "Ö", "ç": "Ç", "ı": "I" };
+    //        string = string.replace(/(([iışğüçö]))+/g, function (letter) { return letters[letter]; })
+    //        return string.toUpperCase();
+    //    }
+
+    //    String.prototype.turkishToLower = function () {
+    //        var string = this;
+    //        var letters = { "İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç" };
+    //        string = string.replace(/(([İIŞĞÜÇÖ]))+/g, function (letter) { return letters[letter]; })
+    //        return string.toLowerCase();
+    //    }
+
+    //});
+
+    function btnUserAddClkk() {
+
+        var SinifId = $('#SinifId').val();
+        var RutbeId = $('#RutbeId').val();
+        //var userRank = $('#userRank').val();
+        var userName = $('#userName').val();
+        var userSurname = $('#userSurname').val();
+        var email = $('#Email').val();
+        var Tcno = $('#Tcno').val();
+        var password = $('#password').val();
+        var passwordAgain = $('#passwordAgain').val();
+
+        var MahalId = $('#MahalId').val();
+
+        var problemText = "";
+
+        if (password != "") {
+            if (password != passwordAgain) {
+                problemText = "Şifreler Uyuşmuyor!";
+            }
+        }
+
+        //if (userRank == "") {
+        //    problemText += "<br>" + "\nRütbe Alanı Zorunludur!";
+        //}
+        if (SinifId == "0") {
+            problemText += "<br>" + "\Sınıf Alanı Zorunludur!";
+        }
+        if (RutbeId == "0") {
+            problemText += "<br>" + "\nRütbe Alanı Zorunludur!";
+        }
+        if (userName == "") {
+            problemText += "<br>" + "\Kullanıcı Adı Alanı Zorunludur!";
+        }
+        if (userSurname == "") {
+            problemText += "<br>" + "\Kullanıcı Soyadı Alanı Zorunludur!";
+        }
+        if (email == "") {
+            problemText += "<br>" + "\nE-Posta Alanı Zorunludur!";
+        }
+        if (Tcno == "") {
+            problemText += "<br>" + "\nT.C. No Alanı Zorunludur!";
+        }
+        if (MahalId == "") {
+            problemText += "<br>" + "\nMahal Alanı Zorunludur!";
+        }
+
+        if (problemText != "") {
+            $("#messageBoxModal .modal-title").html("Kullanıcı Kayıt İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-header").removeClass("bg-success");
+            $("#messageBoxModal .modal-header").addClass("bg-danger");
+            $("#messageBoxModal .modal-body").html("<p>" + problemText + "</p>");
+            $('#messageBoxModal').modal();
+        } else {
+            var dataUserArray = [];
+
+            //dataUserArray[0] = uid;
+            dataUserArray[0] = SinifId;
+            dataUserArray[1] = RutbeId;
+            dataUserArray[2] = upperStr(userName);
+            dataUserArray[3] = upperStr(userSurname);//.toLocaleUpperCase();
+            dataUserArray[4] = lowerStr(email);
+            dataUserArray[5] = Tcno;
+            dataUserArray[6] = password;
+            dataUserArray[7] = MahalId;
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("KullaniciEkle", "login")",
+                data: JSON.stringify({ dataUserArray: dataUserArray }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (ex) {
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>Hata Oluştu.</p>");
+                    $('#messageBoxModal').modal();
+                },
+                success: function (data) {
+                    if (data.State == 1) {
+                        $("#messageBoxModal .modal-title").html(data.title);
+                        $("#messageBoxModal .modal-header").removeClass("bg-danger");
+                        $("#messageBoxModal .modal-header").addClass("bg-success");
+                        //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                        $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                        $('#messageBoxModal').modal();
+
+                        $('#userBtnClear').click();
+
+                        //window.location.href='@Url.Action("Login", "Login")';
+
+                    } else {
+                        $("#messageBoxModal .modal-title").html(data.title);
+                        $("#messageBoxModal .modal-header").removeClass("bg-success");
+                        $("#messageBoxModal .modal-header").addClass("bg-danger");
+                        //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                        $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                        $('#messageBoxModal').modal();
+                    }
+
+                }
+            });
+        }
+
+    }
+
+    function upperStr(str) {
+        //return str.replace(/i/g, "İ").toLocaleUpperCase();
+
+        var string = str;
+        var letters = { "i": "İ", "ş": "Ş", "ğ": "Ğ", "ü": "Ü", "ö": "Ö", "ç": "Ç", "ı": "I" };
+        string = string.replace(/(([iışğüçö]))/g, function (letter) { return letters[letter]; })
+        return string.toUpperCase();
+
+    }
+
+    function lowerStr(str) {
+        var string = str;
+        var letters = { "İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç" };
+        string = string.replace(/(([İIŞĞÜÇÖ]))/g, function (letter) { return letters[letter]; })
+        return string.toLowerCase();
+    }
+
+
+</script>

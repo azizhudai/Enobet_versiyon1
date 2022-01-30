@@ -1,0 +1,548 @@
+﻿@*@model Enobet_versiyon1.Models.MahalModel*@
+@{
+    ViewBag.Title = "Mazeret İşlemleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/app-assets/vendors/css/pickers/pickadate/pickadate.css")
+@Styles.Render("~/app-assets/vendors/css/pickers/daterange/daterangepicker.css")
+
+
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h5 class="content-header-title float-left pr-1 mb-0">Mazeret İşlemleri</h5>
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb p-0 mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="@Url.Action("index","Home")"><i class="bx bx-home-alt"></i></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Uygulamalar</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a href="#">Mazeret İşlemleri</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <!-- Basic Horizontal form layout section start -->
+
+            <section id="basic-horizontal-layouts">
+                <div class="row match-height">
+
+                    <div class="col-md-12 col-12">
+
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Nöbet Mazeret İşlemi</h4>
+                            </div>
+                            <div class="card-content mt-2">
+                                <div class="card-body">
+
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-4 col-12">
+                                                <div class="form-group validate">
+                                                    <label><span style="color:red">* </span>Tarih Aralığı Seçiniz</label>
+
+                                                    <fieldset class="form-group position-relative has-icon-left">
+                                                        <input data-toggle="daterangepicker" maxlength="23" type="text" class="form-control autoapply" placeholder="Tarih Aralığı Seçin">
+                                                        <div class="form-control-position">
+                                                            <i class='bx bx-calendar-check'></i>
+                                                        </div>
+                                                    </fieldset>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-4 col-12">
+                                                <div class="form-group validate">
+                                                    <label><span style="color:red">* </span>Mazeret Açıklama</label>
+
+                                                    <fieldset class="form-group position-relative has-icon-left">
+
+                                                        <textarea id="mazeret" name="mazeret" class="form-control" placeholder="Mazeret Açıklama"></textarea>
+                                                        <div class="form-control-position">
+                                                            <i class='bx bx-text'></i>
+                                                        </div>
+                                                    </fieldset>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-flex justify-content-end">
+
+                                                <button type="button" id="mazeretBtnSave" class="btn btn-primary mr-1 mb-1 block-element">Kaydet</button>
+                                                @*<button type="reset" id="mazeretBtnClear" onclick="formListClear();" class="btn btn-light-secondary mr-1 mb-1">Temizle</button>*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+
+
+            <section id="column-selectors">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Mahal Listesi</h4>
+                                @*<li style="float:right"><span class="badge badge-pill badge-light-success">@Model.ListMahal.Count Kayıt</span></li>*@
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body card-dashboard">
+
+                                    <div class="table-responsive">
+                                        <table id="PersonelMazeretListTable" style="width:100%" class="table table-striped dataex-html5-selectors">
+                                            <thead>
+                                                <tr>
+                                                    <th>Mahal Adı</th>
+                                                    <th>Personel Adı</th>
+                                                    <th>Başlangıç Tarihi</th>
+                                                    <th>Bitiş Tarihi</th>
+                                                    <th>Mazeret Açıklama</th>
+                                                    <th>İşlem</th>
+
+                                                </tr>
+                                            </thead>
+
+
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Mahal Adı</th>
+                                                    <th>Personel Adı</th>
+                                                    <th>Başlangıç Tarihi</th>
+                                                    <th>Bitiş Tarihi</th>
+                                                    <th>Mazeret Açıklama</th>
+                                                    <th>İşlem</th>
+
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/datatables.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.print.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/pdfmake.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/vfs_fonts.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/datatables/datatable.js")
+<!-- END: Page JS-->
+
+@Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/legacy.js")
+@Scripts.Render("~/app-assets/vendors/js/pickers/daterange/moment.min.js")
+@Scripts.Render("~/app-assets/vendors/js/pickers/daterange/daterangepicker.js")
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        MazeretListeGetir();
+
+    });
+
+   @*function btnNobetListClk() {
+
+         $.ajax({
+        type: "POST",
+        url: "@Url.Action("PersonelNobetListTable", "IstatistikIslemleri")",
+        data: JSON.stringify({ }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error: function (ex) {
+            $("#messageBoxModal .modal-title").html("Nöbet Değişim İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+            $('#messageBoxModal').modal();
+        },
+        success: function (data) {
+
+            if (data.State == 1) {
+
+                if ($.fn.DataTable.isDataTable('#PersonelNobetListTable')) {
+                    $('#PersonelNobetListTable').DataTable().clear().draw();
+                }
+
+                // debugger;
+                ////////////
+                var fileName = "Foça Bilgi Sistem Amirliği E-Nöbet Listesi";
+                if (data.NobetList == null)
+                    return;
+                if (data.NobetList.length <= 0)
+                    return;
+
+                var NobetList = JSON.parse(data.NobetList);  //JSON.stringify(data.NobetList)
+                var NobetListTable = $('#PersonelNobetListTable').DataTable({
+                    "data": NobetList,
+                    "columns": [
+                        { title: "Mahal Adı", data: "MahalAdi" },
+                        { title: "Personel Adı", data: "TalepEdenFulAdi" },
+                        { title: "Nöbet Tarihi", data: "NobetTarihi" }
+                    ],
+                    columnDefs: [
+                        {
+                            "targets": 2,
+                            "data": "NobetTarihi",
+                            "render": function (data, type, row, meta) {
+                                var dateArray = data.split('-');
+                                var date = DateFormatTR(dateArray[0], (dateArray[1] - 1), dateArray[2]);
+                                return date;
+                            }
+                        }
+                    ],
+                    "ordering": false,
+                    paging: false,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'print',
+                        { extend: 'pdf', className: 'pdfButton', title: 'Nöbet Talep Listesi', filename: fileName },
+                        {
+                            extend: 'csv',
+                            charset: 'UTF-8',
+                            fieldSeparator: ';',
+                            bom: true,
+                            className: 'excelButton',
+                            filename: fileName,
+                            title: 'Nöbet Talep Listesi'
+                        }
+                    ]
+                });
+
+
+                $(".excelButton").text("CSV İndir");
+                $(".buttons-print").text("Çıktı Al");
+                $(".pdfButton").text("PDF İndir");
+
+
+
+            }
+
+        }
+    });
+    }
+*@
+    function DateFormatTR(year, month, day) {
+        var options111 = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        };
+        var dateStr = new Date(Date.UTC(year, month, day))
+            .toLocaleDateString("tr-TR", options111)
+            .replace(/ /g, '-');
+        return dateStr;
+    }
+    var nowDate = new Date();
+    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+
+    // Localization
+    $('.autoapply').daterangepicker({
+        autoApply: true,
+        "minDate": today,
+
+        autoHide: true,
+        locale: {
+            autoUpdateInput: true,
+           // format: 'MM/DD/YYYY',
+            format: 'DD/MM/YYYY',
+            //separator: " - ",
+            //applyLabel: "İleri",
+            //cancelLabel: 'iptal',
+            //startLabel: 'Başlangıç Tarihi',
+            //endLabel: 'Bitiş Tarihi',
+            //customRangeLabel: 'Tarih Aralığı Seçin',
+            daysOfWeek: ['Paz','Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'],
+            monthNames: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+            firstDay: 1
+
+        }
+    });
+
+    function MazeretListeGetir() {
+        $.ajax({
+             type: "POST",
+        url: "@Url.Action("PersonelMazeretListe", "IstatistikIslemleri")",
+        data: JSON.stringify({ }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error: function (ex) {
+            $("#messageBoxModal .modal-title").html("Nöbet Mazeret Liste İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+            $('#messageBoxModal').modal();
+        },
+        success: function (data) {
+
+            if (data.State == 1) {
+
+                if ($.fn.DataTable.isDataTable('#PersonelMazeretListTable')) {
+                    $('#PersonelMazeretListTable').DataTable().clear().draw();
+                }
+
+                // debugger;
+                ////////////
+                var fileName = "Foça Bilgi Sistem Amirliği E-Nöbet Personel Mazeret Listesi";
+                var title= 'Personel Mazeret Listesi';
+                if (data.mazeretSonuc == null)
+                    return;
+                if (data.mazeretSonuc.length <= 0)
+                    return;
+
+                var NobetList = JSON.parse(data.mazeretSonuc);  //JSON.stringify(data.NobetList)
+                var NobetListTable = $('#PersonelMazeretListTable').DataTable({
+                    "data": NobetList,
+                    "columns": [
+                        { title: "Mahal Adı", data: "MahalAdi" },
+                        { title: "Personel Adı", data: "KullaniciFulAdi" },
+                        { title: "Başlangıç Tarihi", data: "BaslangicTarihi" },
+                        { title: "Bitiş Tarihi", data: "BitisTarihi" },
+                        { title: "Mazeret Açıklama", data: "MazeretAciklama" },
+                        { title: "İşlem", data: "Id" }
+                    ],
+                    columnDefs: [
+                        //{
+                        //    "targets": 2,
+                        //    "data": "BaslangicTarihi",
+                        //    "render": function (data, type, row, meta) {
+                        //        var dateArray = data.split('-');
+                        //        var date = DateFormatTR(dateArray[0], (dateArray[1] - 1), dateArray[2]);
+                        //        return date;
+                        //    }
+                        //},
+                        //{
+                        //    "targets": 3,
+                        //    "data": "BitisTarihi",
+                        //    "render": function (data, type, row, meta) {
+                        //        var dateArray = data.split('-');
+                        //        var date = DateFormatTR(dateArray[0], (dateArray[1] - 1), dateArray[2]);
+                        //        return date;
+                        //    }
+                        //},
+                        {
+                            "targets": 5,
+                            "data": "Id",
+                            "render": function (data, type, row, meta) {
+                                //debugger;
+                                var editStr = "";
+
+                                var str = ' <div id="table_dd_' + data + '" class="dropdown">' +
+                                    '<span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">' +
+                                    '</span>' +
+                                    '<div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(19px, -7px, 0px);">' +
+                                    //'   <a class="dropdown-item" onclick="editUserClk(' + data + ')"><i class="bx bx-edit-alt mr-1"></i> Güncelle</a>' +
+                                    '<a class="dropdown-item" href="#" onclick="deleteMazeretTarihClk(' + data + ')"><i class="bx bx-trash mr-1"></i> Sil</a>' +
+                                    '</div>'
+                                '</div>';
+
+
+                                return str;
+                            }
+                        }
+                    ],
+                    "ordering": false,
+                    paging: false,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'print',
+                        { extend: 'pdf', className: 'pdfButton', title: title, filename: fileName, charset: 'UTF-8', },
+                        {
+                            extend: 'csv',
+                            charset: 'UTF-8',
+                            fieldSeparator: ';',
+                            bom: true,
+                            className: 'excelButton',
+                            filename: fileName,
+                            title: title
+                        }
+                    ]
+                });
+
+
+                $(".excelButton").text("CSV İndir");
+                $(".buttons-print").text("Çıktı Al");
+                $(".pdfButton").text("PDF İndir");
+
+
+
+            }
+
+        }
+
+
+        });
+    }
+
+    $('#mazeretBtnSave').click(function () {
+        var problemText = "";
+        if ($('.autoapply').val().length == 0) {
+            problemText += "<br>" + "\nTarih Aralığı Alanı Zorunludur!";
+        }
+        if ($('#mazeret').val().length == 0) {
+            problemText += "<br>" + "\nMazeret Açıklama Alanı Zorunludur!";
+        }
+
+        if (problemText != "") {
+            $("#messageBoxModal .modal-title").html("Nöbet Mazeret Kayıt İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-header").removeClass("bg-success");
+            $("#messageBoxModal .modal-header").addClass("bg-danger");
+            $("#messageBoxModal .modal-body").html("<p>" + problemText + "</p>");
+            $('#messageBoxModal').modal();
+            return;
+        }
+        var Data = [];
+        Data[0] = $('.autoapply').val();
+        Data[1] = $('#mazeret').val();
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("PersonelMazeretKaydet", "IstatistikIslemleri")",
+            data: JSON.stringify({Data:Data}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html("Nöbet Mazeret Kayıt İşlemi");
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+
+                if (data.State == 1) {
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    $("#messageBoxModal .modal-header").removeClass("bg-danger");
+                    $("#messageBoxModal .modal-header").addClass("bg-success");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                    $('#messageBoxModal').modal();
+                    //$('#uid').val("0");
+                    $('#mazeret').text("");
+                    MazeretListeGetir();
+                    /*if ($.fn.DataTable.isDataTable('#tableUserList')) {
+                        $('#tableUserList').DataTable().destroy();
+                    }*/
+                } else {
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    $("#messageBoxModal .modal-header").removeClass("bg-success");
+                    $("#messageBoxModal .modal-header").addClass("bg-danger");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                    $('#messageBoxModal').modal();
+                }
+            }
+        });
+
+    });
+
+   /* $('#PersonelMazeretListe-tab').click(function () {
+        MazeretListeGetir();
+
+    });*/
+
+    function deleteMazeretTarihClk(mid) {
+         $.ajax({
+            type: "POST",
+            url: "@Url.Action("MazeretDelete", "IstatistikIslemleri")",
+             data: JSON.stringify({ mid: mid}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html("Nöbet Mazeret Silme İşlemi");
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+                if (data.State == 1) {
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    $("#messageBoxModal .modal-header").removeClass("bg-danger");
+                    $("#messageBoxModal .modal-header").addClass("bg-successss");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                    $('#messageBoxModal').modal();
+                    //$('#uid').val("0");
+                    $('#mazeret').text("");
+                    MazeretListeGetir();
+                    /*if ($.fn.DataTable.isDataTable('#tableUserList')) {
+                        $('#tableUserList').DataTable().destroy();
+                    }*/
+                } else {
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    $("#messageBoxModal .modal-header").removeClass("bg-success");
+                    $("#messageBoxModal .modal-header").addClass("bg-danger");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                    $('#messageBoxModal').modal();
+                }
+             }
+         });
+
+    }
+
+</script>

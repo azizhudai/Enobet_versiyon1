@@ -1,0 +1,1204 @@
+﻿@model Enobet_versiyon1.Models.NobetKullaniciAylikVeriGiris
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/app-assets/vendors/css/charts/apexcharts.css")
+
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h5 class="content-header-title float-left pr-1 mb-0">Nöbet İşlemi</h5>
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb p-0 mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="index.html"><i class="bx bx-home-alt"></i></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Yönetici İşlemleri</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a href="#">Nöbet İşlemi</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <!-- Basic Horizontal form layout section start -->
+            <section id="basic-horizontal-layouts">
+                <div class="row match-height">
+
+                    <div class="col-md-12 col-12">
+
+                        @using (Html.BeginForm("MahalAyDoldur", "YoneticiIslemleri", FormMethod.Post))
+                        {
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Aylık Mahal Liste İşlemi</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+
+                                        <div class="form-body">
+                                            <div class="row">
+                                                @*<div class="form-group col-md-4 col-12">
+            <div class="form-group validate">
+                <label><span style="color:red">* </span>Yıl</label>
+                <select id="year" class="form-control"><option value="2020">2020</option></select>
+            </div>
+        </div>*@
+                                                <div class="form-group col-md-4 col-12">
+                                                    <div class="form-group validate">
+                                                        <label><span style="color:red">* </span>Ay</label>
+                                                        <select id="month" class="form-control">
+                                                            <option value="1">Ocak</option>
+                                                            <option value="2">Şubat</option>
+                                                            <option value="3">Mart</option>
+                                                            <option value="4">Nisan</option>
+                                                            <option value="5">Mayıs</option>
+                                                            <option value="6">Haziran</option>
+                                                            <option value="7">Temmuz</option>
+                                                            <option value="8">Ağustos</option>
+                                                            <option value="9">Eylül</option>
+                                                            <option value="10">Ekim</option>
+                                                            <option value="11">Kasım</option>
+                                                            <option value="12">Aralık</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4 col-12">
+                                                    <div class="form-group validate">
+                                                        <label><span style="color:red">* </span>Mahal</label>
+                                                        @Html.DropDownListFor(n => n.MahalId, new SelectList(ViewBag.ddlMahalId, "Value", "Text", Model.MahalId), new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-md-4 col-12">
+            <div class="form-label-group">
+                <input type="text" id="userName" required class="form-control" placeholder="* Kullanıcı Adı" name="userName">
+                <label for="userName"><span style="color:red">* </span>Kullanıcı Adı</label>
+            </div>onclick="btnListClk();"
+        </div>*@
+                                            <div class="col-12 d-flex justify-content-end">
+                                                
+                                                <button type="button" id="userBtnSave" class="btn btn-primary mr-1 mb-1 block-element">Listele</button>
+                                                <button type="reset" id="userBtnClear" onclick="formListClear();" class="btn btn-light-secondary mr-1 mb-1">Temizle</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <section id="basic-horizontal-layouts">
+                <div class="row match-height">
+
+                    <input type="hidden" id="monthNowHdn" value="0" />
+                    <input type="hidden" id="totalDaysCountHdn" value="0" />
+                    <input type="hidden" id="dateNowHdn" value="0" />
+                    <input type="hidden" id="MahalIdHdn" value="0" />
+
+                    <input type="hidden" id="NobetListeIdHdn" value="0" />
+
+                    <div id="formNobetList" class="col-md-6 col-12">
+
+                        <!--<div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title"><p id="p_year"></p> Yılı Nöbet Sayısı</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">-->
+                                    @*<div id="pie-chart" class="d-flex justify-content-center"></div>*@
+                                <!--</div>
+                            </div>
+                        </div>-->
+
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <div class="card" id="cardId" style="height: 350px;">
+                            <div class="card-header">
+                                <h4 class="card-title"><p id="p_year"></p> Yılı Nöbet Sayısı</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div id="pie2-chart" class="d-flex justify-content-center"></div>
+                                    <div id="bar-chart22"></div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title" id="Yil_HaftaNobetSayisi"></h4>
+                            </div>
+
+
+                            <div class="card-content">
+                                <div class="card-body card-dashboard">
+
+                                    <div class="table-responsive">
+                                        <table id="PersonelNobetYillikHaftalikListTable" class="table table-striped dataex-html5-selectors">
+                                            <thead>
+                                                <tr>
+                                                    <th>Pazartesi</th>
+                                                    <th>Salı</th>
+                                                    <th>Çarşamba</th>
+                                                    <th>Perşembe</th>
+                                                    <th>Cuma</th>
+                                                    <th>Cumartesi</th>
+                                                    <th>Pazar</th>
+                                                    <th>Kullanıcı Adı</th>
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+    </div>
+</div>
+
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel121" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel121">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MahalList Preview theme Modal -->
+<div class="modal fade text-left w-100" id="mahalListPreviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-rgba-warning">
+                <h5 class="modal-title warning" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="tableMahalList" class="table table-striped dataex-html5-selectors" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Personel Adı</th>
+                                <th>Mahal</th>
+                                <th>Nöbet Tarihi</th>
+
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#primary" onclick="btnMahalSaveClk();">
+                    Kaydet
+                </button>
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/datatables.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.print.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/pdfmake.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/vfs_fonts.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/datatables/datatable.js")
+<!-- END: Page JS-->
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/charts/apexcharts.min.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/charts/chart-apex.js")
+<!-- END: Page JS-->
+@Scripts.Render("~/app-assets/vendors/js/ui/blockUI.min.js")
+
+<script>
+    var pieChart = null;
+    var barChart = null;
+
+    var DataListMazeret = [];
+    $(document).ready(function () {
+
+        var time = 0;
+        var $white = '#fff';
+        $('.block-element').on('click', function () {
+            var block_ele = $(this).closest('.card');
+            $(block_ele).block({
+                message: '<div class="bx bx-revision icon-spin font-medium-2"></div>',
+                timeout: setTimeout(function () { time = btnListClk(); }, time), //unblock after 2 seconds
+                overlayCSS: {
+                    backgroundColor: $white,
+                    opacity: 0.8,
+                    cursor: 'wait'
+                },
+                css: {
+                    border: 0,
+                    padding: 0,
+                    backgroundColor: 'transparent'
+                }
+            });
+        });
+
+
+
+        var currM = (new Date).getMonth() + 1;
+        if (currM > 14) {
+            currM = currM++;
+        }
+        $('#month').val(currM);
+
+
+        //var formatter111 = ms => new Date(ms)
+        //    .toLocaleDateString("tr-TR", options111)
+        //    .replace(/ /g, '-');
+
+
+        jQuery(document).on("change", ".ddlUser", function () {
+            // you desired code
+            //alert("asdad");
+           // debugger;
+            var date = $(this).attr("data-date");
+            var uid = $(this).find("option:selected").val();
+            var text = findPersonalExcuse(date, uid);
+
+            if (text != "") {
+                var userName = $(this).find("option:selected").text(); //"Personel Mazeret Açıklama";
+                $("#messageBoxModal .modal-title").html("Mazeretli Personel");
+                $("#messageBoxModal .modal-header").removeClass("bg-success");
+                $("#messageBoxModal .modal-header").addClass("bg-danger");
+
+               /* var detayLiTarihArray = DateFormatTR.split('-');
+
+                var yearMazeret = detayLiTarihArray[0];
+                var monthMazeret = detayLiTarihArray[1];
+                var dayMazeret = detayLiTarihArray[2];*/
+                var mazeretDate = new Date(date);
+                //.getUTCFullYear(), dateNow.getUTCMonth() + 1, dayCount
+                var detayliMazeretTarih = DateFormatTR(mazeretDate.getUTCFullYear(), mazeretDate.getUTCMonth(), mazeretDate.getDate()); //DateFormatTR(yearMazeret, monthMazeret, dayMazeret);
+                $("#messageBoxModal .modal-body").html("<p> Personel Adı: " + userName +" <br><br> Açıklama: " + text + "<br><br> Tarih: " + detayliMazeretTarih +" </p>");
+                $('#messageBoxModal').modal();
+
+            }
+
+        })
+
+    });
+    function DateFormatTR(year,month,day) {
+        var options111 = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        };
+        var dateStr = new Date(Date.UTC(year, month, day))
+            .toLocaleDateString("tr-TR", options111)
+            .replace(/ /g, '-');
+        return dateStr;
+    }
+    function btnListClk() {
+        var start = performance.now();
+        //    var year = $('#year');
+        var month = $('#month').val();
+        var MahalId = $('#MahalId').val();
+        var dataList = [];
+        var errorMessage = "";
+        /* if (year == "") {
+             errorMessage = "Yıl Alanı Zorunludur!";
+         }*/
+        if (month == "") {
+            errorMessage = "Ay Alanı Zorunludur!";
+        }
+        if (MahalId == "0" || MahalId == "") {
+            errorMessage = "Mahal Alanı Zorunludur!";
+        }
+        if (errorMessage != "") {
+            $("#messageBoxModal .modal-title").html("Aylık Mahal Tablo Doldurma İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-header").removeClass("bg-success");
+            $("#messageBoxModal .modal-header").addClass("bg-danger");
+            $("#messageBoxModal .modal-body").html("<p>" + errorMessage + "</p>");
+            $('#messageBoxModal').modal();
+            return;
+        }
+
+        dataList[0] = month;
+        dataList[1] = MahalId;
+        //dataList[2] = year;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("MahalAyDoldur","YoneticiIslemleri")",
+            data: JSON.stringify({ dataList: dataList }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html("Kullanıcı Listeleme İşlemi");
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+
+                if (data.State == 1) {
+                    $('#NobetListeIdHdn').val("0");
+                    //var options111 = {
+                    //    year: 'numeric',
+                    //    month: 'long',
+                    //    day: 'numeric',
+                    //    weekday: 'long'
+                    //};
+                    //var formatter111 = ms => new Date(ms)
+                    //    .toLocaleDateString("tr-TR", options111)
+                    //    .replace(/ /g, '-');
+
+                    //var dateJsonFormat = firstDayOfMonthTxt.substr(6, 13)
+                    var firsthDayTxt = data.firsthDayText;
+                    var lastDayNumber = data.lastDayNumber;
+                    var firstDayOfMonthTxt = data.firstDayOfMonth;
+
+                    $('#monthNowHdn').val(month);
+                    $('#totalDaysCountHdn').val(lastDayNumber);
+                    $('#dateNowHdn').val(data.firstDayOfMonthShortStr);
+                    $('#MahalIdHdn').val(MahalId);
+
+                    var yearr = new Date().getFullYear();
+                    var MahalIdTxt = $('#MahalId option:selected').text();
+
+                    // var dayNumberArray = firstDayOfMonthTxt.split(".");
+                    var html = '<div class="card">   ' +
+                        '<div class="card-header">                               ' +
+                        '     <h4 class="card-title">' + MahalIdTxt+' - ' + month +'. Ay ' + yearr + ' Yılı '+'Nöbet Listesi</h4>             ' +
+                        '    </div>                                                ' +
+                        ' <div class="card-content">                                ' +
+                        '    <div class="card-body">                                ' +
+                        '        <form class="form form-horizontal" id="formNobetList">                  ' +
+                        '            <div class="form-body">                        '+
+                    '                <div class="row">';
+                    var dayCount = 1;
+                   // debugger;
+                    var now = new Date(parseInt((firstDayOfMonthTxt.substr(6)))).getTime();
+                    var dateNow = new Date(parseInt((firstDayOfMonthTxt.substr(6))));//.getTime();
+                    var dayNow = dateNow.getDate();
+
+                    var currentDate = new Date().getTime();
+
+                    $('#p_year').text(dateNow.getUTCFullYear());
+                    // var date = getDateFormatted(new Date(new Date(parseInt(firstDayOfMonthTxt.substr(6)))));
+                    if (data.isCurrentMonth == true) {
+                        for (var i = 0; i < lastDayNumber; i++) {
+                            dayNow++;
+                            //var detayli = formatter111(now); //formatter111(parseInt(firstDayOfMonthTxt.substr(6), 10));
+                            var detayli = DateFormatTR(dateNow.getUTCFullYear(), dateNow.getUTCMonth() + 1, dayCount);
+                            var monthBirFazla = dateNow.getMonth() + 1;
+                            var gunHesabi = dayCount.toString();
+                            var ayHesabi = monthBirFazla.toString();
+                            if (monthBirFazla < 10) {
+                                ayHesabi = "0" + ayHesabi;
+                            }
+                            if (dayCount < 10) {
+                                gunHesabi="0"+gunHesabi;
+                            }
+                            var dateBind = dateNow.getUTCFullYear() + '-' + ayHesabi + '-' + gunHesabi;
+                            var bolDetayli = [];
+                            bolDetayli = detayli.split('-');
+                            var color = '';
+                            //debugger;
+                            var txtGun = bolDetayli[3];
+                            if (txtGun == "Cumartesi" || txtGun == "Pazar")
+                            {
+                                color = 'darkgrey';
+                            }
+
+                            var dateBindTypeDate = new Date(dateBind).getTime();
+                            var disabled = "";
+                             if ("@Session["RolId"]" == "1") {
+                                disabled = "";
+                            }
+                            else if (currentDate >= dateBindTypeDate) {
+                                disabled = "disabled";
+                            }
+
+
+                            html += '<div class="col-md-4">' +
+                                // '   <div class="form-group input-group-sm" >' +
+                                '       <label id="lbl_' + dayCount +'">' + detayli + '</label>' +
+                                '</div>  ' +
+                                '<div class="col-md-8 form-group">' +
+                                '       <select id="day_' + dayCount + '" class="form-control ddlUser" '+disabled+' data-date="' + dateBind+'" style="background:'+color+';">' +
+                                '       <option value="0">-Seçiniz-</option>' +
+                                '       </select>' +
+                                '</div>  ';
+                            //    '   </div>' +
+                            // '</div>';
+                            dayCount++;
+
+                            //now = now + (1000 * 60 * 60 * 24)
+                        }
+
+                        html += '</div>                 ' +
+                            //  '     </div>            ' +
+                            '                 </div>    ' +
+                            '             </form>       ' +
+
+                            //    '     </div >            ' +  btnMahalSaveClk
+                            ' </div>';
+                        html += '  <div class="col-12 d-flex justify-content-end">' +
+
+                            ' <button type="button" class="btn btn-outline-primary mr-1 mb-1" onclick="btnMahalSaveClk();">Kaydet</button>' +
+
+                            '<button type = "button" class="btn btn-primary mr-1 mb-1" onclick="MahalListPreview();"> Önizleme Listesi</button>' +
+                         //   '   <button type="reset" class="btn btn-light-secondary mr-1 mb-1">Temizle</button>' +
+                            '         </div>            ' +
+                            '                      </div >';
+
+                        ddlHtml = '<option value="0">-Seçiniz-</option> ';
+                        for (var y = 0; y < data.userList.length; y++) {
+                            ddlHtml += '<option value="' + data.userList[y].KullaniciId + '">' + data.userList[y].FullAdi + '</option>';
+                        }
+
+                        $('#formNobetList').html(html);
+                        $('.ddlUser').html(ddlHtml);
+                        //debugger;
+                        if (data.NobetListeGetir != null) {
+
+                            $('#NobetListeIdHdn').val(data.NobetListeGetir.Id);
+                            var DataList = jQuery.parseJSON(data.NobetListeGetir.Data);
+
+                            dayCount = 1;
+                            for (var i = 0; i < DataList.length; i++) {
+                                $('#day_' + dayCount).val(DataList[i].KullaniciId);
+                                dayCount++;
+                            }
+                            alert("Var olan bilgileri görüntülüyorsunuz! Değişiklik yapıp günceleyebilirsiniz.");
+                        }
+
+
+
+                    } else {
+                        html += '<table id="tableUserList" class="table table-striped dataex-html5-selectors">' +
+                            '  <thead>                                                                          ' +
+                            '  <tr>                                                                               ' +
+                           
+                            '      <th>Yetkili Mahal Adı</th>                                                     ' +
+                            '      <th>Nöbet Tarihi</th>                                                              ' +
+                            '      <th>Personel Adı</th>                                               ' +
+                            '  </tr>                                                                              ' +
+                            '              </thead >                                                              ' +
+                            '          </table>';
+                        html += '</div>                 ' +
+                            //  '     </div>            ' +
+                            '                 </div>    ' +
+                            '             </form>       ' +
+                            '         </div>            ' +
+                            //    '     </div >            ' +  btnMahalSaveClk
+                            ' </div>';
+                        $('#formNobetList').html(html);
+                        if (data.gecmisNobetListe != "") {
+                          //  debugger;
+                            if ($.fn.DataTable.isDataTable('#tableUserList')) {
+                                $('#tableUserList').DataTable().clear().draw();
+                            }
+
+
+                            //$('#formNobetList').html(html);
+
+                            var ayBilgi = $('#month').val();
+                            var yilBilgis = $('#p_year').text();
+                            ////////////
+                            var fileName = "Foça Bilgi Sistem Amirliği E-Nöbet Listesi -  Ay(" + ayBilgi + ') Yıl (' + yilBilgis + ')';
+                            var titleTable = "";
+                            var userList = JSON.parse(data.gecmisNobetListe);//JSON.parse(data.gecmisNobetListe);
+                            tableUserList = $('#tableUserList').DataTable({
+                                "data": userList,
+                                "columns": [
+
+                                    { title: "Mahal Adı", data: "MahalAdi" },
+                                    { title: "Nöbet Tarihi", data: "NobetTarihi" },
+                                    { title: "Personel Adı", data: "FullName" },
+                                ],
+                                /* columnDefs: [
+
+                                     {
+                                         type: 'turkish', targets: '_all'
+                                     },
+
+                                 ],*/
+                                //columnDefs: [
+                                //   /* {
+                                //        "targets": 2,
+                                //        "data": "KullaniciId",
+                                //        "render": function (data, type, row, meta) {
+                                //            //debugger;
+                                //            var editStr = "";
+
+                                //            var str = ' <div id="table_dd_' + data + '" class="dropdown">' +
+                                //                '<span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">' +
+                                //                '</span>' +
+                                //                '<div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(19px, -7px, 0px);">' +
+                                //                // '   <a class="dropdown-item" onclick="editUserClk(' + data + ')"><i class="bx bx-edit-alt mr-1"></i> Güncelle</a>' +
+                                //                '<a class="dropdown-item" href="#" onclick="deleteUserClk(' + data + ')"><i class="bx bx-trash mr-1"></i> Sil</a>' +
+                                //                '</div>'
+                                //            '</div>';
+
+                                //            return str;
+                                //        }
+                                //    }*/
+                                //    // ,
+                                //    //{
+                                //    //     "targets": 6,
+                                //    //     "visible": false
+                                //    // }
+
+                                //],
+                                dom: 'Bfrtip',
+                                buttons: [
+                                    'print',
+                                    { extend: 'pdf', className: 'pdfButton', title: titleTable, filename: fileName },
+                                    {
+                                        extend: 'csv',
+                                        charset: 'UTF-8',
+                                        fieldSeparator: ';',
+                                        bom: true,
+                                        className: 'excelButton',
+                                        filename: fileName,
+                                        title: 'E-Nöbet Listesi - Kıdemli Personel Listesi'
+                                    }
+                                ],
+                                "ordering": false,
+                                paging: false
+                            });
+
+                            $(".excelButton").text("CSV İndir");
+                            $(".buttons-print").text("Çıktı Al");
+                            $(".pdfButton").text("PDF İndir");
+
+                        } else {
+                            alert("Geçmiş Kayıt Bulunmamaktadır!");
+                        }
+
+                    /*    html += '  <div class="col-12 d-flex justify-content-end">' +
+
+                            ' <button type="button" class="btn btn-outline-primary mr-1 mb-1" onclick="btnMahalSaveClk();">Kaydet</button>' +
+
+                            '<button type = "button" class="btn btn-primary mr-1 mb-1" onclick="MahalListPreview();"> Önizleme Listesi</button>' +
+                            '   <button type="reset" class="btn btn-light-secondary mr-1 mb-1">Temizle</button>' +
+                            '                      </div >';*/
+                    }
+
+                    //if ($.fn.DataTable.isDataTable('#tableUserList')) {
+                    //    $('#tableUserList').DataTable().clear().draw();
+                    //}
+
+                    //////////////
+                    //var userList = data.AylikVeriDoldurList; //JSON.parse(data.userList);
+                    //var tableUserList = $('#tableUserList').DataTable({
+                    //    "data": userList,
+                    //    "columns": [
+                    //        { title: "Pazartesi", data: "Gun" },
+                    //        { title: "Salı", data: "Gun" },
+                    //        { title: "Çarşamba", data: "Gun" },
+                    //        { title: "Perşembe", data: "Gun" },
+                    //        { title: "Cuma", data: "Gun" },
+                    //        { title: "Cumartesi", data: "Gun" },
+                    //        { title: "Pazar", data: "Gun" }
+                    //    ]
+                    //});
+                    var $primary = '#5A8DEE',
+                        $success = '#39DA8A',
+                        $danger = '#FF5B5C',
+                        $warning = '#FDAC41',
+                        $info = '#00CFDD',
+                        $label_color_light = '#E6EAEE';
+                    var themeColors = [$primary, $warning, $danger, $success, $info];
+                    if (pieChart != null) {
+                        pieChart.destroy();
+                    }
+                    if (barChart != null) {
+                        barChart.destroy();
+                    }
+                    //var dataUserTotalCountArry = {};
+                    var dataUserTotalCount = [];
+                    var dataUserFullName = [];
+                    if (data.UserTotalYear != null) {
+                       // dataUserTotalCountArry = JSON.parse(data.UserTotalYear);
+                        for (var z = 0; z < data.UserTotalYear.length; z++) {
+                            dataUserTotalCount[z] = JSON.parse(data.UserTotalYear[z].UserTotalYear).TotalCount;
+                            dataUserFullName[z] = data.UserTotalYear[z].FullName;
+                        }
+                    }
+                   // var dataUserTotalYear = data.UserTotalYear;
+
+                    var pieChartOptions = {
+                        chart: {
+                            type: 'pie',
+                            height: 320
+                        },
+
+                        colors: themeColors,
+                        labels: dataUserFullName,//['Team Aaa', 'Team Baaa', 'Team Ca', 'Team Da'],
+                        series: dataUserTotalCount,//[44, 55, 13, 43],
+                        legend: {
+                            itemMargin: {
+                                horizontal: 2
+                            },
+                        },
+                        responsive: [{
+                            breakpoint: 576,
+                            options: {
+                                chart: {
+                                    width: 300
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }]
+                    }
+                     pieChart = new ApexCharts(
+                        document.querySelector("#pie2-chart"),
+                        pieChartOptions
+                    );
+                    pieChart.render();
+                    $('#cardId').css("height", 800);
+
+
+                    // Bar Chart
+                    // ----------------------------------
+                    var barChartOptions = {
+                        chart: {
+                            height: 350,
+                            type: 'bar',
+                        },
+                        colors: themeColors,
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    position: 'top', // top, center, bottom
+                                },
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        series: [{
+                            data: dataUserTotalCount,name:"Nöbet Sayısı"//[400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+                        }],
+                        xaxis: {
+                            categories: dataUserFullName,//['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
+                            tickAmount: 5
+                        }
+                    }
+                     barChart = new ApexCharts(
+                        document.querySelector("#bar-chart22"),
+                        barChartOptions
+                    );
+                    barChart.render();
+
+                    //mazeret tarih hesabına göre renk değişim foksiyonu
+                    NobetMazeretTarihAralik_Getir();
+
+                    //yıllık hafta analizi
+                    YillikHaftaAnalizi(data.array6);
+
+
+                    var duration = (performance.now() - start);
+                    //console.log(duration);
+                    return duration;
+
+                }
+            }
+        });
+
+
+
+    }
+
+    function YillikHaftaAnalizi(array6){
+
+        if ($.fn.DataTable.isDataTable('#PersonelNobetYillikHaftalikListTable')) {
+            $('#PersonelNobetYillikHaftalikListTable').DataTable().clear().draw();
+        }
+
+        //PersonelNobetYillikHaftalikListTable
+        var fileName = "Foça Bilgi Sistem Amirliği Yıl Bazında Haftalık Nöbet Sayısı";// + ' - ' + year + ' - ' + month;
+        var titleAnaliz = year +" Yılı Hafta Bazlı Nöbet Sayısı";
+        var year = $('#p_year').text();
+        var txtCardTitle = year+" Yılı Haftalık Personellerin Nöbet Sayısı";
+    /*year +*/
+        $('#Yil_HaftaNobetSayisi').text(txtCardTitle);
+
+        if (array6 == null)
+            return;
+        if (array6.length == 0)
+            return;
+
+        var aaa = JSON.parse(array6);
+        var NobetListTable2 = $('#PersonelNobetYillikHaftalikListTable').DataTable({
+            "data": aaa,
+            /* dataSrc: function (data) {
+                 var tableData = [];
+                 $.each(data, function (key, value) {
+                     tableData.push([value[0], value[1], value[2], value[4], value57], value[6]]);
+                 });
+                 return tableData;
+             },*/
+
+            "columns": [
+                { title: "Kullanıcı Adı", data: 7 },
+                { title: "Pazartesi", data: 0 },
+                { title: "Salı", data: 1 },
+                { title: "Çarşamba", data: 2 },
+                { title: "Perşembe", data: 3 },
+                { title: "Cuma", data: 4 },
+                { title: "Cumartesi", data: 5 },
+                { title: "Pazar", data: 6 }
+
+            ],
+            /* columnDefs: [
+                 {
+                     "targets": 2,
+                     "data": "NobetTarihi",
+                     "render": function (data, type, row, meta) {
+                         var dateArray = data.split('-');
+                         var date = DateFormatTR(dateArray[0], (dateArray[1] - 1), dateArray[2]);
+                         return date;
+                     }
+                 }
+             ],*/
+            "ordering": false,
+            paging: false,
+            dom: 'Bfrtip',
+            buttons: [
+                'print',
+                { extend: 'pdf', className: 'pdfButton', title: titleAnaliz, filename: fileName },
+                {
+                    extend: 'csv',
+                    charset: 'UTF-8',
+                    fieldSeparator: ';',
+                    bom: true,
+                    className: 'excelButton',
+                    filename: fileName,
+                    title: 'Nöbet Talep Listesi'
+                }
+            ]
+        });
+        $(".excelButton").text("CSV İndir");
+        $(".buttons-print").text("Çıktı Al");
+        $(".pdfButton").text("PDF İndir");
+
+    }
+
+    //var a = new Date(firstDayOfMonthTxt);
+    function getDateFormatted(date) {
+        return date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+
+
+    }
+    //getDateFormatted(a)  formObject
+
+    function btnMahalSaveClk() {
+
+        var selectList = $('#formNobetList').find("select");
+        var labelList = $('#formNobetList').find("label");
+
+        var controlGo = optionControlRequired(selectList, labelList);
+        //alert(controlGo);
+        if (controlGo == true) {
+
+            //$('#monthNowHdn').val();
+            //$('#totalDaysCountHdn').val();
+            //$('#dateNowHdn').val(data.firstDayOfMonthShortStr);
+            //$('#MahalIdHdn').val(MahalId);
+            var mahalId = $('#MahalIdHdn').val();
+            var dateNow = $('#dateNowHdn').val();
+            var dateArray = dateNow.split('.');
+
+            /*
+             var obj = {};
+obj.product = [];
+for(var i=0; i < someObj.length; i++) {
+   obj.product.push[{"attribute": someObj[i]}]
+}var o = {
+  product: [
+    { attribute: "value" },
+    { attribute: "value" }
+  ]
+};
+             */
+
+            var obj = {};
+            obj.data = [];
+            for (var i = 0; i < selectList.length; i++) {
+                obj.data.push({ "KullaniciId": selectList[i].value, "MahalId": mahalId, "NobetTarihi": dateArray[2] + '-' + dateArray[1] + '-' + (i + 1) });
+                // obj.data.push({  });
+                // obj.data.push({  });
+                //obj[i]['KullaniciId'] = selectList[i].value;
+                //obj[i]['MahalId'] = mahalId;
+                //obj[i]['NobetTarihi'] = dateArray[2] + '-' + dateArray[1] + '' + (i + 1);
+            }
+            //debugger;
+            //var jsonObject = JSON.stringify(obj.data)//JSON.stringify(dataList.serializeArray());
+            // alert(jsonObject);
+            var id = $('#NobetListeIdHdn').val();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("NobetListeKaydet","YoneticiIslemleri")",
+                data: JSON.stringify({ dataList: obj.data, id: id }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (ex) {
+                    $("#messageBoxModal .modal-title").html("Nöbet İşlemi");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                    $('#messageBoxModal').modal();
+                },
+                success: function (data) {
+
+                    if (data.State == 1) {
+                        if (data.State == 1) {
+                            $("#messageBoxModal .modal-title").html("Nöbet İşlemi");
+                            $("#messageBoxModal .modal-header").removeClass("bg-danger");
+                            $("#messageBoxModal .modal-header").addClass("bg-success");
+                            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                            $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                            $('#messageBoxModal').modal();
+                            $('#userBtnClear').click();
+
+
+                           // $('#NobetListeIdHdn').val("0");
+
+
+                            /*if ($.fn.DataTable.isDataTable('#tableUserList')) {
+                                $('#tableUserList').DataTable().destroy();
+                            }*/
+                        } else {
+                            $("#messageBoxModal .modal-title").html(data.title);
+                            $("#messageBoxModal .modal-header").removeClass("bg-success");
+                            $("#messageBoxModal .modal-header").addClass("bg-danger");
+                            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                            $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                            $('#messageBoxModal').modal();
+                        }
+                        $('#mahalListPreviewModal').modal('hide');
+                    }
+                }
+            });
+
+        }
+
+        //var jsonObject = JSON.stringify($(formObject).serializeArray());
+    }
+    function optionControlRequired(selectList, labelList) {
+
+        var controlGo = false;
+        for (var i = 0; i < selectList.length; i++) {
+            if (selectList[i].value == "0") {
+                alert(labelList[i].textContent + ' Tarihli Alan Zorunludur!');
+                controlGo = false;
+                return controlGo;
+            } else {
+                controlGo = true;
+            }
+        }
+        return controlGo;
+    }
+
+    function MahalListPreview() {
+
+        var selectList = $('#formNobetList').find("select");
+        var labelList = $('#formNobetList').find("label");
+
+        var controlGo = optionControlRequired(selectList, labelList);
+        //alert(controlGo);
+        if (controlGo == true) {
+
+            var mahalId = $('#MahalIdHdn').val();
+            var dateNow = $('#dateNowHdn').val();
+            var dateArray = dateNow.split('.');
+
+            $('#MahalId').val(mahalId);
+            var mahalAdi = $('#MahalId option:selected').text();
+            $('#month').val($('#monthNowHdn').val());
+            var month = $('#month option:selected').text();
+
+            var obj = {};
+            obj.data = [];
+
+
+
+            for (var i = 0; i < selectList.length; i++) {
+
+
+                var data = selectList[i].options[selectList[i].selectedIndex].text; // selectList[i].selectedOptions[0].textContent.toString()
+                var label = labelList[i].innerText; //labelList[i].textContent.toString();
+                obj.data[i] = { "PersonelAdi": data, "MahalAdi": mahalAdi.toString(), "NobetTarihi": label};
+
+            }
+            // (i + 1) +'.'+ dateArray[1] + '.'+ dateArray[2]
+            if ($.fn.DataTable.isDataTable('#tableMahalList')) {
+                $('#tableMahalList').DataTable().clear().draw();
+            }
+
+            var fileName = 'Foça Bilgi Sistem Amirliği E-Nöbet Listesi - ' + month + ' Ayı - ' + dateArray[2];
+            //debugger;
+            ////////////
+            //var NobetList = obj.data;  //JSON.stringify(data.NobetList)
+            var NobetListTable = $('#tableMahalList').DataTable({
+                "data": obj.data,
+                "columns": [
+                    { title: "Nöbet Tarihi", data: "NobetTarihi" },
+                    { title: "Mahal", data: "MahalAdi" },
+                    { title: "Personel Adı", data: "PersonelAdi" }
+
+                ],
+                "createdRow": function(row,data,dataIndex)
+                {
+                    var bolDetayli = data['NobetTarihi'].split('-');
+                        var color = 'white';
+                        if (bolDetayli[3] == 'Cumartesi' || bolDetayli[3] == 'Pazar') {
+                            color = 'darkgrey';
+                            $(row).css({ "background": color });
+                    }
+
+                },
+                "ordering": false,
+                paging: false,
+                dom: 'Bfrtip',
+                buttons: [
+                    'pdf', 'print',
+                    {
+                        extend: 'csv',
+                        charset: 'UTF-8',
+                        fieldSeparator: ';',
+                        bom: true,
+                        filename: fileName,
+                        title: 'E-Nöbet Listesi'
+                    }
+                ]
+            });
+            $("#mahalListPreviewModal .modal-title").html("Nöbet Önizlemesi");
+            //$("#mahalListPreviewModal .modal-body").html(NobetListTable);
+            $('#mahalListPreviewModal').modal();
+        }
+    }
+    function formListClear() {
+        $('#formNobetList').html("");
+        $('#NobetListeIdHdn').val("0");
+        //$('#monthNowHdn').val("0");
+        $('#totalDaysCountHdn').val("0");
+        $('#dateNowHdn').val("0");
+        $('#MahalIdHdn').val("0");
+
+        if (pieChart != null) {
+            pieChart.destroy();
+            pieChart = null;
+        }
+        if (barChart != null) {
+            barChart.destroy();
+            barChart = null;
+        }
+        if ($.fn.DataTable.isDataTable('#PersonelNobetYillikHaftalikListTable')) {
+            $('#PersonelNobetYillikHaftalikListTable').DataTable().clear().draw();
+        }
+
+    }
+    /*
+    $('.ddlUser').change(function () {
+        alert("sads");
+        //alert(this.attr('data-date'));
+    });*/
+    /*
+    $(document).on('change', '.ddlUser', function () {
+        // you desired code
+    });*/
+
+    function NobetMazeretTarihAralik_Getir() {
+        var mahalId = $("#MahalId option:selected").val();
+        var Ay = $("#month option:selected").val();
+        var year = new Date().getFullYear(); //$("#year option:selected").val();
+
+         //mazeretli olan personeller ve yanında tarihi getir.
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("NobetMazeretTarihAralikGetir", "YoneticiIslemleri")",
+                        data: JSON.stringify({ mahalId: mahalId, Ay: Ay, year: year}),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        error: function (ex) {
+                            $("#messageBoxModal .modal-title").html("Kullanıcı Mazeret Tarih İşlemi");
+                            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                            $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                            $('#messageBoxModal').modal();
+                        },
+                        success: function (data) {
+
+                            if (data.State == 1) {
+                             //   debugger;
+                                var i = 0;
+                                var y = 0;
+
+                                if (data.dataResult != null) {
+
+                                    DataListMazeret = jQuery.parseJSON(data.dataResult);
+                                    for (i = 0; i < DataListMazeret.length; i++) {
+                                        var firstLoop = false;
+                                        var firstId = 0;
+                                        var GunFarki = DataListMazeret[i].GunFarki;
+                                        for (y = 0; y < GunFarki; y++) {
+
+                                            if (firstLoop == false) {
+
+                                                var baslangicTarih = new Date(DataListMazeret[i].BaslangicTarihi);
+                                                var bitisTarihi = new Date(DataListMazeret[i].BitisTarihi);
+                                                if (baslangicTarih.getMonth() + 1 < Ay) {
+                                                    firstId = 1;
+                                                    // var BitisTarihi = new Date(DataList[i].BitisTarihi);
+
+                                                    //GunFarki = BitisTarihi-new Date();
+                                                } else {
+                                                    firstId = baslangicTarih.getDate();
+                                                }
+                                            } else {
+                                                firstId = firstId + 1;
+
+                                                //var someDate = new Date(baslangicTarih);
+                                                // var numberOfDaysToAdd = 1;
+                                                //baslangicTarih.setDate(baslangicTarih.getDate() + numberOfDaysToAdd);
+
+
+                                            }
+                                            firstLoop = true;
+                                            var dateGelen = new Date($('#day_' + firstId).attr("data-date"));
+                                            // var startDate = new Date(val.BaslangicTarihi);
+                                            //var endDate = new Date(val.BitisTarihi);
+                                            //var date = new Date(userDate);
+                                            /*  var firstIdStr = firstId.toString();
+                                              if (firstId < 10) {
+                                                  firstIdStr = "0" + firstId;
+                                              }*/
+                                            if (dateGelen <= bitisTarihi) {
+
+                                                $('#day_' + firstId).find("option[value=" + DataListMazeret[i].KullaniciId + "]").css("color", "red");
+                                                // $('#lbl_' + firstId).css("color", "orange");
+                                            }//$('#day_1').find("option[value=20014]").children().find("label").text();
+                                            //$('#day_1').find("option[value=20014]").css("color","red")
+
+                                        }
+                                    }
+
+
+                                }
+
+
+                            }
+                        }
+
+                    });
+
+        /*function findFirstDayMazeret() {
+
+        }*/
+
+    }
+
+    function findPersonalExcuse(userDate, uid) {
+        var text = "";
+       //var isExist = false;
+
+        jQuery.each(DataListMazeret, function (i, val) {
+           // debugger;
+           // if (isExist == false)
+            if (val.KullaniciId == uid) {
+                //debugger;
+                var startDate = new Date(val.BaslangicTarihi);
+                var endDate = new Date(val.BitisTarihi);
+                var date = new Date(userDate);
+                if (startDate <= date && endDate >= date) {
+                    //alert(val.KullaniciId + " " + val.MazeretAciklama)
+                    text = val.MazeretAciklama;
+                    //break;
+                    //isExist = true;
+                } else {
+                   // text = "";
+                }
+
+            } else {
+               // text = "";
+            }
+
+        });
+        return text;
+
+
+        @* $.ajax({
+            type: "POST",
+            url: "@Url.Action("NobetMazeretAciklamaGetir", "YoneticiIslemleri")",
+            data: JSON.stringify({ date: date, uid: uid }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html("Kullanıcı Mazeret Tarih İşlemi");
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+                if (data.State == 1) {
+
+
+
+                }
+            }
+        });*@
+        }
+
+</script>

@@ -1,0 +1,302 @@
+﻿@model  Enobet_versiyon1.Models.KullaniciIstatistikModel
+@{
+    ViewBag.Title = "KullaniciIstatistik";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h5 class="content-header-title float-left pr-1 mb-0">Nöbet Değişim Talep İşlemi</h5>
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb p-0 mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="@Url.Action("index","Home")"><i class="bx bx-home-alt"></i></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Uygulamalar</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    Kullanıcı İstatistik İşlemleri
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+
+            <section id="multiple-column-form">
+                <div class="row match-height">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">  </h4>
+                            </div>
+                            <div class="card-content">
+
+                               
+                                <div class="card-body">
+
+                                    <ul class="nav nav-tabs mb-2" role="tablist">
+
+                                        <li class="nav-item">
+                                            <a class="nav-link d-flex align-items-center active" id="PersonelNobetListe-tab" data-toggle="tab" href="#PersonelNobetListe" aria-controls="PersonelNobetListe-tab" role="tab" aria-selected="false">
+                                                <i class="bx bx-list-ul mr-25"></i><span class="d-none d-sm-block">Karşılıklı Gün Değişimi</span>
+                                            </a>
+                                        </li>
+
+                                        @*<li class="nav-item current">
+                                            <a class="nav-link d-flex align-items-center" id="MahalNobetListe-tab" data-toggle="tab" href="#MahalNobetListe" aria-controls="MahalNobetListe-tab" role="tab" aria-selected="true">
+                                                <i class="bx bx-user mr-25"></i><span class="d-none d-sm-block">Tek Gün Değişimi</span>
+                                            </a>
+                                        </li>*@
+
+                                        <li class="nav-item">
+                                            <a class="nav-link d-flex align-items-center" id="PersonelMazeretListe-tab" data-toggle="tab" href="#PersonelMazeretListe" aria-controls="PersonelMazeretListe-tab" role="tab" aria-selected="false">
+                                                <i class="bx bx-list-ul mr-25"></i><span class="d-none d-sm-block">Nöbet Değişim Listesi</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show" id="PersonelNobetListe" aria-labelledby="PersonelNobetListe-tab" role="tabpanel">
+
+                                            <section id="icon-tabs">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">Personel Nobet Listesi</h4>
+                                                            </div>
+                                                            <div class="card-content mt-2">
+                                                                <div class="card-body">
+
+                                                                    <div class="form-body">
+                                                                        <div class="row">
+                                                                            <div class="form-group col-md-4 col-12">
+                                                                                <div class="form-group validate">
+                                                                                    <label><span style="color:red">* </span>Yıl</label>
+                                                                                    <select id="year" class="form-control"><option value="2020">2020</option></select>
+                                                                                </div>
+                                                                            </div>
+
+
+
+
+
+                                                                            <div class="input-append date" id="datepicker" data-date="02-2012"
+                                                                                 data-date-format="mm-yyyy">
+
+                                                                                <input type="text" readonly="readonly" name="date">
+                                                                                <span class="add-on"><i class="icon-th"></i></span>
+                                                                            </div>
+
+
+
+
+                                                                            <div class="form-group col-md-4 col-12">
+                                                                                <div class="form-group validate">
+                                                                                    <label><span style="color:red">* </span>Ay</label>
+                                                                                    <select id="month" class="form-control">
+                                                                                        <option value="1">Ocak</option>
+                                                                                        <option value="2">Şubat</option>
+                                                                                        <option value="3">Mart</option>
+                                                                                        <option value="4">Nisan</option>
+                                                                                        <option value="5">Mayıs</option>
+                                                                                        <option value="6">Haziran</option>
+                                                                                        <option value="7">Temmuz</option>
+                                                                                        <option value="8">Ağustos</option>
+                                                                                        <option value="9">Eylül</option>
+                                                                                        <option value="10">Ekim</option>
+                                                                                        <option value="11">Kasım</option>
+                                                                                        <option value="12">Aralık</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group col-md-4 col-12">
+                                                                                <div class="form-group validate">
+                                                                                    <label><span style="color:red">* </span>Mahal</label>
+                                                                                    @Html.DropDownListFor(n => n.MahalId, new SelectList(ViewBag.ddlMahalId, "Value", "Text", Model.MahalId), new { @class = "form-control" })
+                                                                                </div>
+                                                                            </div>
+                                                                            @*<div class="col-md-4 col-12">
+            <div class="form-label-group">
+                <input type="text" id="userName" required class="form-control" placeholder="* Kullanıcı Adı" name="userName">
+                <label for="userName"><span style="color:red">* </span>Kullanıcı Adı</label>
+            </div>onclick="btnListClk();"
+        </div>*@
+                                                                            <div class="col-12 d-flex justify-content-end">
+
+                                                                                <button type="button" id="userBtnSave" class="btn btn-primary mr-1 mb-1 block-element">Listele</button>
+                                                                                <button type="reset" id="userBtnClear" onclick="formListClear();" class="btn btn-light-secondary mr-1 mb-1">Temizle</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <!-- Form wizard with number tabs section end -->
+
+                                        </div>
+
+                                        <div class="tab-pane fade show" id="PersonelMazeretListe" aria-labelledby="PersonelMazeretListe-tab" role="tabpanel">
+
+                                            <!-- Form wizard with icon tabs section start -->
+                                            <section id="icon-tabs2">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">Mahal Liste İşlemi</h4>
+                                                            </div>
+                                                            <div class="card-content mt-2">
+                                                                <div class="card-body">
+                                                                  
+
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <!-- Form wizard with number tabs section end -->
+
+                                        </div>
+
+                                        <div class="tab-pane fade show" id="userList" aria-labelledby="userList-tab" role="tabpanel">
+
+                                            <section id="column-selectors">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">Kullanıcı Listesi</h4>
+                                                                <li style="float:left">
+                                                                    <span class="badge badge-pill badge-light-primary">
+                                                                        <input onclick="btnNobetListClk();" type="button" value="Listele" />
+                                                                    </span>
+                                                                </li>
+
+                                                                @*<li style="float:right"><span class="badge badge-pill badge-light-success">@Model.KullaniciList.Count Aktif</span></li>*@
+                                                            </div>
+                                                            <div class="card-content">
+                                                                <div class="card-body card-dashboard">
+
+                                                                    <div class="table-responsive">
+                                                                        <table id="NobetListTable" class="table table-striped dataex-html5-selectors">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Personel Adı</th>
+                                                                                    <th>Talep Ettiği Personel Adı</th>
+                                                                                    <th>Yeni Nöbet Tarihi</th>
+                                                                                    <th>Eski Nöbet Tarihi</th>
+                                                                                    <th>Durum</th>
+                                                                                    <th>Mahal Adı</th>
+                                                                                    <th>Değişim Tipi</th>
+                                                                                    <th>Amir Adı</th>
+
+
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<!-- END: Content-->
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- BEGIN: Page CSS-->
+@Styles.Render("~/app-assets/css/core/menu/menu-types/vertical-menu.css")
+@Styles.Render("~/app-assets/css/plugins/forms/wizard.css")
+<!--END: Page CSS-->
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/extensions/jquery.steps.min.js")
+@Scripts.Render("~/app-assets/vendors/js/forms/validation/jquery.validate.min.js")
+<!-- END: Page Vendor JS-->
+@*@Scripts.Render("~/app-assets/vendors/js/forms/validation/jquery.validate.min.js")*@
+
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/forms/wizard-steps.js")
+<!-- END: Page JS-->
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/datatables.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.print.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/pdfmake.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/vfs_fonts.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/datatables/datatable.js")
+
+
+<script>
+
+    $("#datepicker").datepicker({
+        viewMode: 'years',
+        format: 'mm-yyyy'
+    });
+
+</script>

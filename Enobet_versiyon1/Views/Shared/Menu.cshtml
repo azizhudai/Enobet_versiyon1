@@ -1,0 +1,47 @@
+﻿@model DYS.Web.Models.MenuModel
+
+<div class="main-menu-content">
+    <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
+        @*<li class=" nav-item">
+            <a href="~/Home/index"><i class="bx bx-sitemap" data-icon="desktop"></i><span class="menu-title" data-i18n="Dashboard">Yönetici İşlemleri</span><span class="badge badge-light-primary badge-pill badge-round float-right mr-2">3</span></a>
+            <ul class="menu-content">
+                <li>
+                    <a href="@Url.Action("MahalIslemleri","YoneticiIslemleri")" asp-controller="YoneticiIslemleri" asp-action="MahalIslemleri"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="eCommerce">Mahal İşlemleri</span></a>
+                </li>
+                <li>
+                    <a href="~/YoneticiIslemleri/KullaniciIslemleri"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="Analytics">Kullanıcı İşlemleri</span></a>
+                </li>
+                <li>
+                    <a href="~/YoneticiIslemleri/NobetKullaniciAylikVeriGiris"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="Analytics">Nöbet İşlemleri</span></a>
+                </li>
+            </ul>
+        </li>
+        <li class="navigation-header">
+            <span>Uygulamalar</span>
+        </li>
+        <li class=" nav-item">
+            <a href="~/Home/index"><i class="bx bx-home-alt" data-icon="desktop"></i><span class="menu-title" data-i18n="Email">Anasayfa</span></a>
+        </li>*@
+
+        @foreach (var t in Model.Sayfaidler)
+        {
+            if (t.UstBaslik == true)
+            {
+                <li class="@t.FotografYolu">
+                    <span>@t.Adi</span>
+                </li>
+                foreach (var y in Model.Sayfaidler)
+                {
+                    if (y.UstId == t.SayfaId)
+                    {
+                        <li class=" nav-item">
+                            <a href="@Url.Action(y.ActionAdi,y.ControllerAdi)"><i class="@y.FotografYolu" data-icon="desktop"></i><span class="menu-title" data-i18n="Email">@y.Adi</span></a>
+                        </li>
+                    }
+                }
+            }
+
+        }
+
+    </ul>
+</div>

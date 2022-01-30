@@ -1,0 +1,169 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="Frest admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Frest admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Foça Üs Komutanlığı - E-Nöbet Sistemi</title>
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="../app-assets/images/ico/b.jpg">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    @Styles.Render("~/app-assets/vendors/css/vendors.min.css")
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    @Styles.Render("~/app-assets/css/bootstrap.css")
+    @Styles.Render("~/app-assets/css/bootstrap-extended.css")
+    @Styles.Render("~/app-assets/css/colors.css")
+    @Styles.Render("~/app-assets/css/components.css")
+    @Styles.Render("~/app-assets/css/themes/dark-layout.css")
+    @Styles.Render("~/app-assets/css/themes/semi-dark-layout.css")
+    <!-- END: Theme CSS-->
+    <!-- BEGIN: Page CSS-->
+    @Styles.Render("~/app-assets/css/core/menu/menu-types/vertical-menu.css")
+    @Styles.Render("~/app-assets/css/pages/authentication.css")
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    @Styles.Render("~/assets/css/style.css")
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern boxicon-layout no-card-shadow 1-column  navbar-sticky footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <!-- login page start -->
+                <section id="auth-login" class="row flexbox-container">
+                    <div class="col-xl-8 col-11">
+                        <div class="card bg-authentication mb-0">
+                            <div class="row m-0">
+                                <!-- left section-login -->
+                                <div class="col-md-6 col-12 px-0">
+                                    <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
+                                        <div class="card-header pb-1">
+                                            <div class="card-title">
+                                                <h4 class="text-center mb-2">Foça Üs Komutanlığı - E-Nöbet Sistemi</h4>
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+
+                                                @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+                                                {
+                                                    <div class="form-group mb-50">
+                                                        <label class="text-bold-600" for="exampleInputEmail1">T.C. No</label>
+                                                        <input type="number" required class="form-control" id="tcNo" name="tcNo" placeholder="T.C. No" data-mask="00000000000">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="text-bold-600" for="exampleInputPassword1">Şifre</label>
+                                                        <input type="password" required class="form-control" id="Password" name="Password" placeholder="Şifre">
+                                                    </div>
+                                                    <div class="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                                        <div class="text-left">
+
+                                                        </div>
+                                                        @*<div class="text-right"><a href="auth-forgot-password.html" class="card-link"><small>Şifremi Unuttum/İlk Şifre Talebi</small></a></div>*@
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary glow w-100 position-relative">Giriş<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
+                                                }
+
+                                                <hr>
+                                                <div class="text-center"><small class="mr-25">Hesabın Yoksa</small><a href="~/Login/Register"><small>Kayıt Ol.</small></a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- right section image -->
+                                <div class="col-md-6 d-md-block d-none text-center align-self-center p-3">
+                                    <div class="card-content">
+                                        <img class="img-fluid" src="~/app-assets/images/logo/tsk_dzkk.png" alt="branding logo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- login page ends -->
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+    <!-- BEGIN: Vendor JS-->
+    @Scripts.Render("~/app-assets/vendors/js/vendors.min.js")
+    @Scripts.Render("~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js")
+    @Scripts.Render("~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js")
+    @Scripts.Render("~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js")
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    @Scripts.Render("~/app-assets/js/core/app-menu.js")
+    @Scripts.Render("~/app-assets/js/core/app.js")
+    @Scripts.Render("~/app-assets/js/scripts/components.js")
+    @Scripts.Render("~/app-assets/js/scripts/footer.js")
+    <!-- END: Theme JS-->
+    <!-- BEGIN: Page JS-->
+    <!-- END: Page JS-->
+
+    @Scripts.Render("~/app-assets/js/scripts/jquery.mask.js")
+</body>
+<!-- END: Body-->
+
+</html>
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" language="javascript">
+    //function DisableBackButton() {
+    //    window.history.forward()
+    //}
+    //DisableBackButton();
+    //window.onload = DisableBackButton;
+    //window.onpageshow = function (evt) { if (evt.persisted) DisableBackButton() }
+    //window.onunload = function () { void (0) }
+
+    if ("@TempData["Result"]".length != 0) {
+        $("#messageBoxModal .modal-body").html("@TempData["Result"]");
+        $('#messageBoxModal').modal();
+    }
+
+</script>

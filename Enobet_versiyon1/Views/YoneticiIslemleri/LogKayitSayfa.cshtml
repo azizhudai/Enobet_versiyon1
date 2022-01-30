@@ -1,0 +1,836 @@
+﻿@model Enobet_versiyon1.Models.LogModel
+@{
+    ViewBag.Title = "Log Kayıt Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+  /*  #viewContent #searchInput, #viewContent #autoCompleteSelect {
+        width: 430px;
+    }*/
+/*
+    #viewContent #searchInput {
+        padding: 5px 0;
+    }*/
+
+    #viewContent #autoCompleteSelect option:hover {
+        background-color: #d8fff7;
+        cursor: pointer;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    }
+</style>
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h5 class="content-header-title float-left pr-1 mb-0">Log İşlemleri</h5>
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb p-0 mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="@Url.Action("LogKayitSayfa","YoneticiIslemleri")"><i class="bx bx-home-alt"></i></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Yönetici İşlemleri</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a href="#">Log İşlemleri</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <!-- Basic Horizontal form layout section start -->
+            <section id="basic-horizontal-layouts">
+                <div class="row match-height">
+
+                    <div class="col-md-12 col-12">
+
+                        @using (Html.BeginForm("LogGetir", "YoneticiIslemleri", FormMethod.Post))
+                        {
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Log Listeme İşlemi</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form form-horizontal">
+                                            <div class="form-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <label>İşlem Yapan Personel</label>
+                                                    </div>
+                                                    <div class="col-md-4 form-group">
+                                                        <fieldset class="form-group position-relative has-icon-left" id="viewContent" >
+                                                            @*<div class="position-relative has-icon-left" style="padding-right:inherit">*@
+                                                                <input type="hidden" id="uId" name="uId" value="0" />
+                                                                @*<input type="text" placeholder="Personel Adı" id="uName" required class="editor-field" data-autocomplete="@Url.Action("Search","YoneticiIslemleri")" />*@
+
+                                                                @*<div class="form-control-position">
+                    <i class="bx bx-user"></i>
+                </div>*@
+                                                                @*<div>*@
+                                                                <input type="text" id="searchInput" class="form-control" placeholder="Personel Adı veya Soyadı" />
+
+                                                                <div id="autoCompleteDiv"></div>
+
+
+                                                                <div class="form-control-position">
+                                                                    <i class='bx bx-user'></i>
+                                                                </div>
+
+
+                                                                @*</div>*@
+
+                                                            @*</div>*@
+                                                        </fieldset>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label>İşlem Yapılan Personel</label>
+                                                    </div>
+                                                    <div class="col-md-4 form-group">
+                                                        @*<div class="position-relative has-icon-left" id="viewContent2">*@
+                                                        <fieldset class="form-group position-relative has-icon-left" id="viewContent2">
+
+                                                            <input type="hidden" id="uId2" name="uId2" value="0" />
+                                                            @*<input type="text" placeholder="Personel Adı" id="uName" required class="editor-field" data-autocomplete="@Url.Action("Search","YoneticiIslemleri")" />*@
+
+                                                            @*<div class="form-control-position">
+            <i class="bx bx-user"></i>
+        </div>*@
+                                                            @*<div>*@
+                                                            <input type="text" id="searchInput2" class="form-control" placeholder="Personel Adı veya Soyadı" />
+
+                                                            <div id="autoCompleteDiv2"></div>
+                                                            @*</div>*@
+                                                            <div class="form-control-position">
+                                                                <i class='bx bx-user'></i>
+                                                            </div>
+                                                        </fieldset>
+                                                    @*</div>*@
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label>Sayfa Adı</label>
+                                                    </div>
+                                                    <div class="col-md-4 form-group ">
+                                                        <div class="position-relative has-icon-left">
+                                                            @Html.DropDownListFor(n => n.SayfaId, new SelectList(ViewBag.ddlSayfaId, "Value", "Text", Model.SayfaId), new { @class = "form-control" })
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label>İşlem Adı</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        @Html.DropDownListFor(n => n.IslemId, new SelectList(ViewBag.ddlIslemId, "Value", "Text", Model.IslemId), new { @class = "form-control" })
+
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>Tarih Aralığı</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+
+                                                        <fieldset class="form-group position-relative has-icon-left">
+                                                            <input type="text" class="form-control daterange" placeholder="Select Date" id="dateRange" name="dateRange">
+                                                            <div class="form-control-position">
+                                                                <i class='bx bx-calendar-check'></i>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label>Ip</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+
+                                                        <input type="text" class="form-control" placeholder="Ip" id="IP" name="IP" />
+                                                    </div>
+
+                                                    <div class="col-12 d-flex justify-content-end ">
+                                                        <button id="LogBtnList" onclick="LogBtnListFnc();" type="button" class="btn btn-primary mr-1 mb-1">Listele</button>
+                                                        <button id="LogBtnClear" onclick="LogBtnClearFnc();" type="reset" class="btn btn-light-secondary mr-1 mb-1">Temizle</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <section id="column-selectors">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Veri Listesi</h4>
+                                @*<li style="float:left">
+                                        <span class="badge badge-pill badge-light-primary">
+                                            <input onclick="btnUserListClk();" type="button" value="Listele" />
+                                        </span>
+                                    </li>*@
+
+                                @*<li style="float:right"><span class="badge badge-pill badge-light-success">@Model.KullaniciList.Count Aktif</span></li>*@
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body card-dashboard">
+
+                                    <div class="table-responsive">
+
+                                        <table id="tableUserAdd" class="table table-striped dataex-html5-selectors">
+                                            <thead>
+                                                <tr id="table_tr_head">
+                                                    <th>IP</th>
+                                                    <th>İşlem Tarihi</th>
+                                                    <th>İşlem Yapan Personel</th>
+                                                    <th>Kullanıcı Adı</th>
+                                                    <th>Kullanıcı Soyadı</th>
+                                                    <th>Sınıf Adı</th>
+                                                    <th>Rutbe Adı</th>
+                                                    <th>Tc No</th>
+                                                    <th>Mahal Adı</th>
+                                                    <th>E-posta</th>
+                                                    <th>Rol Adı</th>
+                                                    
+                                                </tr>
+                                                    </thead>
+                                        </table>
+
+                                        <h3> Kullanıcı Güncelleme Logu </h3>
+                                        <table style="display:inline" id="tableUserList" class="table table-striped dataex-html5-selectors">
+                                            <thead>
+                                                <tr id="table_tr_head">
+                                                    <th style="width:20%"> Aciklama </th>
+                                                    <th> IP </th>
+                                                    <th> İşlem Tarihi </th>
+                                                    <th>İşlem Yapan Personel</th>
+                                                    <th>Kullanıcı Adı</th>
+                                                    <th>Kullanıcı Soyadı</th>
+
+                                                    <th>Eski Sınıf Adı</th>
+                                                    <th>Yeni Sınıf Adı </th>
+                                                    <th>Eski Rutbe Adı </th>
+
+                                                    <th>Yeni Rutbe Adı </th>
+                                                    <th>Eski Kullanıcı Adı </th>
+                                                    <th>Yeni Kullanıcı Adı </th>
+
+                                                    <th>Eski Kullanıcı Soyadı </th>
+                                                    <th>Yeni Kullanıcı Soyadı </th>
+                                                    <th>Eski Tc No </th>
+
+                                                    <th> Yeni Tc No</th>
+
+                                                    <th>Eski Mahal Adı </th>
+
+                                                    <th> Yeni Mahal Adı</th>
+                                                    <th> Eski E-posta</th>
+                                                    <th> Yeni Eposta</th>
+
+                                                    <th> Eski Aktif</th>
+                                                    <th>Yeni Aktif </th>
+                                                    <th> Eski Rol Adı</th>
+                                                    <th> Yeni Rol Adı</th>
+                                                    <th>Eski Nobetten Çıkarma Durumu</th>
+                                                    <th>Yeni Nobetten Çıkarma Durumu</th>
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+                                        <h3> Mahal Ekleme Logu </h3>
+                                        <table id="tableMahalEkleList" class="table table-striped dataex-html5-selectors">
+                                            <thead>
+                                                <tr id="table_mahal_ekle_tr_head">
+                                                    <th style="width:20%"> Aciklama </th>
+                                                    <th> IP </th>
+                                                    <th> İşlem Tarihi </th>
+                                                    <th>İşlem Yapan Personel</th>
+                                                    <th>Mahal Adı</th>
+                                                    <th>Dahili No</th>
+                                                    <th>Mahal Amir Adı</th>
+
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                        <h3> Mahal Günceleme Logu </h3>
+                                        <table style="display:inline" id="tableMahalGuncelleList" class="table table-striped dataex-html5-selectors">
+                                            <thead>
+                                                <tr id="table_mahal_guncelle_tr_head">
+                                                    <th style="width:20%"> Aciklama </th>
+                                                    <th> IP </th>
+                                                    <th> İşlem Tarihi </th>
+                                                    <th>İşlem Yapan Personel</th>
+                                                    <th>Eski Mahal Adı</th>
+                                                    <th>Yeni Mahal Adı</th>
+                                                    <th>Eski Dahili No</th>
+                                                    <th>Yeni Dahili No</th>
+                                                    <th>Eski Mahal Amir Adı</th>
+                                                    <th>Yeni Mahal Amir Adı</th>
+                                                    @*<th>Eski Durum Bilgisi</th>
+                    <th>Yeni Durum Bilgisi</th>*@
+
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/datatables.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.print.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/pdfmake.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/vfs_fonts.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/datatables/datatable.js")
+<!-- END: Page JS-->
+
+<script>
+
+     $(document).ready(function () {
+
+       // btnUserListClk();
+
+        $("#searchInput").keyup(function (e) {
+            if (e.which == 40) {
+                $("#autoCompleteSelect").val($("#autoCompleteSelect option:first").val());
+                $("#autoCompleteSelect").focus();
+                $(this).val($("#autoCompleteSelect :selected").text());
+            }
+            else {
+                if ($(this).val().length > 2)
+                    FillAutoComplete($(this).val());
+                else
+                    $("#autoCompleteDiv").hide();
+            }
+        });
+
+         $("#searchInput2").keyup(function (e) {
+             if (e.which == 40) {
+                 $("#autoCompleteSelect2").val($("#autoCompleteSelect2 option:first").val());
+                 $("#autoCompleteSelect2").focus();
+                 $(this).val($("#autoCompleteSelect2 :selected").text());
+             }
+             else {
+                 if ($(this).val().length > 2)
+                     FillAutoComplete2($(this).val());
+                 else
+                     $("#autoCompleteDiv2").hide();
+             }
+         });
+
+
+    });
+
+
+    function FillAutoComplete(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelect\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDiv").html(html);
+                $("#autoCompleteDiv").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContent").on("change", "#autoCompleteSelect", function () {
+
+        var uid = $("#autoCompleteSelect :selected").val();
+
+        $("#uId").val(uid);
+        $("#searchInput").val($("#autoCompleteSelect :selected").text());
+
+    });
+
+    $("#viewContent").on("click", "#autoCompleteSelect", function () {
+        $("#autoCompleteDiv").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoName(value) {
+        $("#autoCompleteDiv").html(value);
+        $("#autoCompleteDiv").show();
+    }
+
+    /////////////////
+
+     function FillAutoComplete2(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelect2\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDiv2").html(html);
+                $("#autoCompleteDiv2").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContent2").on("change", "#autoCompleteSelect2", function () {
+
+        var uid = $("#autoCompleteSelect2 :selected").val();
+
+        $("#uId2").val(uid);
+        $("#searchInput2").val($("#autoCompleteSelect2 :selected").text());
+
+    });
+
+    $("#viewContent2").on("click", "#autoCompleteSelect2", function () {
+        $("#autoCompleteDiv2").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoName2(value) {
+        $("#autoCompleteDiv2").html(value);
+        $("#autoCompleteDiv2").show();
+    }
+
+
+    /////////
+
+    // $(document).ready(function () {
+
+    //   // btnUserListClk();
+
+    //    $("#searchInput2").keyup(function (e) {
+    //        if (e.which == 40) {
+    //            $("#autoCompleteSelect2").val($("#autoCompleteSelect2 option:first").val());
+    //            $("#autoCompleteSelect2").focus();
+    //            $(this).val($("#autoCompleteSelect2 :selected").text());
+    //        }
+    //        else {
+    //            if ($(this).val().length > 2)
+    //                FillAutoComplete($(this).val());
+    //            else
+    //                $("#autoCompleteDiv2").hide();
+    //        }
+    //    });
+
+    //});
+
+    @*function FillAutoComplete(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelect2\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDiv2").html(html);
+                $("#autoCompleteDiv2").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContent2").on("change", "#autoCompleteSelect2", function () {
+
+        var uid = $("#autoCompleteSelect2 :selected").val();
+
+        $("#uId2").val(uid);
+        $("#searchInput2").val($("#autoCompleteSelect2 :selected").text());
+
+    });
+
+    $("#viewContent2").on("click", "#autoCompleteSelect2", function () {
+        $("#autoCompleteDiv2").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoName(value) {
+        $("#autoCompleteDiv2").html(value);
+        $("#autoCompleteDiv2").show();
+    }*@
+
+
+
+
+    function LogBtnListFnc() {
+
+        var uId = $("#uId").val();
+        var uId2 =$("#uId2").val();
+        var SayfaId = $("#SayfaId").val();
+        var IslemId = $("#IslemId").val();
+        var Ip = $("#IP").val();
+
+          $.ajax({
+            type: "POST",
+            url: "@Url.Action("LogGetir","YoneticiIslemleri")",
+              data: JSON.stringify({ uId: uId, uId2: uId2, SayfaId: SayfaId, IslemId: IslemId, Ip: Ip }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html("Log Listesi");
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu.</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+
+
+                if (data.State == 1) {
+
+                   /* let tables = $('#tableUserList');
+                    for (let i = 0; i < tables.length; i++) {
+                        const table
+                    }*/
+                    
+                    if ($.fn.DataTable.isDataTable('#tableUserAdd')) {
+                        $('#tableUserAdd').DataTable().clear().draw();
+                    }
+                     if ($.fn.DataTable.isDataTable('#tableUserList')) {
+                        $('#tableUserList').DataTable().clear().draw();
+                    }
+                    
+                    if ($.fn.DataTable.isDataTable('#tableMahalEkleList')) {
+                        $('#tableMahalEkleList').DataTable().clear().draw();
+                    }
+                    if ($.fn.DataTable.isDataTable('#tableMahalGuncelleList')) {
+                        $('#tableMahalGuncelleList').DataTable().clear().draw();
+                    }
+                    
+
+                  /*  if ($.fn.DataTable.isDataTable('#tableMahalEkleList')) {
+                        $('#tableMahalEkleList').DataTable.clear().draw();
+                    }*/
+
+                    var userList = JSON.parse(data.dataResult);
+
+                    if (SayfaId == 2 && IslemId == 15) { // mahal sayfası ve ekleme işlemi ise
+                        //$('#tableMahalEkleList').css('display', 'line');
+                        tableMahalEkleList = $('#tableMahalEkleList').DataTable({
+                            "data": userList,
+                            "columns": [
+                                { title: "Aciklama", data: "Aciklama" },
+                                { title: "IP", data: "IP" },
+                                { title: "İşlem Tarihi", data: "IslemTarihi" },
+
+                                { title: "İşlem Yapan Personel", data: "IslemYapanPerAdi" },
+
+                                { title: "Mahal Adı", data: "MahalAdi" },
+                                { title: "Dahili No", data: "DahiliNo" },
+                                { title: "Mahal Amir Adı", data: "MahalAmirAdi" }
+                            ],
+                            columnDefs: [
+
+                                {
+                                    "defaultContent": '-', targets: '_all'
+                                },
+
+                            ],
+
+                            dom: 'Bfrtip',
+                            buttons: [
+                                'print',
+                                { extend: 'pdf', charset: 'UTF-8', className: 'pdfButton', title: "Kullanıcı Listesi", filename: "Kullanıcı Listesi" },
+                                {
+                                    extend: 'csv',
+                                    charset: 'UTF-8',
+                                    fieldSeparator: ';',
+                                    bom: true,
+                                    className: 'excelButton',
+                                    filename: "Kullanıcı Listesi",
+                                    title: "Kullanıcı Listesi"
+                                }
+                            ]
+                        });
+                    }
+                        //else {
+                    //    $('#tableMahalEkleList').css('display', 'block');
+                    //}
+
+                    if (SayfaId == 2 && IslemId == 17) { // mahal sayfası ve güncelle işlemi ise
+                        //$('#tableMahalGuncelleList').css('display', 'line');
+                        tableMahalGuncelleList = $('#tableMahalGuncelleList').DataTable({
+                            "data": userList,
+                            "columns": [
+                                { title: "Aciklama", data: "Aciklama" },
+                                { title: "IP", data: "IP" },
+                                { title: "İşlem Tarihi", data: "IslemTarihi" },
+
+                                { title: "İşlem Yapan Personel", data: "IslemYapanPerAdi" },
+
+                                { title: "Yeni Mahal Adı", data: "MahalAdi" },
+                                { title: "Eski Mahal Adı", data: "EskiMahalAdi" },
+
+                                { title: "Dahili No", data: "DahiliNo" },
+                                { title: "Eski Dahili No", data: "EskiDahiliNo" },
+
+                                { title: "Yeni Mahal Amir Adı", data: "MahalAmirAdi" },
+                                { title: "Eski Mahal Amir Adı", data: "EskiMahalAmirAdi" },
+
+                                //{ title: "Yeni Durum Bilgisi", data: "MahalAmirAdi" },
+                                //{ title: "Eski Durum Bilgisi", data: "EskiMahalAmirAdi" },
+
+                            ],
+                            columnDefs: [
+
+                                {
+                                    "defaultContent": '-', targets: '_all'
+                                },
+
+                            ],
+
+                            dom: 'Bfrtip',
+                            buttons: [
+                                'print',
+                                { extend: 'pdf', charset: 'UTF-8', className: 'pdfButton', title: "Kullanıcı Listesi", filename: "Kullanıcı Listesi" },
+                                {
+                                    extend: 'csv',
+                                    charset: 'UTF-8',
+                                    fieldSeparator: ';',
+                                    bom: true,
+                                    className: 'excelButton',
+                                    filename: "Kullanıcı Listesi",
+                                    title: "Kullanıcı Listesi"
+                                }
+                            ]
+                        });
+                    }
+                    //else {
+                    //    $('#tableMahalGuncelleList').css('display', 'block');
+                    //}
+
+                    ////////////
+                    var table_head_html = "";
+                    table_head_html = "<th> Aciklama </th><th> IP </th><th> IslemTarihi </th>"+
+                    "<th>Eski Sınıf Adı</th><th>Yeni Sınıf Adı </th> <th>Eski Rutbe Adı </th>"+
+                        "<th>Yeni Rutbe Adı </th><th>Eski Kullanıcı Adı </th><th>Yeni Kullanıcı Adı </th>" +
+                        "<th>Eski Kullanıcı Soyadı </th><th>Eski Kullanıcı Soyadı </th><th>Eski Tc No </th>" +
+                        "<th> Yeni Tc No</th><th> </th><th>Eski Mahal Adı </th>" +
+                        "<th> Yeni Mahal Adı</th><th>Eski E-posta </th><th> Yeni Eposta</th>" +
+                        "<th> Eski Aktif</th><th> Yeni Aktif</th><th> Eski Rol Adı</th><th> Yeni Rol Adı</th>";
+                    //$('#table_tr_head').html(table_head_html);
+                    if (SayfaId == 4 && IslemId == 15) {
+                        tableUserAdd = $('#tableUserAdd').DataTable({
+                            //bShort:false,
+                            "data": userList,
+                            "columns": [
+                               // { title: "Aciklama", data: "Aciklama" },
+                                { title: "IP", data: "IP" },
+                                { title: "İşlem Tarihi", data: "IslemTarihi" },
+
+                                { title: "İşlem Yapan Personel", data: "IslemYapanPerAdi" },
+                                { title: "Kullanıcı Adı", data: "KullaniciAdi" },
+                                { title: "Kullanıcı Soyadı", data: "KullaniciSoyadi" },
+
+                                { title: "Sınıf Adı", data: "SinifAdi" },
+                                
+                                { title: " Rutbe Adı", data: "RutbeAdi" },
+                                
+                                { title: " Tc No", data: "Tcno" },
+                                { title: "Mahal Adı", data: "MahalAdi" },
+                                
+                                { title: "E-posta", data: "Eposta" },
+
+                                { title: "Rol Adı", data: "RolAdi" },
+                            ],
+                            columnDefs: [
+
+                                {
+                                    "defaultContent": '-', targets: '_all'
+                                },
+
+                            ],
+
+                            dom: 'Bfrtip',
+                            buttons: [
+                                'print',
+                                { extend: 'pdf', charset: 'UTF-8', className: 'pdfButton', title: "Kullanıcı Listesi", filename: "Kullanıcı Listesi" },
+                                {
+                                    extend: 'csv',
+                                    charset: 'UTF-8',
+                                    fieldSeparator: ';',
+                                    bom: true,
+                                    className: 'excelButton',
+                                    filename: "Kullanıcı Listesi",
+                                    title: "Kullanıcı Listesi"
+                                }
+                            ]
+                        });
+                    }
+
+                    if (SayfaId == 4 && IslemId == 17) {
+                        tableUserList = $('#tableUserList').DataTable({
+                            //bShort:false,
+                            "data": userList,
+                            "columns": [
+                                { title: "Aciklama", data: "Aciklama" },
+                                { title: "IP", data: "IP" },
+                                { title: "İşlem Tarihi", data: "IslemTarihi" },
+
+                                { title: "İşlem Yapan Personel", data: "IslemYapanPerAdi" },
+                                { title: "Kullanıcı Adı", data: "KullaniciAdi" },
+                                { title: "Kullanıcı Soyadı", data: "KullaniciSoyadi" },
+
+                                { title: "Eski Sınıf Adı", data: "EskiSinifAdi" },
+                                { title: "Yeni Sınıf Adı", data: "YeniSinifAdi" },
+                                { title: "Eski Rutbe Adı", data: "EskiRutbeAdi" },
+                                { title: "Yeni Rutbe Adı", data: "YeniRutbeAdi" },
+
+                                { title: "Eski Kullanıcı Adı", data: "EskiKullaniciAdi" },
+                                { title: "Yeni Kullanıcı Adı", data: "YeniKullaniciAdi" },
+                                { title: "Eski Kullanıcı Soyadı", data: "EskiKullaniciSoyadi" },
+                                { title: "Yeni Kullanici Soyadı", data: "YeniKullaniciSoyadi" },
+                                { title: "Eski Tc No", data: "EskiTcno" },
+                                { title: "Yeni Tc No", data: "YeniTcno" },
+                                { title: "Eski Mahal Adı", data: "EskiMahalAdi" },
+                                { title: "Yeni Mahal Adı", data: "YeniMahalAdi" },
+                                { title: "Eski E-posta", data: "EskiEposta" },
+                                { title: "Yeni E-posta", data: "YeniEposta" },
+
+                                { title: "Eski Aktif", data: "EskiAktif" },
+                                { title: "Yeni Aktif", data: "YeniAktif" },
+                                { title: "Eski Rol Adı", data: "EskiRolAdi" },
+                                { title: "Yeni Rol Adı", data: "YeniRolAdi" },
+
+
+                                { title: "Eski Nobetten Çıkarma Durumu", data: "EskiNobettenCikar" },
+                                { title: "Yeni Nobetten Çıkarma Durumu", data: "YeniNobettenCikar" }
+                            ],
+                            columnDefs: [
+
+                                {
+                                    "defaultContent": '-', targets: '_all'
+                                },
+
+                            ],
+
+                            dom: 'Bfrtip',
+                            buttons: [
+                                'print',
+                                { extend: 'pdf', charset: 'UTF-8', className: 'pdfButton', title: "Kullanıcı Listesi", filename: "Kullanıcı Listesi" },
+                                {
+                                    extend: 'csv',
+                                    charset: 'UTF-8',
+                                    fieldSeparator: ';',
+                                    bom: true,
+                                    className: 'excelButton',
+                                    filename: "Kullanıcı Listesi",
+                                    title: "Kullanıcı Listesi"
+                                }
+                            ]
+                        });
+                    }
+                        $(".excelButton").text("CSV İndir");
+                    $(".buttons-print").text("Çıktı Al");
+                    $(".pdfButton").text("PDF İndir");
+                    ///////
+
+                } else {
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    $("#messageBoxModal .modal-header").removeClass("bg-success");
+                    $("#messageBoxModal .modal-header").addClass("bg-danger");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                    $('#messageBoxModal').modal();
+                }
+
+
+            }
+        });
+
+    }
+
+</script>

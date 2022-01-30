@@ -1,0 +1,1098 @@
+﻿@model  Enobet_versiyon1.Models.DetayliIstatistikModel
+@{
+    ViewBag.Title = "Personel İstatistik";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*@Styles.Render("~/app-assets/vendors/css/pickers/pickadate/pickadate.css")
+    @Styles.Render("~/app-assets/vendors/css/pickers/daterange/daterangepicker.css")*@
+@Styles.Render("~/app-assets/vendors/css/charts/apexcharts.css")
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h5 class="content-header-title float-left pr-1 mb-0">Detaylı İstatistik</h5>
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb p-0 mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="@Url.Action("index","Home")"><i class="bx bx-home-alt"></i></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Yönetici İşlemleri</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    Detaylı İstatistik
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+
+            <section id="multiple-column-form">
+                <div class="row match-height">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">  </h4>
+                            </div>
+                            <div class="card-content">
+
+
+                                <div class="card-body">
+
+                                    <ul class="nav nav-tabs mb-2" role="tablist">
+
+                                        <li class="nav-item">
+                                            <a class="nav-link d-flex align-items-center active" id="PersonelNobetListe-tab" data-toggle="tab" href="#PersonelNobetListe" aria-controls="PersonelNobetListe-tab" role="tab" aria-selected="false">
+                                                <i class="bx bx-list-ul mr-25"></i><span class="d-none d-sm-block">Detaylı Nöbet Listesi</span>
+                                            </a>
+                                        </li>
+
+                                        @*<li class="nav-item current">
+                                                <a class="nav-link d-flex align-items-center" id="MahalNobetListe-tab" data-toggle="tab" href="#MahalNobetListe" aria-controls="MahalNobetListe-tab" role="tab" aria-selected="true">
+                                                    <i class="bx bx-user mr-25"></i><span class="d-none d-sm-block">Tek Gün Değişimi</span>
+                                                </a>
+                                            </li>*@
+
+                                        @*<li class="nav-item">
+                                                <a class="nav-link d-flex align-items-center" id="MahalNobetListe-tab" data-toggle="tab" href="#MahalNobetListe" aria-controls="MahalNobetListe-tab" role="tab" aria-selected="false">
+                                                    <i class="bx bx-list-ul mr-25"></i><span class="d-none d-sm-block">Aylık Nöbet Listesi</span>
+                                                </a>
+                                            </li>*@
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show" id="PersonelNobetListe" aria-labelledby="PersonelNobetListe-tab" role="tabpanel">
+
+                                            <section id="icon-tabs">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">Personel Nöbet Listesi</h4>
+                                                            </div>
+                                                            <div class="card-content mt-2">
+                                                                <div class="card-body">
+                                                                    <div class="form-body">
+                                                                        <div class="row">
+                                                                            <div class="form-group col-md-4 col-12">
+                                                                                <div class="form-group validate">
+                                                                                    <label><span style="color:red">* </span>Yıl</label>
+                                                                                    <select id="year" class="form-control">
+                                                                                        <option value="0">Tüm Yıllar</option>
+                                                                                        <option value="2020">2020</option>
+                                                                                        <option value="2021">2021</option>
+                                                                                        <option value="2022">2022</option>
+                                                                                        <option value="2023">2023</option>
+                                                                                        <option value="2024">2024</option>
+                                                                                        <option value="2025">2025</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            @*<div class="input-append date" id="datepicker" data-date="02-2012"
+                                                                                     data-date-format="mm-yyyy">
+
+                                                                                    <input type="text" readonly="readonly" name="date">
+                                                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                                                </div>*@
+                                                                            <div class="form-group col-md-4 col-12">
+                                                                                <div class="form-group validate">
+                                                                                    <label><span style="color:red">* </span>Ay</label>
+                                                                                    <select id="month" class="form-control">
+                                                                                        <option value="0">Tüm Aylar</option>
+                                                                                        <option value="1">Ocak</option>
+                                                                                        <option value="2">Şubat</option>
+                                                                                        <option value="3">Mart</option>
+                                                                                        <option value="4">Nisan</option>
+                                                                                        <option value="5">Mayıs</option>
+                                                                                        <option value="6">Haziran</option>
+                                                                                        <option value="7">Temmuz</option>
+                                                                                        <option value="8">Ağustos</option>
+                                                                                        <option value="9">Eylül</option>
+                                                                                        <option value="10">Ekim</option>
+                                                                                        <option value="11">Kasım</option>
+                                                                                        <option value="12">Aralık</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group col-md-4 col-12">
+                                                                                <div class="form-group validate">
+                                                                                    <label><span style="color:red">* </span>Mahal</label>
+                                                                                    @Html.DropDownListFor(n => n.MahalId, new SelectList(ViewBag.ddlMahalId, "Value", "Text", Model.MahalId), new { @class = "form-control" })
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-4 col-12 form-group">
+                                                                                <div class="position-relative has-icon-left">
+                                                                                    @*<input type="hidden" id="dno" name="dno" value="0" />*@
+                                                                                    <label><span>Personel Adı</span></label>
+                                                                                    <div class="position-relative has-icon-left" id="viewContent">
+                                                                                        <input type="hidden" id="uId" name="uId" value="0" />
+                                                                                        <input type="text" id="searchInput" class="form-control" placeholder="Personel Adı" />
+                                                                                        <div id="autoCompleteDiv"></div>
+
+                                                                                        <div class="form-control-position">
+                                                                                            <i class="bx bx-user"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-12 d-flex justify-content-end">
+
+                                                                                <button type="button" id="userBtnList" onclick="btnSahsiNobetListClk();" class="btn btn-primary mr-1 mb-1 block-element">Listele</button>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="card">
+                                                                                    <div class="card-header">
+                                                                                        @*<h4 class="card-title">Personel Nöbet Listesi </h4>*@
+
+                                                                                        <div class="card-content mt-2">
+                                                                                            <div class="card-body">
+
+                                                                                                <div class="form-body">
+                                                                                                    <div class="row">
+                                                                                                        <div class="form-group col-md-8 col-12">
+
+                                                                                                            <div class="card-content">
+                                                                                                                <div class="card-body card-dashboard">
+
+                                                                                                                    <div class="table-responsive">
+                                                                                                                        <table id="PersonelNobetListTable" class="table table-striped dataex-html5-selectors">
+                                                                                                                            <thead>
+                                                                                                                                <tr>
+                                                                                                                                    <th>Mahal Adı</th>
+                                                                                                                                    <th>Nöbet Tarihi</th>
+                                                                                                                                    <th>Personel Adı</th>
+
+                                                                                                                                </tr>
+                                                                                                                            </thead>
+
+                                                                                                                        </table>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+
+                                                                                                        @*<div class="form-group col-md-8 col-12">
+                                                                                                                <div class="card-content">
+                                                                                                                    <div class="card-body card-dashboard">
+
+                                                                                                                        <div class="table-responsive">
+                                                                                                                            <table id="PersonelNobetHaftalikListTable" class="table table-striped dataex-html5-selectors">
+                                                                                                                                <thead>
+                                                                                                                                    <tr>
+                                                                                                                                        <th>Pazartesi</th>
+                                                                                                                                        <th>Salı</th>
+                                                                                                                                        <th>Çarşamba</th>
+                                                                                                                                        <th>Perşembe</th>
+                                                                                                                                        <th>Cuma</th>
+                                                                                                                                        <th>Cumartesi</th>
+                                                                                                                                        <th>Pazar</th>
+                                                                                                                                        <th>Kullanıcı Adı</th>
+                                                                                                                                    </tr>
+                                                                                                                                </thead>
+
+                                                                                                                            </table>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+
+                                                                                                            </div>*@
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <!-- Form wizard with number tabs section end -->
+
+                                        </div>
+
+                                        <div class="tab-pane fade show" id="MahalNobetListe" aria-labelledby="MahalNobetListe-tab" role="tabpanel">
+                                            <!-- Form wizard with icon tabs section start -->
+                                            <section id="icon-tabs2">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">Aylık Nöbet Listesi </h4>
+
+                                                                <div class="card-content mt-2">
+                                                                    <div class="card-body">
+                                                                        <div class="form-body">
+                                                                            <div class="row">
+                                                                                <div class="form-group col-md-4 col-12">
+                                                                                    <div class="form-group validate">
+                                                                                        <label><span style="color:red">* </span>Yıl</label>
+                                                                                        <select id="year2" class="form-control">
+
+                                                                                            <option value="2020">2020</option>
+                                                                                            <option value="2021">2021</option>
+                                                                                            <option value="2022">2022</option>
+                                                                                            <option value="2023">2023</option>
+                                                                                            <option value="2024">2024</option>
+                                                                                            <option value="2025">2025</option>
+                                                                                        </select>
+
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                @*<div class="input-append date" id="datepicker" data-date="02-2012"
+                                                                                         data-date-format="mm-yyyy">
+
+                                                                                        <input type="text" readonly="readonly" name="date">
+                                                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                                                    </div>*@
+
+
+                                                                                <div class="form-group col-md-4 col-12">
+                                                                                    <div class="form-group validate">
+                                                                                        <label><span style="color:red">* </span>Ay</label>
+                                                                                        <select id="month2" class="form-control">
+                                                                                            <option value="1">Ocak</option>
+                                                                                            <option value="2">Şubat</option>
+                                                                                            <option value="3">Mart</option>
+                                                                                            <option value="4">Nisan</option>
+                                                                                            <option value="5">Mayıs</option>
+                                                                                            <option value="6">Haziran</option>
+                                                                                            <option value="7">Temmuz</option>
+                                                                                            <option value="8">Ağustos</option>
+                                                                                            <option value="9">Eylül</option>
+                                                                                            <option value="10">Ekim</option>
+                                                                                            <option value="11">Kasım</option>
+                                                                                            <option value="12">Aralık</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group col-md-4 col-12">
+                                                                                    <div class="form-group validate">
+                                                                                        <label><span style="color:red">* </span>Mahal</label>
+                                                                                        @Html.DropDownListFor(n => n.AylikNobetMahalId, new SelectList(ViewBag.ddlMahalId, "Value", "Text", Model.AylikNobetMahalId), new { @class = "form-control" })
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                @*<div class="col-md-4">
+                                                                                        <label>Nöbetçi Amiri</label>
+                                                                                    </div>*@
+
+
+                                                                                <div class="col-12 d-flex justify-content-end">
+
+                                                                                    <button type="button" id="userMahalBtnList" onclick="btnMahalNobetListClk();" class="btn btn-primary mr-1 mb-1 block-element">Listele</button>
+
+                                                                                </div>
+                                                                            </div>
+
+
+
+                                                                            <div class="row">
+                                                                                <div class="form-group col-md-4 col-12">
+                                                                                    <div class="card">
+                                                                                        <div class="card-header">
+                                                                                            <h4 class="card-title" id="Yil_Ay_NobetSayisi"></h4>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="card-content">
+                                                                                        <div class="card-body card-dashboard">
+
+                                                                                            <div class="table-responsive">
+                                                                                                <table style="width:100%" id="MahalNobetListTable" class="table table-striped dataex-html5-selectors">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Mahal Adı</th>
+                                                                                                            <th>Nöbet Tarihi</th>
+                                                                                                            <th>Personel Adı</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div class="form-group col-md-8 col-12">
+
+                                                                                    <div class="card">
+                                                                                        <div class="card-header">
+                                                                                            <h4 class="card-title" id="Yil_HaftaNobetSayisi"></h4>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="card-content">
+                                                                                        <div class="card-body card-dashboard">
+
+                                                                                            <div class="table-responsive">
+                                                                                                <table id="PersonelNobetYillikHaftalikListTable" class="table table-striped dataex-html5-selectors">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Pazartesi</th>
+                                                                                                            <th>Salı</th>
+                                                                                                            <th>Çarşamba</th>
+                                                                                                            <th>Perşembe</th>
+                                                                                                            <th>Cuma</th>
+                                                                                                            <th>Cumartesi</th>
+                                                                                                            <th>Pazar</th>
+                                                                                                            <th>Kullanıcı Adı</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+
+                                                                                    <div class="card" id="cardId" style="height: 350px;">
+                                                                                        <div class="card-header">
+                                                                                            <h4 class="card-title"><a id="p_year"></a> Yılı Nöbet Sayısı</h4>
+                                                                                        </div>
+                                                                                        <div class="card-content">
+                                                                                            <div class="card-body">
+                                                                                                <div id="pie2-chart" class="d-flex justify-content-center"></div>
+                                                                                                <div id="bar-chart22"></div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+
+
+                                                                                @*<div class="col-md-6 col-12">
+                                                                                        <div class="card" id="cardId" style="height: 350px;">
+                                                                                            <div class="card-header">
+                                                                                                <h4 class="card-title"><a id="p_year"></a> Yılı Nöbet Sayısı</h4>
+                                                                                            </div>
+                                                                                            <div class="card-content">
+                                                                                                <div class="card-body">
+                                                                                                    <div id="pie2-chart" class="d-flex justify-content-center"></div>
+                                                                                                    <div id="bar-chart22"></div>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>*@
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </section>
+                                            <!-- Form wizard with number tabs section end -->
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<!-- END: Content-->
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- BEGIN: Page CSS-->
+@Styles.Render("~/app-assets/css/core/menu/menu-types/vertical-menu.css")
+@Styles.Render("~/app-assets/css/plugins/forms/wizard.css")
+<!--END: Page CSS-->
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/extensions/jquery.steps.min.js")
+@Scripts.Render("~/app-assets/vendors/js/forms/validation/jquery.validate.min.js")
+<!-- END: Page Vendor JS-->
+@*@Scripts.Render("~/app-assets/vendors/js/forms/validation/jquery.validate.min.js")*@
+
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/forms/wizard-steps.js")
+<!-- END: Page JS-->
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/datatables.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.print.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/pdfmake.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/vfs_fonts.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/datatables/datatable.js")
+
+
+
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/charts/apexcharts.min.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/charts/chart-apex.js")
+<!-- END: Page JS-->
+@Scripts.Render("~/app-assets/vendors/js/ui/blockUI.min.js")
+
+
+<!-- BEGIN: Page Vendor JS-->
+@*@Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/picker.js")
+    @Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/picker.date.js")
+    @Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/picker.time.js")*@
+
+
+@*@Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/legacy.js")
+    @Scripts.Render("~/app-assets/vendors/js/pickers/daterange/moment.min.js")
+    @Scripts.Render("~/app-assets/vendors/js/pickers/daterange/daterangepicker.js")*@
+
+
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@*@Scripts.Render("~/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js")*@
+<!-- END: Page JS-->
+
+<script>
+
+    var pieChart = null;
+    var barChart = null;
+    $(document).ready(function () {
+
+
+      $("#searchInput").keyup(function (e) {
+            if (e.which == 40) {
+                $("#autoCompleteSelect").val($("#autoCompleteSelect option:first").val());
+                $("#autoCompleteSelect").focus();
+                $(this).val($("#autoCompleteSelect :selected").text());
+            }
+            else {
+                if ($(this).val().length > 2)
+                    FillAutoComplete($(this).val());
+                else
+                    $("#autoCompleteDiv").hide();
+            }
+        });
+
+        var date = new Date();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        $('#month').val(month);
+        $('#year').val(year);
+
+        //setTimeout(function () { $('#userBtnList').click(); }, 1000);
+
+        //btnSahsiNobetListClk( month);
+
+        $("#MahalNobetListe-tab").click(function () {
+
+
+            $('#month2').val(month);
+            $('#year2').val(year);
+
+            //setTimeout(function () { $('#userMahalBtnList').click(); }, 1000);
+        });
+
+    });
+
+   function btnSahsiNobetListClk() {
+       //debugger;
+       var year = $("#year option:selected").val();
+       var month = $("#month option:selected").val();
+       var mahalId = $("#MahalId option:selected").val();
+       var uId = $("#uId").val();
+
+       if ($('#searchInput').val() == '')
+           uId = "0";
+
+       var resultData = "";
+       //var mahalId = $('#MahalId option: selected').val();
+       if (mahalId == 0) {
+          // var year = $('#year').val();
+           //var month = $('#month').val();
+           if (year == 0 && month == 0 && uId == "0")
+               resultData += "Yıl Bilgisi veya Ay Bilgisi veya Personel Bilgisi Alanı girilmesi gerekmektedir!";
+
+           if (resultData != "") {
+               alert(resultData);
+               return;
+           }
+       }
+
+         $.ajax({
+        type: "POST",
+        url: "@Url.Action("DetayliPersonelNobetListTable", "IstatistikIslemleri")",
+             data: JSON.stringify({ month: month, year: year,mahalId:mahalId,uId:uId }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error: function (ex) {
+            $("#messageBoxModal .modal-title").html("Nöbet Değişim İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+            $('#messageBoxModal').modal();
+        },
+        success: function (data) {
+
+            if (data.State == 1) {
+
+                if ($.fn.DataTable.isDataTable('#PersonelNobetListTable')) {
+                    $('#PersonelNobetListTable').DataTable().clear().draw();
+                }
+                if ($.fn.DataTable.isDataTable('#PersonelNobetHaftalikListTable')) {
+                    $('#PersonelNobetHaftalikListTable').DataTable().clear().draw();
+                }
+                // debugger;
+                ////////////
+
+                if (data.NobetList == null)
+                    return;
+                if (data.NobetList.length <= 0)
+                    return;
+
+                var fileName = "Foça Bilgi Sistem Amirliği Detaylı E-Nöbet Listesi" + ' - ' + year + ' - ' + month;
+
+                var NobetList = JSON.parse(data.NobetList);  //JSON.stringify(data.NobetList)
+                var NobetListTable = $('#PersonelNobetListTable').DataTable({
+                    "data": NobetList,
+                    "columns": [
+                        { title: "Mahal Adı", data: "MahalAdi" },
+                        { title: "Nöbet Tarihi", data: "GunAdi" },
+                        { title: "Personel Adı", data: "fulAdi" }
+                    ],
+                   /* columnDefs: [
+                        {
+                            "targets": 2,
+                            "data": "NobetTarihi",
+                            "render": function (data, type, row, meta) {
+                                var dateArray = data.split('-');
+                                var date = DateFormatTR(dateArray[0], (dateArray[1] - 1), dateArray[2]);
+                                return date;
+                            }
+                        }
+                    ],*/
+                    "ordering": false,
+                    paging: false,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'print',
+                        { extend: 'pdf', className: 'pdfButton', title: 'Detaylı E-Nöbet Listesi', filename: fileName },
+                        {
+                            extend: 'csv',
+                            charset: 'UTF-8',
+                            fieldSeparator: ';',
+                            bom: true,
+                            className: 'excelButton',
+                            filename: fileName,
+                            title: 'Nöbet Talep Listesi'
+                        }
+                    ]
+                });
+
+
+                $(".excelButton").text("CSV İndir");
+                $(".buttons-print").text("Çıktı Al");
+                $(".pdfButton").text("PDF İndir");
+
+
+                //haftalık analiz listesi
+
+               // PersonelNobetHaftalikListTable
+
+
+             /*   if (data.array6 == null)
+                    return;
+                if (data.array6.length == 0)
+                    return;
+
+                var fileName = "Foça Bilgi Sistem Amirliği Ay Bazında Haftalık Nöbet Sayısı";
+
+
+
+                var aaa = JSON.parse(data.array6);
+                var NobetListTable2 = $('#PersonelNobetHaftalikListTable').DataTable({
+                    "data": aaa ,
+                   /* dataSrc: function (data) {
+                        var tableData = [];
+                        $.each(data, function (key, value) {
+                            tableData.push([value[0], value[1], value[2], value[4], value57], value[6]]);
+                        });
+                        return tableData;
+                    },
+
+                    "columns": [
+                        { title: "Kullanıcı Adı", data: 7 },
+                        { title: "Pazartesi", data: 0 },
+                        { title: "Salı", data: 1 },
+                        { title: "Çarşamba", data: 2},
+                        { title: "Perşembe", data: 3},
+                        { title: "Cuma", data: 4},
+                        { title: "Cumartesi", data: 5},
+                        { title: "Pazar", data: 6 }
+
+                    ],
+                    /* columnDefs: [
+                         {
+                             "targets": 2,
+                             "data": "NobetTarihi",
+                             "render": function (data, type, row, meta) {
+                                 var dateArray = data.split('-');
+                                 var date = DateFormatTR(dateArray[0], (dateArray[1] - 1), dateArray[2]);
+                                 return date;
+                             }
+                         }
+                     ],
+                    "ordering": false,
+                    paging: false,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'print',
+                        { extend: 'pdf', className: 'pdfButton', title: 'Şahsi Nöbet Listesi', filename: fileName },
+                        {
+                            extend: 'csv',
+                            charset: 'UTF-8',
+                            fieldSeparator: ';',
+                            bom: true,
+                            className: 'excelButton',
+                            filename: fileName,
+                            title: 'Nöbet Talep Listesi'
+                        }
+                    ]
+                });
+
+                $(".excelButton").text("CSV İndir");
+                $(".buttons-print").text("Çıktı Al");
+                $(".pdfButton").text("PDF İndir");*/
+
+            }
+
+        }
+    });
+    }
+
+
+
+    function DateFormatTR(year, month, day) {
+        var options111 = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        };
+        var dateStr = new Date(Date.UTC(year, month, day))
+            .toLocaleDateString("tr-TR", options111)
+            .replace(/ /g, '-');
+        return dateStr;
+    }
+    var nowDate = new Date();
+    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+
+
+    function btnMahalNobetListClk() {
+
+        var year = $("#year2 option:selected").val();
+        var month = $("#month2 option:selected").val();
+
+        var MahalId = $("#MahalId option:selected").val();
+
+        $("#p_year").text(year);
+
+         $.ajax({
+        type: "POST",
+        url: "@Url.Action("MahalNobetListTable", "IstatistikIslemleri")",
+             data: JSON.stringify({ month: month, year: year,MahalId:MahalId }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error: function (ex) {
+            $("#messageBoxModal .modal-title").html("Aylık Nöbet Listesi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+            $('#messageBoxModal').modal();
+        },
+        success: function (data) {
+            if (data.State == 1) {
+                //debugger;
+                var go = true;
+                if ($.fn.DataTable.isDataTable('#MahalNobetListTable')) {
+                    $('#MahalNobetListTable').DataTable().clear().draw();
+                }
+                if ($.fn.DataTable.isDataTable('#PersonelNobetYillikHaftalikListTable')) {
+                    $('#PersonelNobetYillikHaftalikListTable').DataTable().clear().draw();
+                }
+
+
+                var fileName = "Foça Bilgi Sistem Amirliği Aylık Mahal E-Nöbet Listesi" + ' - ' + year + ' - ' + month;
+
+                var txtCardTitle2 = month + '. Ay ' + year + " Yılı Aylık Mahal E-Nöbet Listesi";
+
+                $('#Yil_Ay_NobetSayisi').text(txtCardTitle2);
+
+                if (data.NobetList == null)
+                    go = false;
+               // if (data.NobetList.length <= 0)
+                  //  go = false;
+
+                if (go == true) {
+                    var NobetList22 = JSON.parse(data.NobetList);  //JSON.stringify(data.NobetList)
+                    var NobetListTable22 = $('#MahalNobetListTable').DataTable({
+                        "data": NobetList22,
+                        "columns": [
+                            { title: "Mahal Adı", data: "MahalAdi" },
+                            { title: "Nöbet Tarihi", data: "TarihDetay" },
+                            { title: "Personel Adı", data: "fulAdi" }
+                        ],
+                        /* columnDefs: [
+                             {
+                                 "targets": 2,
+                                 "data": "NobetTarihi",
+                                 "render": function (data, type, row, meta) {
+                                     var dateArray = data.split('-');
+                                     var date = DateFormatTR(dateArray[0], (dateArray[1] - 1), dateArray[2]);
+                                     return date;
+                                 }
+                             }
+                         ],*/
+                        "ordering": false,
+                        paging: false,
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'print',
+                            { extend: 'pdf', className: 'pdfButton', title: 'Aylık Mahal Nöbet Listesi', filename: fileName },
+                            {
+                                extend: 'csv',
+                                charset: 'UTF-8',
+                                fieldSeparator: ';',
+                                bom: true,
+                                className: 'excelButton',
+                                filename: fileName,
+                                title: 'Nöbet Talep Listesi'
+                            }
+                        ]
+                    });
+                }
+
+
+
+                $(".excelButton").text("CSV İndir");
+                $(".buttons-print").text("Çıktı Al");
+                $(".pdfButton").text("PDF İndir");
+
+                //chart işlemleri
+                debugger;
+                var $primary = '#5A8DEE',
+                    $success = '#39DA8A',
+                    $danger = '#FF5B5C',
+                    $warning = '#FDAC41',
+                    $info = '#00CFDD',
+                    $label_color_light = '#E6EAEE';
+                var themeColors = [$primary, $warning, $danger, $success, $info];
+                if (pieChart != null) {
+                    pieChart.clear();
+                }
+                if (barChart != null) {
+                    barChart.clear();
+                }
+                //var dataUserTotalCountArry = {};
+                var dataUserTotalCount = [];
+                var dataUserFullName = [];
+                if (data.UserTotalYear != null) {
+                    // dataUserTotalCountArry = JSON.parse(data.UserTotalYear);
+                    for (var z = 0; z < data.UserTotalYear.length; z++) {
+                        dataUserTotalCount[z] = JSON.parse(data.UserTotalYear[z].UserTotalYear).TotalCount;
+                        dataUserFullName[z] = data.UserTotalYear[z].FullName;
+                    }
+                } else {
+
+                    pieChart.clear();
+                    pieChart = null;
+
+                    barChart.clear();
+                    barChart = null;
+                    return;
+                }
+                /*if (data.UserTotalYear.length == 0) {
+                    pieChart.clear();
+                    pieChart = null;
+
+                    barChart.clear();
+                    barChart = null;
+                    return;
+                }*/
+                // var dataUserTotalYear = data.UserTotalYear;
+
+                var pieChartOptions = {
+                    chart: {
+                        type: 'pie',
+                        height: 320
+                    },
+
+                    colors: themeColors,
+                    labels: dataUserFullName,//['Team Aaa', 'Team Baaa', 'Team Ca', 'Team Da'],
+                    series: dataUserTotalCount,//[44, 55, 13, 43],
+                    legend: {
+                        itemMargin: {
+                            horizontal: 2
+                        },
+                    },
+                    responsive: [{
+                        breakpoint: 576,
+                        options: {
+                            chart: {
+                                width: 300
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                }
+                pieChart = new ApexCharts(
+                    document.querySelector("#pie2-chart"),
+                    pieChartOptions
+                );
+                pieChart.render();
+                $('#cardId').css("height", 800);
+
+
+                // Bar Chart
+                // ----------------------------------
+                var barChartOptions = {
+                    chart: {
+                        height: 350,
+                        type: 'bar',
+                    },
+                    colors: themeColors,
+                    plotOptions: {
+                        bar: {
+                            dataLabels: {
+                                position: 'top', // top, center, bottom
+                            },
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    series: [{
+                        data: dataUserTotalCount, name: "Nöbet Sayısı"//[400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+                    }],
+                    xaxis: {
+                        categories: dataUserFullName,//['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
+                        tickAmount: 5
+                    }
+                }
+                barChart = new ApexCharts(
+                    document.querySelector("#bar-chart22"),
+                    barChartOptions
+                );
+                barChart.render();
+
+                //PersonelNobetYillikHaftalikListTable
+                var fileName = "Foça Bilgi Sistem Amirliği Yıl Bazında Haftalık Nöbet Sayısı" + ' - ' + year + ' - ' + month;
+
+                var txtCardTitle = year+" Yılı Haftalık Personellerin E-Nöbet Sayısı";
+
+                $('#Yil_HaftaNobetSayisi').text(txtCardTitle);
+
+                if (data.array6 == null)
+                    return;
+                if (data.array6.length == 0)
+                    return;
+
+                var aaa = JSON.parse(data.array6);
+                var NobetListTable2 = $('#PersonelNobetYillikHaftalikListTable').DataTable({
+                    "data": aaa,
+                    /* dataSrc: function (data) {
+                         var tableData = [];
+                         $.each(data, function (key, value) {
+                             tableData.push([value[0], value[1], value[2], value[4], value57], value[6]]);
+                         });
+                         return tableData;
+                     },*/
+
+                    "columns": [
+                        { title: "Kullanıcı Adı", data: 7 },
+                        { title: "Pazartesi", data: 0 },
+                        { title: "Salı", data: 1 },
+                        { title: "Çarşamba", data: 2 },
+                        { title: "Perşembe", data: 3 },
+                        { title: "Cuma", data: 4 },
+                        { title: "Cumartesi", data: 5 },
+                        { title: "Pazar", data: 6 }
+
+                    ],
+                    /* columnDefs: [
+                         {
+                             "targets": 2,
+                             "data": "NobetTarihi",
+                             "render": function (data, type, row, meta) {
+                                 var dateArray = data.split('-');
+                                 var date = DateFormatTR(dateArray[0], (dateArray[1] - 1), dateArray[2]);
+                                 return date;
+                             }
+                         }
+                     ],*/
+                    "ordering": false,
+                    paging: false,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'print',
+                        { extend: 'pdf', className: 'pdfButton', title: 'Şahsi Nöbet Listesi', filename: fileName },
+                        {
+                            extend: 'csv',
+                            charset: 'UTF-8',
+                            fieldSeparator: ';',
+                            bom: true,
+                            className: 'excelButton',
+                            filename: fileName,
+                            title: 'Nöbet Talep Listesi'
+                        }
+                    ]
+                });
+                $(".excelButton").text("CSV İndir");
+                $(".buttons-print").text("Çıktı Al");
+                $(".pdfButton").text("PDF İndir");
+
+            }
+
+        }
+    });
+    }
+
+    function FillAutoComplete(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelect\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDiv").html(html);
+                $("#autoCompleteDiv").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContent").on("change", "#autoCompleteSelect", function () {
+
+        var uid = $("#autoCompleteSelect :selected").val();
+
+        $("#uId").val(uid);
+        $("#searchInput").val($("#autoCompleteSelect :selected").text());
+
+        @*$.ajax({
+            type: "POST",
+            url: "@Url.Action("FulPersonelListGetir","YoneticiIslemleri")",
+            data: JSON.stringify({ uid:uid}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html("Kıdemli Personel Listeleme İşlemi");
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+
+                if (data.State == 1) {
+                    var values = [];
+                    if (data.kidemliMahalList != null) {
+                        var mahalList = JSON.parse(data.kidemliMahalList);
+                        for (var i = 0; i < mahalList.length; i++) {
+                            values[i] = mahalList[i].MahalId.toString();
+                        }
+                        /*var element = $('#programmatic-single');
+                        var values = "1,2,3";
+                        $.each(values.split(","), function (i, e) {
+                            $("#programmatic-single option[value='" + e + "']").prop("selected", true).trigger('change');;
+                        });*/
+                        $('#programmatic-single').val(values).trigger('change');
+                    }
+
+                    //$("#programmatic-single").multiselect('refresh');
+                    $("#uId").val(uid);
+                    $("#searchInput").val($("#autoCompleteSelect :selected").text());
+
+                }
+            }
+        });*@
+
+
+    });
+
+    $("#viewContent").on("click", "#autoCompleteSelect", function () {
+        $("#autoCompleteDiv").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoName(value) {
+        $("#autoCompleteDiv").html(value);
+        $("#autoCompleteDiv").show();
+    }
+
+</script>

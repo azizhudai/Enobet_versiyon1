@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENobet", "Enobet_versiyon1\ENobet.csproj", "{8AA84833-22A5-4994-9B00-CCE4A45BEA27}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8AA84833-22A5-4994-9B00-CCE4A45BEA27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA84833-22A5-4994-9B00-CCE4A45BEA27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA84833-22A5-4994-9B00-CCE4A45BEA27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA84833-22A5-4994-9B00-CCE4A45BEA27}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E490D62E-3569-43F9-9A11-13561C56EF68}
+	EndGlobalSection
+EndGlobal

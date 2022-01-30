@@ -1,0 +1,1278 @@
+﻿@model Enobet_versiyon1.Models.NobetDegisimModel
+@{
+    ViewBag.Title = "NobetDegisimTalep";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h5 class="content-header-title float-left pr-1 mb-0">Nöbet Değişim Talep İşlemi</h5>
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb p-0 mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="@Url.Action("index","Home")"><i class="bx bx-home-alt"></i></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Uygulamalar</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    Nöbet Değişim Talep İşlemi
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+
+            <section id="multiple-column-form">
+                <div class="row match-height">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">@Model.MahalAdi</h4>
+                            </div>
+                            <div class="card-content">
+
+                                @Html.HiddenFor(m => m.NobetListeId)
+                                @Html.HiddenFor(m => m.MahalId)
+                                @Html.HiddenFor(m => m.AmirId)
+                                @Html.HiddenFor(m => m.AmirEposta)
+                                @Html.HiddenFor(m=>m.NobetKidemliId)
+                                <div class="card-body">
+
+                                    <ul class="nav nav-tabs mb-2" role="tablist">
+
+                                        <li class="nav-item current">
+                                            <a class="nav-link d-flex align-items-center active" id="KarsilikliDegisim-tab" data-toggle="tab" href="#KarsilikliDegisim" aria-controls="KarsilikliDegisim-tab" role="tab" aria-selected="false">
+                                                <i class="bx bx-list-ul mr-25"></i><span class="d-none d-sm-block">Karşılıklı Gün Değişimi</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link d-flex align-items-center" id="userAdd-tab" data-toggle="tab" href="#userAdd" aria-controls="userAdd-tab" role="tab" aria-selected="false">
+                                                <i class="bx bx-user mr-25"></i><span class="d-none d-sm-block">Tek Gün Değişimi</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link d-flex align-items-center" id="userList-tab" data-toggle="tab" href="#userList" aria-controls="userList-tab" role="tab" aria-selected="false">
+                                                <i class="bx bx-list-ul mr-25"></i><span class="d-none d-sm-block">Nöbet Değişim Listesi</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show" id="KarsilikliDegisim" aria-labelledby="KarsilikliDegisim-tab" role="tabpanel">
+
+                                            <!-- Form wizard with icon tabs section start -->
+                                            <section id="icon-tabs">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">Karşılıklı Nöbet Değişim İşlemi</h4>
+                                                            </div>
+                                                            <div class="card-content mt-2">
+                                                                <div class="card-body">
+                                                                    <form action="#" class="wizard-horizontal">
+                                                                        <!-- Step 1 -->
+                                                                        <h6>
+                                                                            <i class="step-icon"></i>
+                                                                            <span>NÖBET TARİHİ SEÇ</span>
+                                                                        </h6>
+                                                                        <!-- Step 1 end-->
+                                                                        <!-- body content step 1 -->
+                                                                        <fieldset>
+                                                                            <div class="row">
+                                                                                <div class="col-12">
+                                                                                    @*<h6 class="py-50">...</h6>*@
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="firstName13">Nöbet Listesi<span style="color:red"> * </span> </label>
+                                                                                        @Html.DropDownListFor(m => m.NobetTarihiKendisi, (IEnumerable<SelectListItem>)@ViewBag.ddlNobetListe, new { @class = "form-control required" })
+                                                                                        @*@Html.DropDownListFor(n => n.NobetTarihi, new SelectList((IEnumerable<SelectListItem>)@ViewBag.ddlNobetListe, "Value", "Text", Model.NobetTarihi), new { @class = "form-control" })*@
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="lastName12">İşlem Yapan Personel Adı</label>
+                                                                                        @Html.TextBoxFor(m => m.IslemYapanAdi, new { @class = "form-control", @readonly = "readonly" })
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Kendi Nöbetçi Amirini Seç<span style="color:red"> * </span></label>
+                                                                                        <div class="position-relative has-icon-left">
+                                                                                            @*<input type="hidden" id="dno" name="dno" value="0" />*@
+
+                                                                                            <div class="position-relative has-icon-left" id="viewContent">
+                                                                                                <input type="hidden" id="uIdKendiAmir" name="uIdKendiAmir" value="0" />
+                                                                                                <input type="text" id="searchInput" class="form-control required" placeholder="Personel Adı" />
+                                                                                                <div id="autoCompleteDiv"></div>
+
+                                                                                                <div class="form-control-position">
+                                                                                                    <i class="bx bx-user"></i>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                            @*<div class="col-md-4">
+                                                                               
+                                                                            </div>*@
+                                                                      
+
+                                                                        </fieldset>
+                                                                        <!-- body content step 1 end-->
+                                                                        <!-- Step 2 -->
+                                                                        <h6>
+                                                                            <i class="step-icon"></i>
+                                                                            <span>DEĞİŞTİRİLECEK nöbet TARİHİ SEÇ</span>
+                                                                        </h6>
+                                                                        <!-- Step 2 end-->
+                                                                        <!-- body content of step 2 -->
+                                                                        <fieldset>
+                                                                            <div class="row">
+                                                                                <div class="col-12">
+                                                                                    @*<h6 class="py-50">Enter Your Location</h6>*@
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Nöbet Listesi<span style="color:red"> * </span></label>
+                                                                                        @Html.DropDownListFor(m => m.NobetTarihiBaskasi, (IEnumerable<SelectListItem>)@ViewBag.ddlDeDegisiklikYapmakIstenilenListe, new { @class = "form-control required" })
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="lastName12">İşlem Yapan Personel Adı</label>
+
+                                                                                        @Html.TextBoxFor(m => m.IslemYapanAdi, new { @class = "form-control", @readonly = "readonly" })
+
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                @*<div class="col-md-4">
+                                                                                   
+                                                                                </div>*@
+                                                                                <div class="col-md-6 form-group">
+                                                                                    <div class="form-group">
+                                                                                        <label>Talep Ettiğin Personelin Nöbetçi Amirini Seç<span style="color:red"> * </span></label>
+                                                                                        <div class="position-relative has-icon-left">
+                                                                                            @*<input type="hidden" id="dno" name="dno" value="0" />*@
+
+                                                                                            <div class="position-relative has-icon-left" id="viewContentTalep">
+                                                                                                <input type="hidden" id="uIdTalepAmir" name="uIdTalepAmir" value="0" />
+                                                                                                <input type="text" id="searchInputTalep" class="form-control required" placeholder="Personel Adı" />
+                                                                                                <div id="autoCompleteDivTalep"></div>
+
+                                                                                                <div class="form-control-position">
+                                                                                                    <i class="bx bx-user"></i>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                   
+                                                                                </div>
+
+                                                                                @*<div class="col-sm-6">
+            <div class="form-group">
+                <label for="lastName12">Nöbetçi Amir Adı</label>
+
+                @Html.TextBoxFor(m => m.AmirAdi, new { @class = "form-control", @readonly = "readonly" })
+
+            </div>
+        </div>*@
+                                                                            </div>
+                                                                        </fieldset>
+                                                                        <!-- body content of step 2 end-->
+                                                                        <!-- Step 3 -->
+                                                                        <h6>
+                                                                            <i class="step-icon"></i>
+                                                                            <span>Önizleme Ve Onay</span>
+                                                                        </h6>
+                                                                        <!-- Step 3 end-->
+                                                                        <!-- body content of Step 3 -->
+                                                                        <fieldset>
+                                                                            <div class="row">
+                                                                                <div class="col-12">
+                                                                                    @*<h6 class="py-50">Enter Your Payment Methods</h6>*@
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Eski Nöbet Tarihi</label>
+                                                                                        @Html.TextBoxFor(m => m.OnEskiNobetTarihiKendisi, new { @class = "form-control", @readonly = "readonly", data_tarih = "" })
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="lastName12">Yeni Nöbet Tarihi</label>
+
+                                                                                        @Html.TextBoxFor(m => m.OnYeniNobetTarihiKendisi, new { @class = "form-control", @readonly = "readonly", data_tarih = "" })
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                @*<div class="col-12">*@
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Onay Makamı Seç <span style="color:red"> * </span></label>
+                                                                                        <div class="position-relative has-icon-left">
+                                                                                            @*<input type="hidden" id="dno" name="dno" value="0" />*@
+
+                                                                                            <div class="position-relative has-icon-left" id="viewContentOnayMak">
+                                                                                                <input type="hidden" id="uIdOnayMak" name="uIdOnayMak" value="0" />
+                                                                                                <input type="text" id="searchInputOnayMak" class="form-control required" placeholder="Personel Adı" />
+                                                                                                <div id="autoCompleteDivOnayMak"></div>
+
+                                                                                                <div class="form-control-position">
+                                                                                                    <i class="bx bx-user"></i>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Açıklama</label>
+                                                                                        <br />
+                                                                                        <hr>
+                                                                                        <label style="font-weight: bold;font-size:large" id="karsilikliOnizlemeAciklama"></label>
+                                                                                        <br />
+                                                                                        <hr>
+                                                                                        @*<label style="font-weight: bold;font-size:large" id="karsilikliOnizlemeAciklamaBaska"></label>
+                <hr />
+                <label style="font-weight:bold;font-size:large" id="karOnBaskaAmirAdi"></label>*@
+                                                                                        @*@Html.TextBoxFor(m => m.OnNobetDegisimTalepEdilenPersonelTarih_Adi, new { @class = "form-control", @readonly = "readonly" })*@
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Kendi Nöbetçi Amiri</label>
+                                                                                        @Html.TextBoxFor(m => m.AmirAdi, new { @class = "form-control", @readonly = "readonly", Style = "color:blue" })
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Talep Edilen Personelin Nöbetçi Amiri</label>
+                                                                                        @Html.TextBoxFor(m => m.TalepEdeninAmirAdi, new { @class = "form-control", @readonly = "readonly", Style = "color:blue" })
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Nöbet Kıdemlisi</label>
+                                                                                        @Html.TextBoxFor(m => m.NobetKidemliAdi, new { @class = "form-control", @readonly = "readonly", Style = "color:blue" })
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                @*<div class="col-sm-6">
+            <div class="form-group">
+                <label>Onay Makamı</label>
+                @Html.TextBoxFor(m => m.OnayMakamAdi, new { @class = "form-control", @readonly = "readonly", Style = "color:blue" })
+            </div>
+        </div>*@
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Mazeret</label>
+                                                                                        @Html.TextAreaFor(m => m.Mazeret, new { @class = "form-control" })
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr>
+
+                                                                                @*</div>*@
+
+                                                                            </div>
+                                                                        </fieldset>
+                                                                        <!-- body content of Step 3 end-->
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <!-- Form wizard with number tabs section end -->
+
+                                        </div>
+
+                                        <div class="tab-pane fade" id="userAdd" aria-labelledby="userAdd-tab" role="tabpanel">
+
+
+                                            <!-- Form wizard with icon tabs section start -->
+                                            <section id="icon-tabs2">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">Tek Gün Nöbet Değişim İşlemi</h4>
+                                                            </div>
+                                                            <div class="card-content mt-2">
+                                                                <div class="card-body">
+                                                                    <form action="#" class="wizard22-horizontal">
+                                                                        <!-- Step 1 -->
+                                                                        <h6>
+                                                                            <i class="step-icon"></i>
+                                                                            <span>Değişiklik Talebi Yapılacak Günü Seçin</span>
+                                                                        </h6>
+                                                                        <!-- Step 1 end-->
+                                                                        <!-- body content step 1 -->
+                                                                        <fieldset>
+                                                                            <div class="row">
+                                                                                <div class="col-12">
+                                                                                    @*<h6 class="py-50">...</h6>*@
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="firstName13">Nöbet Listesi<span style="color:red"> * </span></label>
+                                                                                        @Html.DropDownListFor(m => m.TekNobetTarihiKendisi, (IEnumerable<SelectListItem>)@ViewBag.ddlDeDegisiklikYapmakIstenilenListe, new { @class = "form-control required" })
+                                                                                        @*@Html.DropDownListFor(n => n.NobetTarihi, new SelectList((IEnumerable<SelectListItem>)@ViewBag.ddlNobetListe, "Value", "Text", Model.NobetTarihi), new { @class = "form-control" })*@
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="lastName12">İşlem Yapan Personel Adı</label>
+
+                                                                                        @Html.TextBoxFor(m => m.IslemYapanAdi, new { @class = "form-control", @readonly = "readonly" })
+
+                                                                                    </div>
+                                                                                </div>
+
+
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Kendi Nöbetçi Amirini Seç<span style="color:red"> * </span></label>
+                                                                                        <div class="position-relative has-icon-left">
+                                                                                            @*<input type="hidden" id="dno" name="dno" value="0" />*@
+
+                                                                                            <div class="position-relative has-icon-left" id="viewContentTekTalepKendiAmir">
+                                                                                                <input type="hidden" id="uIdTekTalepKendiAmir" name="uIdTekTalepKendiAmir" value="0" />
+                                                                                                <input type="text" id="searchInputTekTalepKendiAmir" class="form-control required" value="" placeholder="Personel Adı" />
+                                                                                                <div id="autoCompleteDivTekTalepKendiAmir"></div>
+
+                                                                                                <div class="form-control-position">
+                                                                                                    <i class="bx bx-user"></i>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Talep Ettiğin Personelin Nöbetçi Amirini Seçin<span style="color:red"> * </span></label>
+                                                                                        <div class="position-relative has-icon-left">
+                                                                                            @*<input type="hidden" id="dno" name="dno" value="0" />*@
+
+                                                                                            <div class="position-relative has-icon-left" id="viewContentTekTalepEttigiAmir">
+                                                                                                <input type="hidden" id="uIdTekTalepEttigiAmir" name="uIdTekTalepEttigiAmir" value="0" />
+                                                                                                <input class="form-control required" type="text" id="searchInputTekTalepEttigiAmir" value="" placeholder="Personel Adı" />
+                                                                                                <div id="autoCompleteDivTekTalepEttigiAmir"></div>
+
+                                                                                                <div class="form-control-position">
+                                                                                                    <i class="bx bx-user"></i>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                        <!-- body content step 1 end-->
+                                                                        <!-- Step 3 -->
+                                                                        <h6>
+                                                                            <i class="step-icon"></i>
+                                                                            <span>Önizleme Ve Onay</span>
+                                                                        </h6>
+                                                                        <!-- Step 3 end-->
+                                                                        <!-- body content of Step 3 -->
+                                                                        <fieldset>
+                                                                            <div class="row">
+                                                                                <div class="col-12">
+                                                                                    @*<h6 class="py-50">Enter Your Payment Methods</h6>*@
+                                                                                </div>
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="lastName12">Yeni Nöbet Tarihi</label>
+
+                                                                                        @Html.TextBoxFor(m => m.TekOnYeniNobetTarihiKendisi, new { @class = "form-control", @readonly = "readonly", data_tarih = "" })
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                @*<div class="col-12">*@
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Onay Makamı Seç <span style="color:red"> * </span></label>
+                                                                                        <div class="position-relative has-icon-left">
+                                                                                            @*<input type="hidden" id="dno" name="dno" value="0" />*@
+
+                                                                                            <div class="position-relative has-icon-left" id="viewContentTekTalepOnayMak">
+                                                                                                <input type="hidden" id="uIdTekOnayMak" name="uIdOnayMak" value="0" />
+                                                                                                <input type="text" id="searchInputTekOnayMak" class="form-control required" placeholder="Personel Adı" />
+                                                                                                <div id="autoCompleteDivTekTalepOnayMak"></div>
+
+                                                                                                <div class="form-control-position">
+                                                                                                    <i class="bx bx-user"></i>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Açıklama</label>
+                                                                                        <br />
+                                                                                        <hr>
+                                                                                        <label style="font-weight: bold;font-size:large" id="TekOnizlemeAciklama"></label>
+                                                                                        <br />
+                                                                                        <hr>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Kendi Nöbetçi Amiri</label>
+                                                                                        @Html.TextBoxFor(m => m.TekAmirAdi, new { @class = "form-control", @readonly = "readonly", Style = "color:blue" })
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Talep Edilen Personelin Nöbetçi Amiri</label>
+                                                                                        @Html.TextBoxFor(m => m.TekTalepEdeninAmirAdi, new { @class = "form-control", @readonly = "readonly", Style = "color:blue" })
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Nöbet Kıdemlisi</label>
+                                                                                        @Html.TextBoxFor(m => m.NobetKidemliAdi, new { @class = "form-control", @readonly = "readonly", Style = "color:blue" })
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Mazeret</label>
+                                                                                        @Html.TextAreaFor(m => m.TekMazeret, new { @class = "form-control" })
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr>
+
+                                                                            </div>
+                                                                        </fieldset>
+                                                                        <!-- body content of Step 3 end-->
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <!-- Form wizard with number tabs section end -->
+
+                                        </div>
+
+                                        <div class="tab-pane fade show" id="userList" aria-labelledby="userList-tab" role="tabpanel">
+
+                                            <section id="column-selectors">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">Kullanıcı Listesi</h4>
+                                                                <li style="float:left">
+                                                                    <span class="badge badge-pill badge-light-primary">
+                                                                        <input onclick="btnNobetListClk();" type="button" value="Listele" />
+                                                                    </span>
+                                                                </li>
+
+                                                                @*<li style="float:right"><span class="badge badge-pill badge-light-success">@Model.KullaniciList.Count Aktif</span></li>*@
+                                                            </div>
+                                                            <div class="card-content">
+                                                                <div class="card-body card-dashboard">
+
+                                                                    <div class="table-responsive">
+                                                                        <table id="NobetListTable" class="table table-striped dataex-html5-selectors">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Personel Adı</th>
+                                                                                    <th>Talep Ettiği Personel Adı</th>
+                                                                                    <th>Yeni Nöbet Tarihi</th>
+                                                                                    <th>Eski Nöbet Tarihi</th>
+                                                                                    <th>Durum</th>
+                                                                                    <th>Mahal Adı</th>
+                                                                                    <th>Değişim Tipi</th>
+                                                                                    <th>Amir Adı</th>
+
+
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<!-- END: Content-->
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- BEGIN: Page CSS-->
+@Styles.Render("~/app-assets/css/core/menu/menu-types/vertical-menu.css")
+@Styles.Render("~/app-assets/css/plugins/forms/wizard.css")
+<!--END: Page CSS-->
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/extensions/jquery.steps.min.js")
+@Scripts.Render("~/app-assets/vendors/js/forms/validation/jquery.validate.min.js")
+<!-- END: Page Vendor JS-->
+@*@Scripts.Render("~/app-assets/vendors/js/forms/validation/jquery.validate.min.js")*@
+
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/forms/wizard-steps.js")
+<!-- END: Page JS-->
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/datatables.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.print.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/pdfmake.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/vfs_fonts.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/datatables/datatable.js")
+
+
+<script>
+    //$(window).load(function () { /*code here*/
+
+    //})
+    $(document).ready(function () {
+
+        // btnUserListClk();
+
+        $("#searchInput").keyup(function (e) {
+            if (e.which == 40) {
+                $("#autoCompleteSelect").val($("#autoCompleteSelect option:first").val());
+                $("#autoCompleteSelect").focus();
+                $(this).val($("#autoCompleteSelect :selected").text());
+            }
+            else {
+                if ($(this).val().length > 2)
+                    FillAutoComplete($(this).val());
+                else
+                    $("#autoCompleteDiv").hide();
+            }
+        });
+
+        $("#searchInputTalep").keyup(function (e) {
+            if (e.which == 40) {
+                $("#autoCompleteSelectTalep").val($("#autoCompleteSelectTalep option:first").val());
+                $("#autoCompleteSelectTalep").focus();
+                $(this).val($("#autoCompleteSelectTalep :selected").text());
+            }
+            else {
+                if ($(this).val().length > 2)
+                    FillAutoCompleteTalep($(this).val());
+                else
+                    $("#autoCompleteDivTalep").hide();
+            }
+        });
+        $("#searchInputOnayMak").keyup(function (e) {
+            //debugger;
+            if (e.which == 40) {
+                $("#autoCompleteSelectOnayMak").val($("#autoCompleteSelectOnayMak option:first").val());
+                $("#autoCompleteSelectOnayMak").focus();
+                $(this).val($("#autoCompleteSelectOnayMak :selected").text());
+            }
+            else {
+                if ($(this).val().length > 2)
+                    FillAutoCompleteOnayMak($(this).val());
+                else
+                    $("#autoCompleteDivOnayMak").hide();
+            }
+        });
+
+        //tek kendi amir
+        $("#searchInputTekTalepKendiAmir").keyup(function (e) {
+            //debugger;
+            if (e.which == 40) {
+                $("#autoCompleteSelectTekKendiAmir").val($("#autoCompleteSelectTekKendiAmir option:first").val());
+                $("#autoCompleteSelectTekKendiAmir").focus();
+                $(this).val($("#autoCompleteSelectTekKendiAmir :selected").text());
+            }
+            else {
+                if ($(this).val().length > 2)
+                    FillAutoCompleteTekTalepKendiAmir($(this).val());
+                else
+                    $("#autoCompleteDivTekTalepKendiAmir").hide();
+            }
+        });
+
+        // tek talep ettiği amir
+        $("#searchInputTekTalepEttigiAmir").keyup(function (e) {
+            //debugger;
+            if (e.which == 40) {
+                $("#autoCompleteSelectTekTalepEttigiAmir").val($("#autoCompleteSelectTekTalepEttigiAmir option:first").val());
+                $("#autoCompleteSelectTekTalepEttigiAmir").focus();
+                $(this).val($("#autoCompleteSelectTekTalepEttigiAmir :selected").text());
+            }
+            else {
+                if ($(this).val().length > 2)
+                    FillAutoCompleteTekTalepEttigiAmir($(this).val());
+                else
+                    $("#autoCompleteDivTekTalepEttigiAmir").hide();
+            }
+        });
+        // tek onay makamı
+        $("#searchInputTekOnayMak").keyup(function (e) {
+            //debugger;
+            if (e.which == 40) {
+                $("#autoCompleteSelectTekOnayMak").val($("#autoCompleteSelectTekOnayMak option:first").val());
+                $("#autoCompleteSelectTekOnayMak").focus();
+                $(this).val($("#autoCompleteSelectTekOnayMak :selected").text());
+            }
+            else {
+                if ($(this).val().length > 2)
+                    FillAutoCompleteTekOnayMak($(this).val());
+                else
+                    $("#autoCompleteDivTekTalepOnayMak").hide();
+            }
+        });
+
+
+    });
+    
+
+
+</script>
+
+<script>
+
+     function FillAutoComplete(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelect\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDiv").html(html);
+                $("#autoCompleteDiv").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContent").on("change", "#autoCompleteSelect", function () {
+
+        var uid = $("#autoCompleteSelect :selected").val();
+
+        $("#uIdKendiAmir").val(uid);
+        $("#searchInput").val($("#autoCompleteSelect :selected").text());
+
+    });
+
+    $("#viewContent").on("click", "#autoCompleteSelect", function () {
+        $("#autoCompleteDiv").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoName(value) {
+        $("#autoCompleteDiv").html(value);
+        $("#autoCompleteDiv").show();
+    }
+
+    //talep eden personelin amir bilgileri
+     function FillAutoCompleteTalep(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelectTalep\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDivTalep").html(html);
+                $("#autoCompleteDivTalep").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContentTalep").on("change", "#autoCompleteSelectTalep", function () {
+
+        var uid = $("#autoCompleteSelectTalep :selected").val();
+
+        $("#uIdTalepAmir").val(uid);
+        $("#searchInputTalep").val($("#autoCompleteSelectTalep :selected").text());
+
+        $('#TalepEdeninAmirAdi').val($('#searchInputTalep').val());
+    });
+
+    $("#viewContentTalep").on("click", "#autoCompleteSelectTalep", function () {
+        $("#autoCompleteDivTalep").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoNameTalep(value) {
+        $("#autoCompleteDivTalep").html(value);
+        $("#autoCompleteDivTalep").show();
+    }
+
+     function FillAutoCompleteOnayMak(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelectOnayMak\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDivOnayMak").html(html);
+                $("#autoCompleteDivOnayMak").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContentOnayMak").on("change", "#autoCompleteSelectOnayMak", function () {
+
+        var uid = $("#autoCompleteSelectOnayMak :selected").val();
+
+        $("#uIdOnayMak").val(uid);
+        $("#searchInputOnayMak").val($("#autoCompleteSelectOnayMak :selected").text());
+
+    });
+
+    $("#viewContentOnayMak").on("click", "#autoCompleteSelectOnayMak", function () {
+        $("#autoCompleteDivOnayMak").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoNameOnayMak(value) {
+        $("#autoCompleteDivOnayMak").html(value);
+        $("#autoCompleteDivOnayMak").show();
+    }
+
+    //tek nöbet işlemleri
+
+
+    function FillAutoCompleteTekTalepKendiAmir(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelectTekKendiAmir\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDivTekTalepKendiAmir").html(html);
+                $("#autoCompleteDivTekTalepKendiAmir").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContentTekTalepKendiAmir").on("change", "#autoCompleteSelectTekKendiAmir", function () {
+
+        var uid = $("#autoCompleteSelectTekKendiAmir :selected").val();
+
+        $("#uIdTekTalepKendiAmir").val(uid);
+        $("#searchInputTekTalepKendiAmir").val($("#autoCompleteSelectTekKendiAmir :selected").text());
+
+    });
+
+    $("#viewContentTekTalepKendiAmir").on("click", "#autoCompleteSelectTekKendiAmir", function () {
+        $("#autoCompleteDivTekTalepKendiAmir").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoNameTekTalepKendiAmir(value) {
+        $("#autoCompleteDivTekTalepKendiAmir").html(value);
+        $("#autoCompleteDivTekTalepKendiAmir").show();
+    }
+
+    ///tek nöbet talep ettiği amir için
+
+
+    function FillAutoCompleteTekTalepEttigiAmir(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelectTekTalepEttigiAmir\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDivTekTalepEttigiAmir").html(html);
+                $("#autoCompleteDivTekTalepEttigiAmir").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContentTekTalepEttigiAmir").on("change", "#autoCompleteSelectTekTalepEttigiAmir", function () {
+
+        var uid = $("#autoCompleteSelectTekTalepEttigiAmir :selected").val();
+
+        $("#uIdTekTalepEttigiAmir").val(uid);
+        $("#searchInputTekTalepEttigiAmir").val($("#autoCompleteSelectTekTalepEttigiAmir :selected").text());
+
+    });
+
+    $("#viewContentTekTalepEttigiAmir").on("click", "#autoCompleteSelectTekTalepEttigiAmir", function () {
+        $("#autoCompleteDivTekTalepEttigiAmir").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoNameTekTalepEttigiAmir(value) {
+        $("#autoCompleteDivTekTalepEttigiAmir").html(value);
+        $("#autoCompleteDivTekTalepEttigiAmir").show();
+    }
+
+
+    // tek nöbet onay makamı için
+
+
+      function FillAutoCompleteTekOnayMak(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelectTekOnayMak\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDivTekTalepOnayMak").html(html);
+                $("#autoCompleteDivTekTalepOnayMak").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContentTekTalepOnayMak").on("change", "#autoCompleteSelectTekOnayMak", function () {
+
+        var uid = $("#autoCompleteSelectTekOnayMak :selected").val();
+
+        $("#uIdTekOnayMak").val(uid);
+        $("#searchInputTekOnayMak").val($("#autoCompleteSelectTekOnayMak :selected").text());
+
+    });
+
+    $("#viewContentTekTalepOnayMak").on("click", "#autoCompleteSelectTekOnayMak", function () {
+        $("#autoCompleteDivTekTalepOnayMak").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoNameTekTalepOnayMak(value) {
+        $("#autoCompleteDivTekTalepOnayMak").html(value);
+        $("#autoCompleteDivTekTalepOnayMak").show();
+    }
+
+
+    ///////////////////////
+
+
+
+    $(".actions [href='#next']").text("İleri");
+    $(".actions [href='#previous']").text("Geri");
+
+    $('#NobetTarihiKendisi').on('change', function () {
+        //alert(this.text);
+        if ($('#NobetTarihiKendisi').val() == "")
+            return;
+        var textArry2 = $("#NobetTarihiKendisi option:selected").text().split('||');
+        var MahalId = $('#MahalId').val();
+
+
+          $.ajax({
+        type: "POST",
+        url: "@Url.Action("NobetTarihKontrol", "Home")",
+              data: JSON.stringify({ tarih: textArry2[0], MahalId: MahalId}),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error: function (ex) {
+            $("#messageBoxModal .modal-title").html("Nöbet Değişim İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+            $('#messageBoxModal').modal();
+        },
+        success: function (data) {
+
+            if (data.State == 2) {
+                $('#NobetTarihiKendisi').val("").trigger('change');
+                alert(data.Message);
+            }
+
+        }
+    });
+
+
+        $('#OnEskiNobetTarihiKendisi').val($("#NobetTarihiKendisi option:selected").text());
+        $('#OnEskiNobetTarihiKendisi').data('tarih', textArry2[0]); //setter
+    });
+    $('#NobetTarihiBaskasi').on('change', function () {
+        // alert(this.text);
+        if ($('#NobetTarihiBaskasi').val() == "")
+            return;
+
+        var textArry = $("#NobetTarihiBaskasi option:selected").text().split('||');
+        var MahalId = $('#MahalId').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("NobetTarihKontrol", "Home")",
+            data: JSON.stringify({ tarih: textArry[0], MahalId: MahalId }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html("Nöbet Değişim İşlemi");
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+
+                if (data.State == 2) {
+                    $('#NobetTarihiBaskasi').val("").trigger('change');
+                    alert(data.Message);
+                }
+
+            }
+        });
+
+        $('#OnYeniNobetTarihiKendisi').val($("#NobetTarihiBaskasi option:selected").text());
+
+        //$('#OnNobetDegisimTalepEdilenPersonelTarih_Adi').val($("#NobetTarihiBaskasi option:selected").text());
+
+        var textArry2 = $("#NobetTarihiKendisi option:selected").text().split('||');
+
+        var textArry3 = $("#NobetTarihiBaskasi option:selected").text().split('||');
+        var aciklama = textArry2[1] + " PERSONELİN NÖBET TARİHİ " + textArry3[0] + "OLACAKTIR.";
+        $('#karsilikliOnizlemeAciklama').text(aciklama);
+
+        var textArry22 = $("#NobetTarihiBaskasi option:selected").text().split('||');
+
+        var textArry33 = $("#NobetTarihiKendisi option:selected").text().split('||');
+        var aciklama = textArry22[1] + " PERSONELİN NÖBET TARİHİ " + textArry33[0] + "OLACAKTIR.";
+
+        $('#karsilikliOnizlemeAciklamaBaska').text(aciklama);
+
+        $('#OnYeniNobetTarihiKendisi').data('tarih', textArry[0]);
+
+        $('#AmirAdi').val($('#searchInput').val());
+
+        // $('#OnayMakamAdi').val($('#searchInputOnayMak').val());
+    });
+        /////////////
+    $('#TekNobetTarihiKendisi').on('change', function () {
+        // alert(this.text);
+        if ($('#TekNobetTarihiKendisi').val() == "")
+            return;
+
+        var textArry = $("#TekNobetTarihiKendisi option:selected").text().split('||');
+        var MahalId = $('#MahalId').val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("NobetTarihKontrol", "Home")",
+            data: JSON.stringify({ tarih: textArry[0], MahalId: MahalId }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html("Nöbet Değişim İşlemi");
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+                if (data.State == 2) {
+                    $('#TekNobetTarihiKendisi').val("").trigger('change');
+                    alert(data.Message);
+                }
+            }
+        });
+    });
+        /////
+
+
+    function AjaxMethod(data) {
+
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("NobetDegisimKaydetVeMailGonder", "Home")",
+        data: JSON.stringify({ data: data}),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error: function (ex) {
+            $("#messageBoxModal .modal-title").html("Nöbet Değişim İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+            $('#messageBoxModal').modal();
+        },
+        success: function (data) {
+
+            if (data.State == 1) {
+                alert(data.id);
+            } else {
+                alert(data.Message);
+            }
+
+        }
+    });
+
+    }
+
+     function AjaxMethodTekTalep(data) {
+
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("NobetTekDegisimKaydetVeMailGonder", "Home")",
+        data: JSON.stringify({ data: data}),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error: function (ex) {
+            $("#messageBoxModal .modal-title").html("Nöbet Değişim İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+            $('#messageBoxModal').modal();
+        },
+        success: function (data) {
+
+            if (data.State == 1) {
+                alert(data.id);
+            } else {
+                alert(data.Message);
+            }
+
+        }
+    });
+
+    }
+
+    function btnNobetListClk() {
+
+         $.ajax({
+        type: "POST",
+        url: "@Url.Action("NobetDegisimListe", "Home")",
+        data: JSON.stringify({ }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error: function (ex) {
+            $("#messageBoxModal .modal-title").html("Nöbet Değişim İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+            $('#messageBoxModal').modal();
+        },
+        success: function (data) {
+
+            if (data.State == 1) {
+
+                if ($.fn.DataTable.isDataTable('#NobetListTable')) {
+                    $('#NobetListTable').DataTable().clear().draw();
+                }
+
+                // debugger;
+                ////////////
+                var fileName = "Foça Bilgi Sistem Amirliği E-Nöbet Listesi";
+                if (data.NobetList == null)
+                    return;
+                if (data.NobetList.length <= 0)
+                    return;
+
+                var NobetList = JSON.parse(data.NobetList);  //JSON.stringify(data.NobetList)
+                var NobetListTable = $('#NobetListTable').DataTable({
+                    "data": NobetList,
+                    "columns": [
+                        { title: "Personel Adı", data: "TalepEdenFulAdi" },
+                        { title: "Talep Ettiği Personel Adı", data: "TalepEttigiFulAdi" },
+                        { title: "Yeni Nöbet Tarihi", data: "YeniTalepEdenKisininTarihi" },
+                        { title: "Eski Nöbet Tarihi", data: "YeniTalepEttigiKisininTarihi" },
+
+                        { title: "Mahal Adı", data: "MahalAdi" },
+                        { title: "Değişim Tipi", data: "DegisimTipi" },
+                        { title: "Amir Adı", data: "OnaylayanAmirFulAdi" },
+                        { title: "Durum", data: "Durum" },
+                        //{ title: "Nöbet Tarihi", data: "NobetTarihi" },
+                    ],
+                    columnDefs: [
+                        {
+                            "targets": 2,
+                            "data": "YeniTalepEdenKisininTarihi",
+                            "render": function (data, type, row, meta) {
+                                var dateArray = data.split('-');
+                                var date = DateFormatTR(dateArray[0], (dateArray[1] - 1), dateArray[2]);
+                                return date;
+                            }
+                        },
+                        {
+                            "targets": 3,
+                            "data": "YeniTalepEttigiKisininTarihi",
+                            "render": function (data, type, row, meta) {
+                                var dateArray = data.split('-');
+                                var date = DateFormatTR(dateArray[0], (dateArray[1] - 1), dateArray[2]);
+                                return date;
+                            }
+                        }
+                    ],
+                    "ordering": false,
+                    paging: false,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'print',
+                        { extend: 'pdf', className: 'pdfButton', title: 'Nöbet Talep Listesi', filename: fileName },
+                        {
+                            extend: 'csv',
+                            charset: 'UTF-8',
+                            fieldSeparator: ';',
+                            bom: true,
+                            className: 'excelButton',
+                            filename: fileName,
+                            title: 'Nöbet Talep Listesi'
+                        }
+                    ]
+                });
+
+
+                $(".excelButton").text("CSV İndir");
+                $(".buttons-print").text("Çıktı Al");
+                $(".pdfButton").text("PDF İndir");
+
+
+            }
+
+        }
+    });
+    }
+
+    function DateFormatTR(year, month, day) {
+        var options111 = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        };
+        var dateStr = new Date(Date.UTC(year, month, day))
+            .toLocaleDateString("tr-TR", options111)
+            .replace(/ /g, '-');
+        return dateStr;
+    }
+
+    $('#userList-tab').click(function () {
+
+        btnNobetListClk();
+    });
+
+</script>

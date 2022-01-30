@@ -1,0 +1,719 @@
+﻿@model Enobet_versiyon1.Models.KullaniciModel
+
+@{
+    ViewBag.Title = "KullaniciIslemleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    .uppercase {
+        text-transform: uppercase;
+    }
+    .lower{
+        text-transform:lowercase;
+    }
+</style>
+
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h5 class="content-header-title float-left pr-1 mb-0">Personel İşlemleri</h5>
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb p-0 mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="~/home/index"><i class="bx bx-home-alt"></i></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Yönetici İşlemleri</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a href="#">Personel İşlemleri</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+
+
+            <section id="multiple-column-form">
+                <div class="row match-height">
+                    <div class="col-12">
+                        <div class="card">
+                            @*<div class="card-header">
+                                    <h4 class="card-title">Kullanıcı Ekle</h4>
+                                </div>*@
+                            <div class="card-content">
+
+                                <div class="card-body">
+
+                                    <ul class="nav nav-tabs mb-2" role="tablist">
+                                        <li class="nav-item current">
+                                            <a class="nav-link d-flex align-items-center active" id="userAdd-tab" data-toggle="tab" href="#userAdd" aria-controls="userAdd-tab" role="tab" aria-selected="true">
+                                                <i class="bx bx-user mr-25"></i><span class="d-none d-sm-block">Personel Kayıt İşlemi</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link d-flex align-items-center" id="userList-tab" data-toggle="tab" href="#userList" aria-controls="userList-tab" role="tab" aria-selected="false">
+                                                <i class="bx bx-list-ul mr-25"></i><span class="d-none d-sm-block">Personel Listesi</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show" id="userAdd" aria-labelledby="userAdd-tab" role="tabpanel">
+
+                                            @using (Html.BeginForm("KullaniciEkle", "YoneticiIslemleri", FormMethod.Post))
+                                            {
+                                                <input type="hidden" value="0" id="uid" name="uid" />
+                                                <div class="form-body">
+                                                    <div class="row">
+                                                        @*<div class="col-md-2 col-12">
+            <div class="form-label-group">
+                <input type="text" id="userRank" required class="form-control" placeholder="* Sınıfı ve Rütbesi" name="userRank">
+                <label for="userRank"><span style="color:red">* </span>Sınıfı ve Rütbesi</label>
+            </div>
+        </div>*@
+                                                        <div class="form-group col-md-2 col-12">
+                                                            <div class="form-group validate">
+                                                                <label><span style="color:red">* </span>Sınıf</label>
+                                                                @Html.DropDownListFor(n => n.SinifId, new SelectList(ViewBag.ddlSinifId, "Value", "Text", Model.SinifId), new { @class = "form-control" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-md-2 col-12">
+                                                            <div class="form-group validate">
+                                                                <label><span style="color:red">* </span>Rütbe</label>
+                                                                @Html.DropDownListFor(n => n.RutbeId, new SelectList(ViewBag.ddlRutbeId, "Value", "Text", Model.RutbeId), new { @class = "form-control" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-12" style="padding-top: 20px;">
+                                                            <div class="form-label-group">
+                                                                <input type="text" id="userName" required class="form-control uppercase" placeholder="* Adı" name="userName">
+                                                                <label for="userName"><span style="color:red">* </span>Adı</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-12" style="padding-top: 20px;">
+                                                            <div class="form-label-group">
+                                                                <input type="text" id="userSurname" required class="form-control uppercase" placeholder="* Soyadı" name="userSurname">
+                                                                <label for="userSurname"><span style="color:red">* </span>Soyadı</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-12">
+                                                            <div class="form-label-group">
+                                                                <input type="email" id="Email" required class="form-control lower" placeholder="* E-posta" name="Email">
+                                                                <label for="Email"><span style="color:red">* </span>E-posta</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 col-12">
+                                                            <div class="form-label-group">
+                                                                <input type="number" id="Tcno" class="form-control" name="Tcno" placeholder="* T.C. No" data-mask="00000000000">
+                                                                <label for="Tcno"><span style="color:red">* </span>T.C. No</label>
+                                                            </div>
+                                                        </div>
+                                                        <!--
+         <div class="col-md-4 col-12"></div>
+    -->
+                                                        <div class="col-md-2 col-12">
+                                                            <div class="form-label-group">
+                                                                <input type="password" id="password" class="form-control" name="password" placeholder="Parola">
+                                                                <label for="company-column">Parola</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 col-12">
+                                                            <div class="form-label-group">
+                                                                <input type="password" id="passwordAgain" class="form-control" name="passwordAgain" placeholder="Parola Tekrar">
+                                                                <label for="passwordAgain">Parola Tekrar</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-md-4 col-12">
+                                                            <div class="form-group validate">
+                                                                <label><span style="color:red">* </span>Birlik</label>
+                                                                @Html.DropDownListFor(n => n.BirlikId, new SelectList(ViewBag.ddlBirlikId, "Value", "Text", Model.BirlikId), new { @class = "form-control" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-md-4 col-12">
+                                                            <div class="form-group validate">
+                                                                <label><span style="color:red">* </span>Mahal</label>
+                                                                @Html.DropDownListFor(n => n.MahalId, new SelectList(ViewBag.ddlMahalId, "Value", "Text", Model.MahalId), new { @class = "form-control" })
+
+                                                                @*<select id="mahalSelect" class="form-control" aria-invalid="false">
+                </select>*@
+                                                            </div>
+                                                        </div>
+                                                        @if (Session["RolId"].ToString() == "1")
+                                                        {
+                                                            <div class="form-group col-md-2 col-12">
+                                                                <div class="form-group validate">
+                                                                    <label><span style="color:red">* </span>Rol</label>
+                                                                    <select id="rolId" class="form-control" aria-invalid="false">
+                                                                        <option value="0">Personel</option>
+
+                                                                        <option value="1">Yönetici</option>
+                                                                        <option value="3">Nöbet Kıdemlisi</option>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        @if (Session["RolId"].ToString() == "1")
+                                                        {
+                                                            <div class="form-group col-md-2 col-12" style="padding-top:20px;">
+
+                                                                <input type="checkbox" id="NobettenCikar" name="NobettenCikar" />
+                                                                <label for="NobettenCikar"> Nöbet Listesinden Çıkar</label>
+                                                            </div>
+                                                        }
+
+
+
+                                                        <div class="form-group col-md-2 col-12">
+                                                            <div class="form-group validate">
+                                                                <label><span style="color:red">* </span>Durum</label>
+                                                                @Html.DropDownListFor(n => n.Aktif, new SelectList(ViewBag.ddlKullaniciDurumId, "Value", "Text", Model.Aktif), new { @class = "form-control" })
+
+
+
+                                                                @*<select id="rolId" class="form-control" aria-invalid="false">
+                    <option value="0">Kullanıcı</option>
+                    @if (Session["RolId"].ToString() == "1")
+                    {
+                        <option value="1">Yönetici</option>
+                        <option value="3">Nöbet Kıdemlisi</option>
+                    }
+
+                </select>*@
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-12 d-flex justify-content-end">
+                                                            <button type="button" id="userBtnSave" onclick="btnUserAddClk();" class="btn btn-primary mr-1 mb-1">Kaydet</button>
+                                                            <button type="reset" id="userBtnClear" class="btn btn-light-secondary mr-1 mb-1">Temizle</button>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+
+                                            }
+
+                                        </div>
+
+                                        <div class="tab-pane fade show" id="userList" aria-labelledby="userList-tab" role="tabpanel">
+
+                                            <section id="column-selectors">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">Personel Listesi</h4>
+                                                                <p style="float:left">
+                                                                    <span class="badge badge-pill badge-light-primary">
+                                                                        <input onclick="btnUserListClk();" type="button" value="Listele" />
+                                                                    </span>
+                                                                </p>
+
+                                                                @*<li style="float:right"><span class="badge badge-pill badge-light-success">@Model.KullaniciList.Count Aktif</span></li>*@
+                                                            </div>
+                                                            <div class="card-content">
+                                                                <div class="card-body card-dashboard">
+
+                                                                    <div class="table-responsive">
+                                                                        <table id="tableUserList" class="table table-striped dataex-html5-selectors">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Sınıf</th>
+                                                                                    <th>Rütbe</th>
+                                                                                    <th>Personel Adı</th>
+                                                                                    <th>Personel Soyadı</th>
+                                                                                    <th>Personel E-Posta</th>
+                                                                                    <th>Personel Mahali</th>
+                                                                                    <th>Personel T.C. No</th>
+                                                                                    <th>Rol</th>
+                                                                                    <th>Nöbet Durumu</th>
+                                                                                    <th>Sistem Durumu</th>
+                                                                                    <th>İşlemler</th>
+
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+</div>
+
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/datatables.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.print.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/pdfmake.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/vfs_fonts.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/datatables/datatable.js")
+<!-- END: Page JS-->
+
+@Scripts.Render("~/app-assets/js/scripts/pages/page-users.js")
+@Scripts.Render("~/app-assets/js/scripts/navs/navs.js")
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/modal/components-modal.js")
+<!-- END: Page JS-->
+
+@Scripts.Render("~/app-assets/js/scripts/jquery.mask.js")
+
+<script>
+
+    var tableUserList;
+
+    //$(document).ready(function () {
+
+    //    String.prototype.turkishToUpper = function () {
+    //        var string = this;
+    //        var letters = { "i": "İ", "ş": "Ş", "ğ": "Ğ", "ü": "Ü", "ö": "Ö", "ç": "Ç", "ı": "I" };
+    //        string = string.replace(/(([iışğüçö]))+/g, function (letter) { return letters[letter]; })
+    //        return string.toUpperCase();
+    //    }
+
+    //    String.prototype.turkishToLower = function () {
+    //        var string = this;
+    //        var letters = { "İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç" };
+    //        string = string.replace(/(([İIŞĞÜÇÖ]))+/g, function (letter) { return letters[letter]; })
+    //        return string.toLowerCase();
+    //    }
+
+    //});
+    
+
+    function btnUserAddClk() {
+
+        //var userRank = $('#userRank').val();
+        var SinifId = $('#SinifId').val();
+        var RutbeId = $('#RutbeId').val();
+        var userName = $('#userName').val();
+        var userSurname = $('#userSurname').val();
+        var email = $('#Email').val();
+        var Tcno = $('#Tcno').val();
+        var password = $('#password').val();
+        var passwordAgain = $('#passwordAgain').val();
+        var BirlikId = $('#BirlikId').val();
+        var MahalId = $('#MahalId').val();
+        var rolId = $('#rolId').val();
+
+        var NobettenCikar = $('#NobettenCikar').prop('checked');
+        var Aktif = $('#Aktif').val();
+
+        var uid = $('#uid').val();
+        //$('#userBtnSave').text("Kaydet");
+
+        var problemText = "";
+
+        if (password != "") {
+            if (password != passwordAgain) {
+                problemText = "Şifreler Uyuşmuyor!";
+            }
+        }
+        if ($('#Tcno').val().length != 11) {
+            problemText += "<br>" + "\nT.C. No 11 karakter olmalıdır!";
+        }
+        //if (userRank == "") {
+        //    problemText += "<br>" + "\nRütbe Alanı Zorunludur!";
+        //}
+        if (SinifId == "0") {
+            problemText += "<br>" + "\nSınıf Alanı Zorunludur!";
+        }
+        if (RutbeId == "0") {
+            problemText += "<br>" + "\nRütbe Alanı Zorunludur!";
+        }
+        if (userName == "") {
+            problemText += "<br>" + "\Personel Adı Alanı Zorunludur!";
+        }
+        if (userSurname == "") {
+            problemText += "<br>" + "\Personel Soyadı Alanı Zorunludur!";
+        }
+        if (email == "") {
+            problemText += "<br>" + "\nE-Posta Alanı Zorunludur!";
+        }
+        if (Tcno == "") {
+            problemText += "<br>" + "\nT.C. No Alanı Zorunludur!";
+        }
+
+        if (BirlikId == 0) {
+            problemText += "<br>" + "\nBirlik Seçmeniz Gerekmektedir!";
+        }
+        if (MahalId == 0) {
+            problemText += "<br>" + "\n Mahal Seçmeniz Gerekmektedir!";
+        }
+
+        if (problemText != "") {
+            $("#messageBoxModal .modal-title").html("Personel Kayıt İşlemi");
+            //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+            $("#messageBoxModal .modal-header").removeClass("bg-success");
+            $("#messageBoxModal .modal-header").addClass("bg-danger");
+            $("#messageBoxModal .modal-body").html("<p>" + problemText + "</p>");
+            $('#messageBoxModal').modal();
+        } else {
+            var dataUserArray = [];
+
+            dataUserArray[0] = uid;
+            dataUserArray[1] = SinifId;
+            dataUserArray[2] = RutbeId;
+            dataUserArray[3] = upperStr(userName);
+            dataUserArray[4] = upperStr(userSurname);
+            dataUserArray[5] = lowerStr(email);
+            dataUserArray[6] = Tcno;
+            dataUserArray[7] = password;
+            dataUserArray[8] = BirlikId;
+            dataUserArray[9] = MahalId;
+            dataUserArray[10] = rolId;
+            dataUserArray[11] = NobettenCikar;
+            dataUserArray[12] = Aktif;
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("KullaniciEkle","YoneticiIslemleri")",
+                data: JSON.stringify({ dataUserArray: dataUserArray }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (ex) {
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>Hata Oluştu.</p>");
+                    $('#messageBoxModal').modal();
+                },
+                success: function (data) {
+
+                    if (data.State == 1) {
+                        $("#messageBoxModal .modal-title").html(data.title);
+                        $("#messageBoxModal .modal-header").removeClass("bg-danger");
+                        $("#messageBoxModal .modal-header").addClass("bg-success");
+                        //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                        $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                        $('#messageBoxModal').modal();
+                        $('#uid').val("0");
+                        $('#userBtnSave').text("Kaydet");
+                        $('#userBtnClear').click();
+                        /*if ($.fn.DataTable.isDataTable('#tableUserList')) {
+                            $('#tableUserList').DataTable().destroy();
+                        }*/
+                    } else {
+                        $("#messageBoxModal .modal-title").html(data.title);
+                        $("#messageBoxModal .modal-header").removeClass("bg-success");
+                        $("#messageBoxModal .modal-header").addClass("bg-danger");
+                        //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                        $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                        $('#messageBoxModal').modal();
+                    }
+
+                }
+            });
+
+        }
+
+
+    }
+
+    $('#userList-tab').click(function () {
+        btnUserListClk();
+    });
+
+    function btnUserListClk() {
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("KullaniciListele","YoneticiIslemleri")",
+            data: JSON.stringify({}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html("Personel Listeleme");
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+
+                if (data.State == 1) {
+
+                    if ($.fn.DataTable.isDataTable('#tableUserList')) {
+                        $('#tableUserList').DataTable().clear().draw();
+                    }
+                    ////////////
+                    var userList = JSON.parse(data.userList);
+                    tableUserList = $('#tableUserList').DataTable({
+                        "data": userList,
+                        "columns": [
+                            { title: "Sınıf", data: "Sinif" },
+                            { title: "Rütbe", data: "Rutbe" },
+                            { title: "Kullanici Adı", data: "KullaniciAdi" },
+                            { title: "KullaniciSoyadı", data: "KullaniciSoyadi" },
+                            { title: "E-Posta", data: "Eposta" },
+                            { title: "Mahal Adı", data: "MahalAdi" },
+                            { title: "Tc No", data: "Tcno" },
+                            { title: "Rol", data: "RolId" },
+                            { title: "Nöbet Durumu", data: "NobettenCikar" },
+                            { title: "Sistem Durumu", data: "Aktif" },
+                            { title: "İşlemler", data: "KullaniciId" }
+                        ],
+                        /* columnDefs: [
+
+                             {
+                                 type: 'turkish', targets: '_all'
+                             },
+
+                         ],*/
+                        columnDefs: [
+                            {
+                                "targets": 7,
+                                "data": "RolId",
+                                "render": function (data, type, row, meta) {
+                                    var RolName = "";
+                                    if (data == 0)
+                                        RolName = "Personel";
+                                    if (data == 1)
+                                        RolName = "Yönetici";
+                                    if (data == 3)
+                                        RolName = "Nöbet Kıdemlisi";
+                                    return RolName;
+                                }
+                            },
+
+                            {
+                                "targets": 9,
+                                "data": "Aktif",
+                                "render": function (data, type, row, meta) {
+                                    var RolName = "";
+                                    if (data == 0)
+                                        RolName = "Devre Dışı";
+                                    if (data == 1)
+                                        RolName = "Aktif";
+                                    if (data == 2)
+                                        RolName = "Bekleme";
+                                    if (data == 3)
+                                        RolName = "Tayin Oldu";
+                                    if (data == 4)
+                                        RolName = "Emekli Oldu";
+                                    return RolName;
+                                }
+                            },
+
+
+                            {
+                                "targets": 10,
+                                "data": "KullaniciId",
+                                "render": function (data, type, row, meta) {
+                                    //var editStr = "";
+
+                                    var str = ' <div id="table_dd_' + data +'" class="dropdown">' +
+                                        '<span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">' +
+                                        '</span>' +
+                                        '<div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(19px, -7px, 0px);">' +
+                                        '   <a class="dropdown-item" onclick="editUserClk(' + data + ')"><i class="bx bx-edit-alt mr-1"></i> Güncelle</a>' +
+                                        '<a class="dropdown-item" href="#" onclick="deleteUserClk(' + data + ')"><i class="bx bx-trash mr-1"></i> Sil</a>' +
+                                        '</div>'
+                                    '</div>';
+
+
+                                    return str;
+                                }
+                            }
+                            
+
+                        ],
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'print',
+                            { extend: 'pdf', charset: 'UTF-8', className: 'pdfButton', title: "Personel Listesi", filename: "Personel Listesi" },
+                            {
+                                extend: 'csv',
+                                charset: 'UTF-8',
+                                fieldSeparator: ';',
+                                bom: true,
+                                className: 'excelButton',
+                                filename: "Personel Listesi",
+                                title: "Personel Listesi",
+                                orientation: "landscape",
+                                pageSize:'LEGAL'
+                            }
+                        ]
+                    });
+                    $(".excelButton").text("CSV İndir");
+                    $(".buttons-print").text("Çıktı Al");
+                    $(".pdfButton").text("PDF İndir");
+                    ///////
+
+                } else {
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    $("#messageBoxModal .modal-header").removeClass("bg-success");
+                    $("#messageBoxModal .modal-header").addClass("bg-danger");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                    $('#messageBoxModal').modal();
+                }
+
+            }
+        });
+
+    }
+    function editUserClk(id) {
+        $('#userBtnClear').click();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("editUserClk","YoneticiIslemleri")",
+            data: JSON.stringify({ id: id }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html(data.title);
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu.</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+
+                if (data.State == 1) {
+                    var UserData = data.userData; // JSON.parse(data.userData);
+                    $('#uid').val(UserData.KullaniciId);
+                    $('#SinifId').val(UserData.SinifId);
+                    $('#RutbeId').val(UserData.RutbeId);
+                    //$('#userRank').val(UserData[0].Rutbe);
+                    $('#userName').val(UserData.KullaniciAdi);
+                    $('#userSurname').val(UserData.KullaniciSoyadi);
+                    $('#Email').val(UserData.Eposta);
+                    $('#Tcno').val(UserData.Tcno);
+                    $('#BirlikId').val(UserData.BirlikId);
+                    $('#MahalId').val(UserData.MahalId);
+                    $('#rolId').val(UserData.RolId);
+                    $('#password').val(UserData.Parola);
+                    $('#passwordAgain').val(UserData.Parola);
+
+                    $('#NobettenCikar').prop('checked', UserData.NobettenCikar);
+
+                    $('#Aktif').val(UserData.Aktif);
+
+                    $('#userBtnSave').text("Güncelle");
+                    $('#userAdd-tab').click();
+
+                } else {
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    $("#messageBoxModal .modal-header").removeClass("bg-success");
+                    $("#messageBoxModal .modal-header").addClass("bg-danger");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                    $('#messageBoxModal').modal();
+                }
+            }
+        });
+
+    }
+    function deleteUserClk(id) {
+
+        if (confirm("Silmek İstediğinizden Emin Misiniz?")) {
+               $.ajax({
+            type: "POST",
+            url: "@Url.Action("deleteUserClk","YoneticiIslemleri")",
+            data: JSON.stringify({ id: id }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html(data.title);
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu.</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+                if (data.State == 1) {
+
+                    tableUserList
+                        .row($("#table_dd_" + id).parents('tr'))
+                        .remove()
+                        .draw();
+
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    $("#messageBoxModal .modal-header").removeClass("bg-danger");
+                    $("#messageBoxModal .modal-header").addClass("bg-success");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                    $('#messageBoxModal').modal();
+                }
+            }
+        });
+        } else {
+
+        }
+
+
+    }
+
+    $('#userBtnClear').click(function () {
+
+        $('#uid').val("0");
+    });
+
+    function upperStr(str) {
+        //return str.replace(/i/g, "İ").toLocaleUpperCase();
+
+        var string = str;
+        var letters = { "i": "İ", "ş": "Ş", "ğ": "Ğ", "ü": "Ü", "ö": "Ö", "ç": "Ç", "ı": "I" };
+        string = string.replace(/(([iışğüçö]))/g, function (letter) { return letters[letter]; })
+        return string.toUpperCase();
+
+    }
+
+    function lowerStr(str) {
+        var string = str;
+        var letters = { "İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç" };
+        string = string.replace(/(([İIŞĞÜÇÖ]))/g, function (letter) { return letters[letter]; })
+        return string.toLowerCase();
+    }
+
+
+</script>

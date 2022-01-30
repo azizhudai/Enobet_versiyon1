@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+<html class="loading" lang="tr" data-textdirection="ltr" style="font-size: 0.75rem;">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    @*<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">*@
+
+    @*<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <meta name="description" content="Frest admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+        <meta name="keywords" content="admin template, Frest admin template, dashboard template, flat admin template, responsive admin template, web app">
+        <meta name="author" content="PIXINVENT">*@
+    <title>Foça Bilgi Sistemleri A.liği - E-Nöbet Sistemi</title>
+    <link rel="apple-touch-icon" href="~/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="~/app-assets/images/ico/b.jpg">
+    @*<link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">*@
+
+    <!-- BEGIN: Vendor CSS-->
+    @Styles.Render("~/app-assets/vendors/css/vendors.min.css")
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    @Styles.Render("~/app-assets/css/bootstrap.css")
+    @Styles.Render("~/app-assets/css/bootstrap-extended.css")
+    @Styles.Render("~/app-assets/css/colors.css")
+    @Styles.Render("~/app-assets/css/components.css")
+    @Styles.Render("~/app-assets/css/themes/dark-layout.css")
+    @Styles.Render("~/app-assets/css/themes/semi-dark-layout.css")
+    <!-- END: Theme CSS-->
+    <!-- BEGIN: Page CSS-->
+    @Styles.Render("~/app-assets/css/core/menu/menu-types/vertical-menu.css")
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    @*@Styles.Render("~/assets/css/style.css")*@
+    <!-- END: Custom CSS-->
+    <!-- BEGIN: Vendor JS-->
+    @Scripts.Render("~/app-assets/vendors/js/vendors.min.js")
+
+    @Scripts.Render("~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js")
+    @Scripts.Render("~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js")
+    @Scripts.Render("~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js")
+
+</head>
+<!-- END: Head-->
+<!-- BEGIN: Body-->
+
+
+<script>
+
+    $(document).ready(function () {
+
+        // Disable search and ordering by default
+        $.extend($.fn.dataTable.defaults, {
+            searching: true,
+            ordering: true,
+            //"searching": true,
+            destroy: true,
+            "language": {
+                "sDecimal": ",",
+                "sEmptyTable": "Tabloda herhangi bir veri mevcut değil",
+                "sInfo": "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
+                "sInfoEmpty": "Kayıt yok",
+                "sInfoFiltered": "(_MAX_ kayıt içerisinden bulunan)",
+                "sInfoPostFix": "",
+                "sInfoThousands": ".",
+                "sLengthMenu": "Sayfada _MENU_ kayıt göster",
+                "sLoadingRecords": "Yükleniyor...",
+                "sProcessing": "İşleniyor...",
+                "sSearch": "Ara:",
+                "sZeroRecords": "Eşleşen kayıt bulunamadı",
+                "oPaginate": {
+                    "sFirst": "İlk",
+                    "sLast": "Son",
+                    "sNext": "Sonraki",
+                    "sPrevious": "Önceki"
+                },
+                "oAria": {
+                    "sSortAscending": ": artan sütun sıralamasını aktifleştir",
+                    "sSortDescending": ": azalan sütun soralamasını aktifleştir"
+                }
+            }
+        });
+
+
+    });
+
+
+</script>
+ @*// vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static*@
+<body class="vertical-layout 2-columns navbar-sticky footer-static pace-done vertical-menu-modern menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+
+    <!-- BEGIN: Header-->
+    <div class="header-navbar-shadow"></div>
+    <nav class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top ">
+        <div class="navbar-wrapper">
+            <div class="navbar-container content">
+                <div class="navbar-collapse float-right" id="navbar-mobile">
+
+                    <ul class="nav navbar-nav float-right">
+
+                        <li class="dropdown dropdown-user nav-item">
+                            <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                                @{
+                                    if (Session["KullaniciAdi"] == null)
+                                    {
+                                        <div class="user-nav d-sm-flex d-none"><span class="user-name">Kullanıcı Girişi</span><span class="user-status text-muted"></span></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="user-nav d-sm-flex d-none">
+                                            <span class="user-name">
+                                                @Session["KullaniciAdi"] @Session["KullaniciSoyadi"]
+                                                 @{
+                                                     string Statu = "";
+                                                     if (Convert.ToInt32(Session["RolId"]) == 3)
+                                                     { Statu = "Nöbet Kıdemlisi"; }
+                                                     else if (Convert.ToInt32(Session["RolId"]) == 1)
+                                                     { Statu = "Yönetici"; }
+                                                     else { Statu = ""; }
+                                                 }
+                                            <br />
+                                            <strong style="color:darkgray;">@Statu</strong> 
+                                            </span><span class="user-status text-muted"></span>
+                                        </div>
+                                                     }
+                                }
+                                <span><img class="round" src="~/app-assets/images/logo/tsk_dzkk.png" alt="avatar" height="40" width="40"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right pb-0">
+                                @*<a class="dropdown-item" href="page-user-profile.html"><i class="bx bx-user mr-50"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="bx bx-envelope mr-50"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="bx bx-check-square mr-50"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="bx bx-message mr-50"></i> Chats</a>*@
+                                <div class="dropdown-divider mb-0"></div>
+                                @{
+                                    if (Session["KullaniciAdi"] == null)
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("Login", "Login")"><i class="bx bx-power-off mr-50"></i> Giriş Yap</a>
+                                        <a class="dropdown-item" href="@Url.Action("Register", "Login")"><i class="bx bx-power-off mr-50"></i> Kayıt Ol</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("LoginOff", "Login")"><i class="bx bx-power-off mr-50"></i> Çıkış Yap </a>
+                                    }
+                                }
+
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- END: Header-->
+    <!-- BEGIN: Main Menu-->
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mr-auto">
+                    <a class="navbar-brand" href="@Url.Action("index","Home")">
+                        <div class="brand-logo"><img class="logo" src="~/app-assets/images/logo/tsk_dzkk.png" /></div>
+                        <h2 class="brand-text mb-0">E-Nöbet</h2>
+                    </a>
+                </li>
+                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="bx bx-x d-block d-xl-none font-medium-4 primary"></i><i class="toggle-icon bx bx-disc font-medium-4 d-none d-xl-block primary" data-ticon="bx-disc"></i></a></li>
+            </ul>
+        </div>
+        <div class="shadow-bottom"></div>
+
+        @{ Html.RenderAction("Menu", "Home"); }
+
+
+        @*<div class="main-menu-content">
+                <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
+                    <li class=" nav-item">
+                        <a href="~/Home/index"><i class="bx bx-sitemap" data-icon="desktop"></i><span class="menu-title" data-i18n="Dashboard">Yönetici İşlemleri</span><span class="badge badge-light-primary badge-pill badge-round float-right mr-2">3</span></a>
+                        <ul class="menu-content">
+                            <li>
+                                <a href="@Url.Action("MahalIslemleri","YoneticiIslemleri")" asp-controller="YoneticiIslemleri" asp-action="MahalIslemleri"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="eCommerce">Mahal İşlemleri</span></a>
+                            </li>
+                            <li>
+                                <a href="~/YoneticiIslemleri/KullaniciIslemleri"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="Analytics">Kullanıcı İşlemleri</span></a>
+                            </li>
+                            <li>
+                                <a href="~/YoneticiIslemleri/NobetKullaniciAylikVeriGiris"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="Analytics">Nöbet İşlemleri</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="navigation-header">
+                        <span>Uygulamalar</span>
+                    </li>
+                    <li class=" nav-item">
+                        <a href="~/Home/index"><i class="bx bx-home-alt" data-icon="desktop"></i><span class="menu-title" data-i18n="Email">Anasayfa</span></a>
+                    </li>
+
+
+                </ul>
+            </div>*@
+    </div>
+    <!-- END: Main Menu-->
+
+
+    @RenderBody()
+
+
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+        <p class="clearfix mb-0">
+            <span class="float-left d-inline-block">2021 &copy; Foça Bilgi Sistemleri A.liği</span><span class="float-right d-sm-inline-block d-none"><span style="color:#5A8DEE" class=" brand-text mb-0">Foça Bilgi Sistemleri A.liği</span> Tarafından Geliştirildi.</span>
+            <button class="btn btn-primary btn-icon scroll-top" type="button"><i class="bx bx-up-arrow-alt"></i></button>
+        </p>
+    </footer>
+    <!-- END: Footer-->
+
+</body>
+<!-- END: Body-->
+
+</html>
+
+
+<!-- BEGIN Vendor JS-->
+<!-- BEGIN: Page Vendor JS-->
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Theme JS-->
+@Scripts.Render("~/app-assets/js/scripts/configs/vertical-menu-light.js")
+@Scripts.Render("~/app-assets/js/core/app-menu.js")
+@Scripts.Render("~/app-assets/js/core/app.js")
+@Scripts.Render("~/app-assets/js/scripts/components.js")
+@Scripts.Render("~/app-assets/js/scripts/footer.js")
+<!-- END: Theme JS-->
+<!-- BEGIN: Page JS-->
+<!-- END: Page JS-->
+
+<style>
+    .table th, .table td {
+        padding: 0.8rem 1.8rem
+    }
+
+</style>

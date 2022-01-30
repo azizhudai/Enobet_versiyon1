@@ -1,0 +1,454 @@
+﻿@*@model  Enobet_versiyon1.Models.Sonuc*@
+@{
+    ViewBag.Title = "Home Page";
+}
+@*@model Enobet_versiyon1.Models.KullaniciModel*@
+@Styles.Render("~/app-assets/vendors/css/pickers/pickadate/pickadate.css")
+    @Styles.Render("~/app-assets/vendors/css/pickers/daterange/daterangepicker.css")
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h5 class="content-header-title float-left pr-1 mb-0">Anasayfa</h5>
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb p-0 mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="/home/index"><i class="bx bx-home-alt"></i></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Uygulamalar</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a href="#">Anasayfa</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <!-- Basic Horizontal form layout section start -->
+            <section id="column-selectors">
+                <div class="row" >
+                    <div class="col-12" >
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Günlük Nöbet Listesi</h4>
+                                <hr />
+                                @*<input id="tarih" type="text" class="form-control" placeholder="Select Date">*@
+                            <fieldset style="display: flex;" class="form-group position-relative has-icon-left col-10">
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control single2-daterange">
+
+                                    <div class="form-control-position">
+                                        <i class='bx bx-calendar'></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" value="Geri" style="background: #5A8DEE;" id="btnLeftDate" class="form-control">
+
+                                    <div class="form-control-position">
+                                        <i class='bx bx-left-arrow'></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" value="Bugün" style="background: #5A8DEE" id="todayDate" class="form-control">
+
+                                    <div class="form-control-position">
+                                        <i class='bx bx-dashboard'></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" value="İleri" style="background: #5A8DEE" id="btnRightDate" class="form-control">
+
+                                    <div class="form-control-position">
+                                        <i class='bx bx-right-arrow'></i>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-1">
+                                    @*<input type="button" value="İleri" style="background: #5A8DEE" id="btnRightDate" class="form-control">*@
+
+                                    <label id="lblDate" style="font-size:large"></label>
+                                </div>
+
+                            </fieldset>
+
+                               
+
+                                @*<div class="col-12 d-flex justify-content-end ">
+            <button id="mahalBtnKaydet" type="button" onclick="NobetListeGetir()" class="btn btn-primary mr-1 mb-1">Listele</button>
+        </div>*@
+                                @*<li style="float:right"><span class="badge badge-pill badge-light-success">0 Kayıt</span></li>*@
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body card-dashboard">
+
+                                    <div class="table-responsive" style="padding-left: 2%">
+                                        <table id="NobetListTable" class="table table-striped dataex-html5-selectors" style="width:70%;padding-left:16%">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:20%">Mahal Adı</th>
+                                                    <th style="width:15%">Nöbet Tarih</th>
+                                                    <th style="width:15%">Personel Adı</th>
+
+                                                    <th style="width:10%">Dahili No</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @*@{ foreach (var list in Model.KullaniciList)
+                                                    {
+                                                        <tr id="mahalTable_@list.KullaniciId">
+                                                            <td> @list.KullaniciAdi @list.KullaniciSoyadi</td>
+                                                            <td>@list.Eposta</td>
+                                                            <td>@list.MahalId</td>
+                                                            <td>@list.Tcno</td>
+                                                            <td>
+                                                                <div class="dropdown">
+                                                                    <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                                                    </span>
+                                                                    <div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(19px, -7px, 0px);">
+                                                                        <a class="dropdown-item" onclick="editMahalClk(@list.KullaniciAdi)"><i class="bx bx-edit-alt mr-1"></i> edit</a>
+                                                                        <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    }}*@
+
+                                            </tbody>
+
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Mahal</th>
+                                                    <th>Nöbet Tarihi</th>
+                                                    <th>Personel Adı</th>
+                                                    <th>Dahili No</th>
+
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/datatables.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.print.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/pdfmake.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/vfs_fonts.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/datatables/datatable.js")
+<!-- END: Page JS-->
+<!-- BEGIN: Page Vendor JS-->
+@*@Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/picker.js")
+    @Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/picker.date.js")
+    @Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/picker.time.js")
+    @Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/legacy.js")
+    @Scripts.Render("~/app-assets/vendors/js/pickers/daterange/moment.min.js")
+    @Scripts.Render("~/app-assets/vendors/js/pickers/daterange/daterangepicker.js")*@
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@*@Scripts.Render("~/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js")*@
+<!-- END: Page JS-->
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/picker.js")
+@Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/picker.date.js")
+@Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/picker.time.js")
+@Scripts.Render("~/app-assets/vendors/js/pickers/pickadate/legacy.js")
+@Scripts.Render("~/app-assets/vendors/js/pickers/daterange/moment.min.js")
+@Scripts.Render("~/app-assets/vendors/js/pickers/daterange/daterangepicker.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@*@Scripts.Render("~/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js")*@
+<!-- END: Page JS-->
+
+<script>
+    (function (window, document, $) {
+        'use strict';
+        // Single Date Picker
+        $('.single2-daterange').pickadate({
+            //singleDatePicker: true,
+            //showDropdowns: true,
+            selectYears: true,
+            selectMonths: true,
+            minYear: 1901,
+            maxYear: parseInt(moment().format('YYYY'), 10),
+            locale: {
+                cancelLabel: 'Clear'
+            },
+            format: 'dd.mm.yyyy',
+            formatSubmit: 'dd.mm.yyyy',
+            monthsFull: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+            monthsShort: ['Janaa', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+            weekdaysShort: ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'],
+            today: 'Bugün',
+            clear: 'Temizle',
+            close: 'Kapat',
+            firstDay: 1,
+            onSet: function (context) {
+                try {
+                    console.log('Just set stuff:', context.select)
+                    var dateNow = new Date(context.select);
+                    NobetListeGetir(dateNow.getFullYear(), dateNow.getMonth() + 1, dateNow.getDate());
+                    $('#lblDate').text(dateNow.getDate()+'.'+(dateNow.getMonth() + 1)+'.'+dateNow.getFullYear());
+                }
+                catch (err) {
+                    alert(err);
+                }
+
+
+            }
+
+        }/*, function (start, end, label) {
+            var years = moment().diff(start, 'years');
+            alert("You are " + years + " years olllld!");
+        }*/
+        );
+    })(window, document, jQuery);
+
+    var now = new Date();
+    var month = (now.getMonth() + 1);
+    var day = now.getDate();
+    if (month < 10)
+        month = "0" + month;
+    if (day < 10)
+        day = "0" + day;
+    var today = day+ '.' + month + '.' + now.getFullYear();
+    $('.single2-daterange ').val(today);
+
+    setTimeout(function () { NobetListeGetir(now.getFullYear(), month, day); }, 500);
+
+        function NobetListeGetir(year,month,day) {
+
+            //var options111 = {
+            //    year: 'numeric',
+            //    month: 'long',
+            //    day: 'numeric',
+            //    weekday: 'long'
+            //};
+            //var formatter111 = ms => new Date(ms)
+            //    .toLocaleDateString("tr-TR", options111)
+            //    .replace(/ /g, '-');
+
+            var date = year + '-' + month + '-' + day//$('#tarih').val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("NobetListeGetir","Home")",
+                data: JSON.stringify({ date: date }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function (ex) {
+                    $("#messageBoxModal .modal-title").html("Kullanıcı Listeleme İşlemi");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                    $('#messageBoxModal').modal();
+                },
+                success: function (data) {
+                    if (data.State == 1) {
+
+                        if ($.fn.DataTable.isDataTable('#NobetListTable')) {
+                            $('#NobetListTable').DataTable().clear().draw();
+                        }
+
+                       // debugger;
+                        ////////////
+                        var fileName = "Aziz Bilgi Sistem E-Nöbet Listesi - " + date;
+                        if (data.NobetList == null)
+                            return;
+                        if (data.NobetList.length <= 0)
+                            return;
+
+                        var NobetList = JSON.parse(data.NobetList);  //JSON.stringify(data.NobetList)
+                        var NobetListTable = $('#NobetListTable').DataTable({
+                            "data": NobetList,
+                            "columns": [
+                                { title: "Mahal", data: "MahalAdi" },
+                                { title: "Nöbet Tarihi", data: "NobetTarihi" },
+                                { title: "Personel Adı", data: "KullaniciFulAdi" },
+                                { title: "Dahili No", data: "DahiliNo" },
+                               
+                            ],
+                          /*  columnDefs: [
+                                {
+                                    "targets": 1,
+                                    "data": "NobetTarihi",
+                                    "render": function (data, type, row, meta) {
+                                        var dateArray = data.split('-');
+                                       var date = DateFormatTR(dateArray[0], (dateArray[1]-1), dateArray[2]);
+                                        return date;
+                                    }
+                                }
+                                ],*/
+                            "ordering": false,
+                            paging: false,
+                            dom: 'Bfrtip',
+                            buttons: [
+                                'print',
+                                { extend: 'pdf', charset: 'UTF-8', className: 'pdfButton', title: 'E-Nöbet Listesi', filename: fileName},
+                                {
+                                    extend: 'csv',
+                                    charset: 'UTF-8',
+                                    fieldSeparator: ';',
+                                    bom: true,
+                                    className: 'excelButton',
+                                    filename: fileName,
+                                    title: 'E-Nöbet Listesi'
+                                }
+                            ]
+                        });
+
+
+                        $(".excelButton").text("CSV İndir");
+                        $(".buttons-print").text("Çıktı Al");
+                        $(".pdfButton").text("PDF İndir");
+
+                    }
+                }
+            });
+    }
+
+    function DateFormatTR(year, month, day) {
+        var options111 = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        };
+        var dateStr = new Date(Date.UTC(year, month, day))
+            .toLocaleDateString("tr-TR", options111)
+            .replace(/{(\w+)}/g, '-');
+        return dateStr;
+    }
+
+    if ("@TempData["Result"]".length != 0) {
+        $("#messageBoxModal .modal-title").html("Mahal İşlemi");
+        //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+        $("#messageBoxModal .modal-header").removeClass("bg-danger");
+        $("#messageBoxModal .modal-header").addClass("bg-success");
+        $("#messageBoxModal .modal-body").html("<p>" + "@TempData["Result"]" + "</p>");
+        $('#messageBoxModal').modal();
+    }
+    $('#btnLeftDate').click(function () {
+        /*var date = $('.single2-daterange').val();
+        NobetListeGetir();*/
+       // $('.single2-daterange').pickadate("setDate", new Date(2008, 9, 03));
+
+        var daterange = $('.single2-daterange').val().split('.');
+        var yil = daterange[2];
+        var ay = daterange[1];
+        var gun = daterange[0];
+        var duzenliDate = yil + '-' + ay + '-' + gun;
+       /* var date = moment(duzenliDate)
+            .add(-1, 'd') //replace 2 with number of days you want to add
+            .toDate();*/
+
+
+        var dateConvert = new Date(duzenliDate);;
+        var date = dateConvert.setDate(dateConvert.getDate() - 1); /*moment(duzenliDate)
+            .add(1, 'd') //replace 2 with number of days you want to add
+            .toDate();*/
+        var date = new Date(date);
+
+
+        var day = date.getDate();
+        var month = (date.getMonth() + 1);
+        if (month < 10)
+            month = "0" + month;
+        if (day < 10)
+            day = "0" + day;
+
+        var today = day + '.' + month + '.' + date.getFullYear();
+        $('.single2-daterange ').val(today);
+        setTimeout(function () { NobetListeGetir(date.getFullYear(), month, day); }, 100);
+        $('#lblDate').text(today);
+
+    });
+    $('#todayDate').click(function () {
+        var now = new Date();
+        var month = (now.getMonth() + 1);
+        var day = now.getDate();
+        if (month < 10)
+            month = "0" + month;
+        if (day < 10)
+            day = "0" + day;
+        var today = day + '.' + month + '.' + now.getFullYear();
+        $('.single2-daterange ').val(today);
+        setTimeout(function () { NobetListeGetir(now.getFullYear(), month, day); }, 100);
+        $('#lblDate').text(today);
+    });
+    $('#btnRightDate').click(function () {
+        var daterange = $('.single2-daterange').val().split('.');
+        var yil = daterange[2];
+        var ay = daterange[1];
+        var gun = daterange[0];
+        var duzenliDate = yil + '-' + ay + '-' + gun;
+        var dateConvert = new Date(duzenliDate);
+        var date = dateConvert.setDate(dateConvert.getDate()+1); /*moment(duzenliDate)
+            .add(1, 'd') //replace 2 with number of days you want to add
+            .toDate();*/
+        var date = new Date(date);
+        var day = date.getDate();
+        var month = (date.getMonth()+1);
+        if (month < 10)
+            month = "0" + month;
+        if (day < 10)
+            day = "0" + day;
+
+        var today = day + '.' + month + '.' + date.getFullYear();
+        $('.single2-daterange ').val(today);
+        setTimeout(function () { NobetListeGetir(date.getFullYear(), month, day); }, 100);
+        $('#lblDate').text(today);
+
+
+       
+
+    });
+</script>

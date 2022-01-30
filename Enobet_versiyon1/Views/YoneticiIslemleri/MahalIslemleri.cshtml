@@ -1,0 +1,437 @@
+﻿@model Enobet_versiyon1.Models.MahalModel
+@{
+    ViewBag.Title = "Mahal İşlemleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h5 class="content-header-title float-left pr-1 mb-0">Mahal İşlemleri</h5>
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb p-0 mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="@Url.Action("index","Home")"><i class="bx bx-home-alt"></i></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Yönetici İşlemleri</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <a href="#">Mahal İşlemleri</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <!-- Basic Horizontal form layout section start -->
+            @if (Session["RolId"].ToString() == "1")
+            {
+                <section id="basic-horizontal-layouts">
+                    <div class="row match-height">
+
+                        <div class="col-md-12 col-12">
+
+                            @using (Html.BeginForm("MahalEkle", "YoneticiIslemleri", FormMethod.Post))
+                            {
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Mahal Ekleme İşlemi</h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <form class="form form-horizontal">
+                                                <div class="form-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label>Mahal Yeri</label>
+                                                        </div>
+                                                        <div class="col-md-8 form-group ">
+                                                            <div class="position-relative has-icon-left">
+                                                                <input type="hidden" id="mid" name="mid" value="0" />
+                                                                <input type="text" id="MahalAdi" required class="form-control" name="MahalAdi" placeholder="Mahal Adı">
+                                                                <div class="form-control-position">
+                                                                    <i class="bx bx-user"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <label>Dahili No</label>
+                                                        </div>
+                                                        <div class="col-md-8 form-group ">
+                                                            <div class="position-relative has-icon-left">
+                                                                @*<input type="hidden" id="dno" name="dno" value="0" />*@
+                                                                <input type="text" id="DahiliNo" required class="form-control" name="DahiliNo" placeholder="Dahili No (Birden Fazla Girilebilir! Örn. 1444,1445)">
+                                                                <div class="form-control-position">
+                                                                    <i class="bx bx-user"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <label>Sıra</label>
+                                                        </div>
+                                                        <div class="col-md-8 form-group ">
+                                                            <div class="position-relative has-icon-left">
+                                                                @*<input type="hidden" id="dno" name="dno" value="0" />*@
+                                                                <input type="number" id="Order" required class="form-control" name="Order" placeholder="Sıra Giriniz.">
+                                                                <div class="form-control-position">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <label>Nöbetçi Amiri</label>
+                                                        </div>
+                                                        <div class="col-md-8 form-group">
+                                                            <div class="position-relative has-icon-left">
+                                                                @*<input type="hidden" id="dno" name="dno" value="0" />*@
+
+                                                                <div class="position-relative has-icon-left" id="viewContent">
+                                                                    <input type="hidden" id="uId" name="uId" value="0" />
+                                                                    <input type="text" id="searchInput" class="form-control" placeholder="Personel Adı" />
+                                                                    <div id="autoCompleteDiv"></div>
+
+                                                                    <div class="form-control-position">
+                                                                        <i class="bx bx-user"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-12 d-flex justify-content-end ">
+                                                            <button id="mahalBtnKaydet" type="submit" class="btn btn-primary mr-1 mb-1">Kaydet</button>
+                                                            <button id="mahalBtnTemizle" onclick="mahalBtnTemizleFnc();" type="reset" class="btn btn-light-secondary mr-1 mb-1">Temizle</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </section>
+
+
+            }
+
+            <section id="column-selectors">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Mahal Listesi</h4>
+                                <li style="float:right"><span class="badge badge-pill badge-light-success">@Model.ListMahal.Count Kayıt</span></li>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body card-dashboard">
+
+                                    <div class="table-responsive">
+                                        <table id="MahalListTable" class="table table-striped dataex-html5-selectors">
+                                            <thead>
+                                                <tr>
+                                                    <th>Mahal Adı</th>
+                                                    <th>Dahili No</th>
+                                                    <th>Mahal Amiri</th>
+                                                    <th>Sıra</th>
+                                                    <th>İşlemler</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    int? amirid = 0;
+                                                    foreach (var list in Model.ListMahal)
+                                                    {
+
+                                                        <tr id="mahalTable_@list.MahalId">
+                                                            <td> @list.MahalAdi</td>
+                                                            <td> @list.DahiliNo</td>
+                                                            <td> @list.AmirFulAdi</td>
+                                                            <td>@list.Sira</td>
+                                                            <td>
+
+                                                                <div id="table_dd_@list.MahalId" class="dropdown">
+                                                                    <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                                                    </span>
+                                                                    @{ 
+                                                                        if (list.MahalAmirId == null) { amirid = 0; } else { amirid = list.MahalAmirId; }
+                                                                    }
+                                                                        <div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(19px, -7px, 0px);">
+                                                                            <a class="dropdown-item" onclick="editMahalClk(@list.MahalId,@amirid) "><i class="bx bx-edit-alt mr-1"></i> Düzenle</a>
+                                                                            <a class="dropdown-item" onclick="deleteMahalClk(@list.MahalId)"><i class="bx bx-trash mr-1"></i> Sil</a>
+                                                                        </div>
+                                                                    </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    }}
+
+                                            </tbody>
+
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Mahal Adı</th>
+                                                    <th>Dahili No</th>
+                                                    <th>Nöbetçi Amiri</th>
+                                                    <th>Sıra</th>
+                                                    <th>İşlemler</th>
+
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--Danger theme Modal -->
+<div class="modal fade text-left" id="messageBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">  </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN: Page Vendor JS-->
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/datatables.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.print.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/pdfmake.min.js")
+@Scripts.Render("~/app-assets/vendors/js/tables/datatable/vfs_fonts.js")
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+@Scripts.Render("~/app-assets/js/scripts/datatables/datatable.js")
+<!-- END: Page JS-->
+
+<script>
+
+     $(document).ready(function () {
+
+       // btnUserListClk();
+
+        $("#searchInput").keyup(function (e) {
+            if (e.which == 40) {
+                $("#autoCompleteSelect").val($("#autoCompleteSelect option:first").val());
+                $("#autoCompleteSelect").focus();
+                $(this).val($("#autoCompleteSelect :selected").text());
+            }
+            else {
+                if ($(this).val().length > 2)
+                    FillAutoComplete($(this).val());
+                else
+                    $("#autoCompleteDiv").hide();
+            }
+        });
+
+    });
+
+
+    function FillAutoComplete(value) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SearchFulPersonelListGetir", "YoneticiIslemleri")",
+            contentType: "application/json; charset=utf-8",
+            data: '{"term":"' + value + '"}',
+            dataType: "json",
+            success: function (result, status, xhr) {
+
+                var html = "<select id=\"autoCompleteSelect\" size=\"5\">";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<option value=\"" + result[i].value + "\">" + result[i].label + "</option>";
+                }
+                html +="</select>";
+                $("#autoCompleteDiv").html(html);
+                $("#autoCompleteDiv").show();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + " " + status + " " + error);
+            }
+        });
+        return false;
+    }
+    $("#viewContent").on("change", "#autoCompleteSelect", function () {
+
+        var uid = $("#autoCompleteSelect :selected").val();
+
+        $("#uId").val(uid);
+        $("#searchInput").val($("#autoCompleteSelect :selected").text());
+
+        @*$.ajax({
+            type: "POST",
+            url: "@Url.Action("FulPersonelListGetir","YoneticiIslemleri")",
+            data: JSON.stringify({ uid:uid}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html("Kıdemli Personel Listeleme İşlemi");
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+
+                if (data.State == 1) {
+                    var values = [];
+                    if (data.kidemliMahalList != null) {
+                        var mahalList = JSON.parse(data.kidemliMahalList);
+                        for (var i = 0; i < mahalList.length; i++) {
+                            values[i] = mahalList[i].MahalId.toString();
+                        }
+                        /*var element = $('#programmatic-single');
+                        var values = "1,2,3";
+                        $.each(values.split(","), function (i, e) {
+                            $("#programmatic-single option[value='" + e + "']").prop("selected", true).trigger('change');;
+                        });*/
+                        $('#programmatic-single').val(values).trigger('change');
+                    }
+
+                    //$("#programmatic-single").multiselect('refresh');
+                    $("#uId").val(uid);
+                    $("#searchInput").val($("#autoCompleteSelect :selected").text());
+
+                }
+            }
+        });*@
+
+
+    });
+
+    $("#viewContent").on("click", "#autoCompleteSelect", function () {
+        $("#autoCompleteDiv").hide();
+        //location.href = $(this).val();
+    });
+
+    function ShowAutoName(value) {
+        $("#autoCompleteDiv").html(value);
+        $("#autoCompleteDiv").show();
+    }
+
+
+
+    function editMahalClk(mid, MahalAmirId){
+        $('#mid').val(mid);
+        $('#mahalBtnKaydet').text("Güncelle");
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("editOneListMahalClk","YoneticiIslemleri")",
+            data: JSON.stringify({ mid: mid }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html(data.title);
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu.</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+                if (data.State == 1) {
+                    $('#MahalAdi').val($('#mahalTable_' + mid).children('td:first').text());
+                    $('#DahiliNo').val($('#mahalTable_' + mid).children('td:eq(1)').text());
+                    $('#searchInput').val($('#mahalTable_' + mid).children('td:eq(2)').text());
+                    $('#Order').val($('#mahalTable_' + mid).children('td:eq(3)').text());
+                    $('#uId').val(MahalAmirId);
+                    $("html,body").animate({ scrollTop: 0 }, "slow");
+
+                }
+            }
+        });
+
+    }
+    function mahalBtnTemizleFnc() {
+        $('#mid').val("");
+        $('#MahalAdi').val("");
+        $('#DahiliNo').val("");
+        $('#Order').val("");
+        $('#uId').val("");
+        $('#searchInput').val("");
+        $('#mahalBtnKaydet').text("Kaydet");
+    }
+    function deleteMahalClk(id) {
+
+        var txt;
+        if (confirm("Silmek İstediğinizden Emin Misiniz?")) {
+            $.ajax({
+            type: "POST",
+            url: "@Url.Action("deleteMahalClk","YoneticiIslemleri")",
+            data: JSON.stringify({ id: id }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (ex) {
+                $("#messageBoxModal .modal-title").html(data.title);
+                //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                $("#messageBoxModal .modal-body").html("<p>Hata Oluştu.</p>");
+                $('#messageBoxModal').modal();
+            },
+            success: function (data) {
+                if (data.State == 1) {
+
+                   /* $('#MahalListTable')
+                        .row($("#table_dd_" + id).parents('tr'))
+                        .remove()
+                        .draw();*/
+                    location.reload();
+                    $("#messageBoxModal .modal-title").html(data.title);
+                    $("#messageBoxModal .modal-header").removeClass("bg-danger");
+                    $("#messageBoxModal .modal-header").addClass("bg-success");
+                    //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+                    $("#messageBoxModal .modal-body").html("<p>" + data.Message + "</p>");
+                    $('#messageBoxModal').modal();
+                }
+            }
+        });
+        } else {
+
+        }
+
+
+    }
+   if ("@TempData["Result"]".length != 0) {
+        $("#messageBoxModal .modal-title").html("Mahal İşlemi");
+        //$("#messageBoxModal .message-image").children().eq(0).attr("src", "/Content/img/Warning.png");
+        $("#messageBoxModal .modal-header").removeClass("bg-danger");
+        $("#messageBoxModal .modal-header").addClass("bg-success");
+        $("#messageBoxModal .modal-body").html("<p>" + "@TempData["Result"]" + "</p>");
+        $('#messageBoxModal').modal();
+    }
+</script>
